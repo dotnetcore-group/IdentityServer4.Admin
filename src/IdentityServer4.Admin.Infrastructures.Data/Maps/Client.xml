@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SmartSqlMap Scope="Client" xmlns="http://SmartSql.net/schemas/SmartSqlMap.xsd">
+  <Statements>
+
+    <Statement Id="QueryParams">
+      <Where>
+        <IsNotEmpty Prepend="And" Property="Id">
+          T.Id = $Id
+        </IsNotEmpty>
+      </Where>
+    </Statement>
+
+    <!--获取数据列-->
+    <Statement Id="Query" >
+      SELECT
+      <IsNotEmpty Prepend="Top" Property="Taken">
+        ($Taken)
+      </IsNotEmpty>
+      T.* FROM clients T
+      <Include RefId="QueryParams" />
+      <Switch Prepend="Order By" Property="OrderBy">
+        <Default>
+          T.Id DESC
+        </Default>
+      </Switch>
+    </Statement>
+
+    <Statement Id="Insert"></Statement>
+
+    <Statement Id="Delete"></Statement>
+
+    <Statement Id="Update"></Statement>
+
+    <Statement Id="QueryByPage" ></Statement>
+
+    <Statement Id="GetRecord"></Statement>
+
+    <Statement Id="GetEntity" ></Statement>
+
+    <Statement Id="IsExist"></Statement>
+
+  </Statements>
+</SmartSqlMap>
