@@ -13,3 +13,8 @@
 /src/IdentityServer4.Admin.Infrastructures.Data/bin/Debug/netstandard2.0
 /src/IdentityServer4.Admin.Infrastructures.Data/obj
 *.dtbcache
+/.vs/IdentityServer4.Admin/config
+/src/IdentityServer4.Admin.Data.Mysql/bin/Debug/netstandard2.0
+/src/IdentityServer4.Admin.Data.Mysql/obj
+/src/IdentityServer4.SSO/bin/Debug/netcoreapp2.2
+/src/IdentityServer4.SSO/obj

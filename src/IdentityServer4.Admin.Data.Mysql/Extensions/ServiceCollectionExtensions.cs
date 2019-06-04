@@ -1,18 +1,16 @@
 ﻿using IdentityServer4.Admin.Infrastructures.Data.Database;
 using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
-namespace IdentityServer4.Admin.Infrastructures.Data.Extensions
+namespace IdentityServer4.Admin.Data.Mysql.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddIdentityContext(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddIdentityContextMySql(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("SSOConnection");
             var migrationsAssembly = typeof(IS4DbContext).GetTypeInfo().Assembly.GetName().Name;
@@ -30,6 +28,17 @@ namespace IdentityServer4.Admin.Infrastructures.Data.Extensions
             services.AddDbContext<IS4DbContext>(options =>
                 options.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly))
             );
+
+            return services;
+        }
+
+        public static IServiceCollection AddIdentityMySql(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddIdentityContextMySql(configuration);
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+                .AddDefaultTokenProviders();
 
             return services;
         }

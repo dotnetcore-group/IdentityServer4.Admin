@@ -5,25 +5,19 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+
   <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="2.4.0" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="2.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="SmartSql" Version="4.0.58" />
-    <PackageReference Include="SmartSql.DIExtension" Version="4.0.58" />
-    <PackageReference Include="SmartSql.ScriptTag" Version="4.0.58" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <ProjectReference Include="..\IdentityServer4.Admin.Application\IdentityServer4.Admin.Application.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Data.Mysql\IdentityServer4.Admin.Data.Mysql.csproj" />
-    <ProjectReference Include="..\IdentityServer4.Admin.Domain\IdentityServer4.Admin.Domain.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Infrastructures.Data\IdentityServer4.Admin.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="SmartSqlMapConfig.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
