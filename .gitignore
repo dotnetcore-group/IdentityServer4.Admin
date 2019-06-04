@@ -12,3 +12,4 @@
 /src/IdentityServer4.Admin.Domain/obj
 /src/IdentityServer4.Admin.Infrastructures.Data/bin/Debug/netstandard2.0
 /src/IdentityServer4.Admin.Infrastructures.Data/obj
+*.dtbcache
