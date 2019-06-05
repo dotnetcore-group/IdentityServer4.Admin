@@ -28,7 +28,8 @@ namespace IdentityServer4.Admin.IoC
             services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
 
             // Application Services
-            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IClientService, ClientService>()
+                .AddScoped<IUserService, UserService>();
 
             // Domain Events
 

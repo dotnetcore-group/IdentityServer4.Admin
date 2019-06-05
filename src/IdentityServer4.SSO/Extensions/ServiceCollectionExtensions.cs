@@ -1,8 +1,11 @@
 ﻿using IdentityModel;
 using IdentityServer4.Admin.Data.Mysql.Extensions;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -67,6 +70,27 @@ namespace IdentityServer4.SSO.Extensions
                     };
                 });
             }
+
+            return services;
+        }
+
+        public static IServiceCollection AddMvcLocalization(this IServiceCollection services)
+        {
+            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+
+            services.Configure<RequestLocalizationOptions>(
+                            opts =>
+                            {
+                                var supportedCultures = new[]
+                                {
+                                    new CultureInfo("zh-cn"),
+                                    new CultureInfo("en-us"),
+                                };
+
+                                opts.DefaultRequestCulture = new RequestCulture("zh-cn");
+                                opts.SupportedCultures = supportedCultures;
+                                opts.SupportedUICultures = supportedCultures;
+                            });
 
             return services;
         }

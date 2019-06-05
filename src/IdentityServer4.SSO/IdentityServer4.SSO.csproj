@@ -16,9 +16,18 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\IdentityServer4.Admin.Application\IdentityServer4.Admin.Application.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.BuildingBlock\IdentityServer4.Admin.BuildingBlock.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Data.Mysql\IdentityServer4.Admin.Data.Mysql.csproj" />
+    <ProjectReference Include="..\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Infrastructures.Data\IdentityServer4.Admin.Data.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Views\Account\Login.en-us.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

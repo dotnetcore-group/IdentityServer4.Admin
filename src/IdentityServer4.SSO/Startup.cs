@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -34,7 +35,12 @@ namespace IdentityServer4.SSO
 
 
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts => { opts.ResourcesPath = "Resources"; })
+                .AddDataAnnotationsLocalization();
+
+            // localization
+            services.AddMvcLocalization();
 
             // Identity
             services.ConfigureIdentityDatabase(Configuration);
@@ -66,7 +72,7 @@ namespace IdentityServer4.SSO
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseIdentityServer();
-
+            app.UseLocalization();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
