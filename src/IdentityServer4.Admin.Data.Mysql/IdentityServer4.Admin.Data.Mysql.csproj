@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Infrastructures.Data\IdentityServer4.Admin.Data.csproj" />
   </ItemGroup>
 

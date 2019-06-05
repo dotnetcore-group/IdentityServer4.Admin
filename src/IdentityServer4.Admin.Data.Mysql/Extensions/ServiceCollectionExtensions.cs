@@ -1,4 +1,7 @@
-﻿using IdentityServer4.Admin.Infrastructures.Data.Database;
+﻿using IdentityServer4.Admin.Data.Database;
+using IdentityServer4.Admin.Identity;
+using IdentityServer4.Admin.Identity.Entities;
+using IdentityServer4.Admin.Infrastructures.Data.Database;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,10 +25,13 @@ namespace IdentityServer4.Admin.Data.Mysql.Extensions
             services.AddSingleton(storeOptions);
 
             services.AddEntityFrameworkMySql()
-                .AddDbContext<ApplicationIdentityDbContext>(options =>
+                .AddDbContext<AppIdentityDbContext>(options =>
                     options.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly))
                 );
             services.AddDbContext<IS4DbContext>(options =>
+                options.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly))
+            );
+            services.AddDbContext<EventStoreContext>(options =>
                 options.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly))
             );
 
@@ -36,8 +42,8 @@ namespace IdentityServer4.Admin.Data.Mysql.Extensions
         {
             services.AddIdentityContextMySql(configuration);
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
             return services;

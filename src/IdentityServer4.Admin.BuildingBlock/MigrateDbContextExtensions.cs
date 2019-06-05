@@ -39,7 +39,7 @@ namespace IdentityServer4.Admin.BuildingBlock
                         {
                             context.Database.Migrate();
                         }
-                        seeder(context, services);
+                        seeder?.Invoke(context, services);
                         context.Dispose();
                     });
 
