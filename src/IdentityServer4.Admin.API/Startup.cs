@@ -2,6 +2,7 @@
 using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.Services;
 using IdentityServer4.Admin.IoC;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,14 @@ namespace IdentityServer4.Admin.API
             // Auth
             services.AddIdentityServerAuth(Configuration);
 
+            services.AddSwagger(Configuration);
+
+            // Config automapper
+            services.AddAutoMapperSetup();
+
+            // Adding MediatR for Domain Events and Notifications
+            services.AddMediatR(typeof(Startup));
+
             // Register Services
             RegisterServices(services);
         }
@@ -49,6 +58,13 @@ namespace IdentityServer4.Admin.API
                 app.UseHttpsRedirection();
             }
             app.UseAuthentication();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("./v1/swagger.json", "ID4 User Management");
+                c.OAuthClientId("Swagger");
+                c.OAuthAppName("User Management UI - full access");
+            });
             app.UseMvc();
         }
 

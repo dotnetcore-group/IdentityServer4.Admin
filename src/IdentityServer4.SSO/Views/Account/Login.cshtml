@@ -44,8 +44,8 @@
                 @Localizer["Foot-Register-Tip"]
                 <a class="register-link" asp-action="Register">@Localizer["Foot-Register-now"]</a>
             </p>
-            @*@if (Model.EnableExternalProviders && Model.VisibleExternalProviders.Any())*@
-            @if (Model.EnableExternalProviders || Model.VisibleExternalProviders.Any())
+            @*Model.EnableExternalProviders &&*@
+            @if (Model.VisibleExternalProviders.Any())
             {
                 <p class="external-logins">
                     <span>@Localizer["External-Tip"]</span>

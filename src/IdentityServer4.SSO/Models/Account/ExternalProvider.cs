@@ -11,11 +11,12 @@ namespace IdentityServer4.SSO.Models
         public string AuthenticationScheme { get; set; }
 
         public string NormalizedName => DisplayName?.ToLower();
-        public string Fontawesome => _icons[NormalizedName] ?? "";
+        public string Fontawesome => _icons.ContainsKey(NormalizedName) ? _icons[NormalizedName] : "";
 
 
         private Dictionary<string, string> _icons = new Dictionary<string, string>
         {
+            {"github","fa-github" },
             {"google","fa-google-plus" },
             {"facebook","fa-facebook" },
             {"twitter","fa-twitter" },

@@ -135,3 +135,11 @@
     .external-login-item.twitter:hover {
         background-color: #148cd5;
     }
+
+.external-login-item.github {
+    background-color: #24292e
+}
+
+    .external-login-item.github:hover {
+        background-color: #141619
+    }

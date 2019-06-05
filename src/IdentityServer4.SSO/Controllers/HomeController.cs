@@ -7,11 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using IdentityServer4.SSO.Models;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
+using IdentityServer4.Models;
+using IdentityServer4.Services;
 
 namespace IdentityServer4.SSO.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IIdentityServerInteractionService _interaction;
+        public HomeController(IIdentityServerInteractionService interaction)
+        {
+            _interaction = interaction;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -23,9 +31,18 @@ namespace IdentityServer4.SSO.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public async Task<IActionResult> Error(string errorId)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var vm = new ErrorViewModel();
+
+            // retrieve error details from identityserver
+            var message = await _interaction.GetErrorContextAsync(errorId);
+            if (message != null)
+            {
+                vm.Error = message;
+            }
+
+            return View("Error", vm);
         }
 
         [HttpPost]
@@ -38,6 +55,22 @@ namespace IdentityServer4.SSO.Controllers
             );
 
             return LocalRedirect(returnUrl);
+        }
+
+        /// <summary>
+        /// Shows the error page
+        /// </summary>
+        [HttpGet]
+        public IActionResult LoginError(string error)
+        {
+            var vm = new ErrorViewModel();
+
+            if (error != null)
+            {
+                vm.Error = new ErrorMessage() { ErrorDescription = error, Error = "1000" };
+            }
+
+            return View("Error", vm);
         }
     }
 }

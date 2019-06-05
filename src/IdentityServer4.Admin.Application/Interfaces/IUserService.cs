@@ -8,8 +8,8 @@ namespace IdentityServer4.Admin.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<UserViewModel> FindByEmailAsync(string username);
-        Task<UserViewModel> FindByNameAsync(string username);
+        Task<ApplicationUser> FindByEmailAsync(string username);
+        Task<ApplicationUser> FindByNameAsync(string username);
         Task<SignInResult> PasswordSignInAsync(string userName, string password, bool rememberLogin, bool lockoutOnFailure);
         Task<UserViewModel> FindByProviderAsync(string provider, string providerUserId);
         Task<bool> CheckUsername(string username);

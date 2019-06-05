@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Admin.Domain.Core.Events;
 using IdentityServer4.Admin.Domain.Interfaces;
+using IdentityServer4.Admin.Identity.Entities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace IdentityServer4.Admin.Data.EventSourcing
     public class DbEventStore : IEventStore
     {
         private readonly IEventStoreRepository _eventStoreRepository;
-        private readonly IUser _user;
+        private readonly SystemUser _user;
 
-        public DbEventStore(IEventStoreRepository eventStoreRepository, IUser user)
+        public DbEventStore(IEventStoreRepository eventStoreRepository, SystemUser user)
         {
             _eventStoreRepository = eventStoreRepository;
             _user = user;
@@ -25,7 +26,7 @@ namespace IdentityServer4.Admin.Data.EventSourcing
             var storedEvent = new StoredEvent(
                 @event,
                 serializedData,
-                _user.Name);
+                _user.Username);
 
             _eventStoreRepository.Store(storedEvent);
         }

@@ -9,7 +9,7 @@ namespace IdentityServer4.Admin.Data.Mysql.Extensions
         public static IIdentityServerBuilder UseIdentityServerMySqlDatabase(this IIdentityServerBuilder builder, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("SSOConnection");
-            var migrationsAssembly = "IdentityServer4.Admin.Data";
+            var migrationsAssembly = "IdentityServer4.Admin.Data.Mysql";
 
             // this adds the config data from DB (clients, resources)
             builder.AddConfigurationStore(options =>

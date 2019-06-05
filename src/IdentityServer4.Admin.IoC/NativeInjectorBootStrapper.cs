@@ -3,11 +3,17 @@ using IdentityServer4.Admin.Application.Services;
 using IdentityServer4.Admin.BuildingBlock.Bus;
 using IdentityServer4.Admin.Data;
 using IdentityServer4.Admin.Data.Database;
+using IdentityServer4.Admin.Data.EventSourcing;
 using IdentityServer4.Admin.Data.Repositories;
+using IdentityServer4.Admin.Domain.CommandHandlers;
+using IdentityServer4.Admin.Domain.Commands;
 using IdentityServer4.Admin.Domain.Core.Bus;
+using IdentityServer4.Admin.Domain.Core.Events;
 using IdentityServer4.Admin.Domain.Interfaces;
 using IdentityServer4.Admin.Identity.Authorization;
+using IdentityServer4.Admin.Identity.Entities;
 using IdentityServer4.Admin.Infrastructures.Data.Database;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,17 +35,20 @@ namespace IdentityServer4.Admin.IoC
 
             // Application Services
             services.AddScoped<IClientService, ClientService>()
-                .AddScoped<IUserService, UserService>();
+                .AddScoped<IUserService, UserService>()
+                .AddScoped<SystemUser>();
 
             // Domain Events
 
             // Domain Commands
+            services.AddScoped<IRequestHandler<RegisterNewUserWithoutPassCommand, bool>, UserCommandHandler>();
 
             // Repositories
             services.AddScoped<IDS4DbContext>()
                 .AddScoped<EventStoreContext>()
                 .AddScoped<IUnitOfWork, UnitOfWork>()
-                .AddScoped<IEventStoreRepository, EventStoreRepository>();
+                .AddScoped<IEventStoreRepository, EventStoreRepository>()
+                .AddScoped<IEventStore, DbEventStore>(); ;
         }
     }
 }

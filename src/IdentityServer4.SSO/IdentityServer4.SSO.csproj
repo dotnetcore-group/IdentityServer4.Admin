@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -7,8 +7,11 @@
 
 
   <ItemGroup>
+    <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="2.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="IdentityServer4" Version="2.4.0" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="2.4.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
@@ -21,6 +24,7 @@
     <ProjectReference Include="..\IdentityServer4.Admin.Data.Mysql\IdentityServer4.Admin.Data.Mysql.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Infrastructures.Data\IdentityServer4.Admin.Data.csproj" />
+    <ProjectReference Include="..\IdentityServer4.Admin.IoC\IdentityServer4.Admin.IoC.csproj" />
   </ItemGroup>
 
 

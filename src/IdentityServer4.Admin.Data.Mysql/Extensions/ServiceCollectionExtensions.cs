@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Admin.Data.Database;
 using IdentityServer4.Admin.Identity;
+using IdentityServer4.Admin.Identity.Authorization;
 using IdentityServer4.Admin.Identity.Entities;
 using IdentityServer4.Admin.Infrastructures.Data.Database;
 using IdentityServer4.EntityFramework.Options;
@@ -44,6 +45,7 @@ namespace IdentityServer4.Admin.Data.Mysql.Extensions
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddClaimsPrincipalFactory<ClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
 
             return services;

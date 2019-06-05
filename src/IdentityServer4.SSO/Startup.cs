@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Admin.IoC;
 using IdentityServer4.SSO.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +35,11 @@ namespace IdentityServer4.SSO
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.Configure<IISOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
@@ -51,7 +58,13 @@ namespace IdentityServer4.SSO
             // authentication and external logins
             services.AddAuth(Configuration);
 
+            // automapper
+            services.AddMappingProfiles();
 
+            services.AddMediatR(typeof(Startup));
+
+            // .NET Native DI Abstraction
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +92,12 @@ namespace IdentityServer4.SSO
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            // Adding dependencies from another layers (isolated from Presentation)
+            NativeInjectorBootStrapper.RegisterServices(services);
         }
     }
 }

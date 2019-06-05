@@ -1,10 +1,13 @@
-﻿using IdentityModel;
+﻿using AutoMapper;
+using IdentityModel;
+using IdentityServer4.Admin.Application.AutoMapper;
 using IdentityServer4.Admin.Data.Mysql.Extensions;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -20,7 +23,6 @@ namespace IdentityServer4.SSO.Extensions
 
         public static IServiceCollection ConfigureIdentityServerDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            var connection = configuration.GetConnectionString("SSOConnection");
             var idsBuilder = services.AddIdentityServer();
 
             idsBuilder.UseIdentityServerMySqlDatabase(configuration);
@@ -71,6 +73,25 @@ namespace IdentityServer4.SSO.Extensions
                 });
             }
 
+            if (configuration.GetSection("ExternalLogin:GitHub").Exists())
+            {
+                authBuilder.AddGitHub("GitHub", options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.ClientId = configuration.GetValue<string>("ExternalLogin:GitHub:ClientId");
+                    options.ClientSecret = configuration.GetValue<string>("ExternalLogin:GitHub:ClientSecret");
+                    options.Events = new OAuthEvents
+                    {
+                        OnCreatingTicket = context =>
+                        {
+                            if (context.User.ContainsKey("picture"))
+                                context.Identity.AddClaim(new Claim(JwtClaimTypes.Picture, context.User.GetValue("picture").SelectToken("data").SelectToken("url").ToString()));
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+            }
+
             return services;
         }
 
@@ -91,6 +112,19 @@ namespace IdentityServer4.SSO.Extensions
                                 opts.SupportedCultures = supportedCultures;
                                 opts.SupportedUICultures = supportedCultures;
                             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddMappingProfiles(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(EntityToViewModelMappingProfile).Assembly);
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<EntityToViewModelMappingProfile>();
+                cfg.AddProfile<ViewModelToDomainMappingProfile>();
+            });
 
             return services;
         }

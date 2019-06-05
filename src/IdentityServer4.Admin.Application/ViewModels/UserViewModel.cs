@@ -12,16 +12,14 @@ namespace IdentityServer4.Admin.Application.ViewModels
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Phone] [Display(Name = "Telephone")] public string PhoneNumber { get; set; }
+        [Phone] [Display(Name = "Telephone")]
+        public string PhoneNumber { get; set; }
 
         [Required]
         [Display(Name = "Username")]
         public string Name { get; set; }
 
-
-        [Display(Name = "Picture")] public string Picture { get; set; }
-
-        [Required]
+                    [Required]
         [Display(Name = "Username")]
         public string UserName { get; set; }
         public Guid Id { get; set; }

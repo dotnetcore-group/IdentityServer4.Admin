@@ -1,30 +1,54 @@
-﻿using IdentityServer4.Admin.Application.Interfaces;
+﻿using AutoMapper;
+using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.ViewModels;
+using IdentityServer4.Admin.Domain.Commands;
+using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IdentityServer4.Admin.Application.Services
 {
     public class UserService : IUserService
     {
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
+        private readonly IMediatorHandler _bus;
+        public UserService(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IMapper mapper,
+            IMediatorHandler bus)
+        {
+            _userManager = userManager;
+            _mapper = mapper;
+            _signInManager = signInManager;
+            _bus = bus;
+        }
+
         public Task AddLogin(SocialViewModel user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> CheckEmail(string email)
+        public async Task<bool> CheckEmail(string email)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(email))
+            {
+                return false;
+            }
+            return (await _userManager.FindByEmailAsync(email)) != null;
         }
 
-        public Task<bool> CheckUsername(string username)
+        public async Task<bool> CheckUsername(string username)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(username))
+            {
+                return false;
+            }
+            return (await _userManager.FindByNameAsync(username)) != null;
         }
 
         public Task<ClaimsPrincipal> CreateUserPrincipalAsync(ApplicationUser user)
@@ -32,29 +56,35 @@ namespace IdentityServer4.Admin.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<UserViewModel> FindByEmailAsync(string username)
+        public async Task<ApplicationUser> FindByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _userManager.FindByEmailAsync(email);
         }
 
-        public Task<UserViewModel> FindByNameAsync(string username)
+        public async Task<ApplicationUser> FindByNameAsync(string username)
         {
-            throw new NotImplementedException();
+            return await _userManager.FindByNameAsync(username);
         }
 
-        public Task<UserViewModel> FindByProviderAsync(string provider, string providerUserId)
+        public async Task<UserViewModel> FindByProviderAsync(string provider, string providerUserId)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByLoginAsync(provider, providerUserId);
+            if (user != null)
+            {
+                return _mapper.Map<UserViewModel>(user);
+            }
+            return null;
         }
 
-        public Task<SignInResult> PasswordSignInAsync(string userName, string password, bool rememberLogin, bool lockoutOnFailure)
+        public async Task<SignInResult> PasswordSignInAsync(string userName, string password, bool rememberLogin, bool lockoutOnFailure)
         {
-            throw new NotImplementedException();
+            return await _signInManager.PasswordSignInAsync(userName, password, rememberLogin, lockoutOnFailure: true);
         }
 
-        public Task RegisterWithoutPassword(SocialViewModel user)
+        public async Task RegisterWithoutPassword(SocialViewModel user)
         {
-            throw new NotImplementedException();
+            var command = _mapper.Map<RegisterNewUserWithoutPassCommand>(user);
+            await _bus.SendCommand(command);
         }
     }
 }

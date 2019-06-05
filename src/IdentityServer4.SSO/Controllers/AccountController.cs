@@ -32,19 +32,21 @@ namespace IdentityServer4.SSO.Controllers
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
-
+        private readonly SignInManager<ApplicationUser> _signInManager;
         public AccountController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            IUserService users = null)
+            IUserService users,
+            SignInManager<ApplicationUser> signInManager)
         {
             _users = users;
             _interaction = interaction;
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
             _events = events;
+            _signInManager = signInManager;
         }
 
         /// <summary>
@@ -122,9 +124,11 @@ namespace IdentityServer4.SSO.Controllers
                 // in this sample we don't show how that would be done, as our sample implementation
                 // simply auto-provisions new external user
                 user = await AutoProvisionUserAsync(provider, providerUserId, claims);
-                //if (user == null)
-                //    return RedirectToAction("LoginError", "Home", new { Error = string.Join(" ", _notifications.GetNotifications().Select(a => $"{a.Key}: {a.Value}")) });
-
+                if (user == null)
+                {
+                    //return RedirectToAction("LoginError", "Home", new { Error = string.Join(" ", _notifications.GetNotifications().Select(a => $"{a.Key}: {a.Value}")) });
+                    return RedirectToAction("LoginError", "Home");
+                }
             }
 
             // this allows us to collect any additonal claims or properties
@@ -213,29 +217,29 @@ namespace IdentityServer4.SSO.Controllers
 
             if (ModelState.IsValid)
             {
-                UserViewModel userIdentity;
+                ApplicationUser user;
                 if (model.IsUsernameEmail())
                 {
-                    userIdentity = await _users.FindByEmailAsync(model.Username);
+                    user = await _users.FindByEmailAsync(model.Username);
 
                 }
                 else
                 {
-                    userIdentity = await _users.FindByNameAsync(model.Username);
+                    user = await _users.FindByNameAsync(model.Username);
                 }
 
-                if (userIdentity == null)
+                if (user == null)
                 {
                     await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
                     ModelState.AddModelError("", AccountOptions.InvalidCredentialsErrorMessage);
                 }
 
-                if (userIdentity != null)
+                if (user != null)
                 {
-                    var result = await _users.PasswordSignInAsync(userIdentity.UserName, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberLogin, lockoutOnFailure: true);
                     if (result.Succeeded)
                     {
-                        await _events.RaiseAsync(new UserLoginSuccessEvent(userIdentity.UserName, userIdentity.Id.ToString(), userIdentity.UserName));
+                        await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
 
                         if (context != null)
                         {
