@@ -23,7 +23,8 @@ namespace IdentityServer4.SSO.Extensions
 
         public static IServiceCollection ConfigureIdentityServerDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            var idsBuilder = services.AddIdentityServer();
+            var idsBuilder = services.AddIdentityServer()
+                .AddDeveloperSigningCredential();
 
             idsBuilder.UseIdentityServerMySqlDatabase(configuration);
 
