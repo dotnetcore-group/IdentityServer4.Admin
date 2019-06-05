@@ -28,7 +28,7 @@ namespace IdentityServer4.Admin.Data.Mysql.Extensions
                 .AddDbContext<AppIdentityDbContext>(options =>
                     options.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly))
                 );
-            services.AddDbContext<IS4DbContext>(options =>
+            services.AddDbContext<IDS4DbContext>(options =>
                 options.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly))
             );
             services.AddDbContext<EventStoreContext>(options =>

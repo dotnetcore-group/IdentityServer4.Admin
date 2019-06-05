@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentityServer4.Admin.Data.Mysql.Migrations.IdentityServer
 {
-    [DbContext(typeof(IS4DbContext))]
+    [DbContext(typeof(IDS4DbContext))]
     [Migration("20190605011931_Init")]
     partial class Init
     {

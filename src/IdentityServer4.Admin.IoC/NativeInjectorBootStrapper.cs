@@ -36,7 +36,7 @@ namespace IdentityServer4.Admin.IoC
             // Domain Commands
 
             // Repositories
-            services.AddScoped<IS4DbContext>()
+            services.AddScoped<IDS4DbContext>()
                 .AddScoped<EventStoreContext>()
                 .AddScoped<IUnitOfWork, UnitOfWork>()
                 .AddScoped<IEventStoreRepository, EventStoreRepository>();

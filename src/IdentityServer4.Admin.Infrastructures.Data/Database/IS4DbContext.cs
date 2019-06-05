@@ -14,7 +14,7 @@ namespace IdentityServer4.Admin.Infrastructures.Data.Database
     /// <summary>
     /// IdentityServer4 Admin DbContext
     /// </summary>
-    public class IS4DbContext :
+    public class IDS4DbContext :
         DbContext,
         IConfigurationDbContext,
         IPersistedGrantDbContext
@@ -22,7 +22,7 @@ namespace IdentityServer4.Admin.Infrastructures.Data.Database
         private readonly ConfigurationStoreOptions _storeOptions;
         private readonly OperationalStoreOptions _operationalOptions;
 
-        public IS4DbContext(DbContextOptions<IS4DbContext> options,
+        public IDS4DbContext(DbContextOptions<IDS4DbContext> options,
             ConfigurationStoreOptions storeOptions,
             OperationalStoreOptions operationalOptions
             ) : base(options)

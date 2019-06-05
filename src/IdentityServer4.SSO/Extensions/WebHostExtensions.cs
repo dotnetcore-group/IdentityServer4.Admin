@@ -11,7 +11,7 @@ namespace IdentityServer4.SSO.Extensions
     {
         public static IWebHost MigrationAndSeedDataDB(this IWebHost webHost)
         {
-            webHost.MigrateDbContext<IS4DbContext>(EnsureSeedIS4Data)
+            webHost.MigrateDbContext<IDS4DbContext>(EnsureSeedIS4Data)
                 .MigrateDbContext<AppIdentityDbContext>(EnsureSeedIdentityData)
                 .MigrateDbContext<EventStoreContext>(null);
 
@@ -23,7 +23,7 @@ namespace IdentityServer4.SSO.Extensions
 
         }
 
-        private static void EnsureSeedIS4Data(IS4DbContext context, IServiceProvider sp)
+        private static void EnsureSeedIS4Data(IDS4DbContext context, IServiceProvider sp)
         {
 
         }

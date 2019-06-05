@@ -6,8 +6,8 @@ namespace IdentityServer4.Admin.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly IS4DbContext _dbContext;
-        public UnitOfWork(IS4DbContext dbContext)
+        private readonly IDS4DbContext _dbContext;
+        public UnitOfWork(IDS4DbContext dbContext)
         {
             _dbContext = dbContext;
         }
