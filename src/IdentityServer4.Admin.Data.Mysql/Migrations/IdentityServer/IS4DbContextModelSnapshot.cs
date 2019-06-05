@@ -3,16 +3,14 @@ using System;
 using IdentityServer4.Admin.Infrastructures.Data.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace IdentityServer4.Admin.Infrastructures.Data.Migrations.IdentityServer
+namespace IdentityServer4.Admin.Data.Mysql.Migrations.IdentityServer
 {
     [DbContext(typeof(IS4DbContext))]
-    [Migration("20190604085459_Init")]
-    partial class Init
+    partial class IS4DbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

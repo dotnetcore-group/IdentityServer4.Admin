@@ -13,18 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IdentityServer4.Admin.Domain.Core\IdentityServer4.Admin.Domain.Core.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Domain\IdentityServer4.Admin.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Maps\Client.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="SmartSqlMapConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

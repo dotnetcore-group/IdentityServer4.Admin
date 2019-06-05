@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IdentityServer4.Admin.BuildingBlock;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace IdentityServer4.Admin.API
 {
@@ -19,6 +13,8 @@ namespace IdentityServer4.Admin.API
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseUrls("https://+:5003", "http://+:5004")
+                .UseStartup<Startup>()
+                .UseSerilogLogger();
     }
 }

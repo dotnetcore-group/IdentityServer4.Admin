@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace IdentityServer4.Admin.Infrastructures.Data.Migrations.IdentityServer
+namespace IdentityServer4.Admin.Data.Mysql.Migrations.IdentityServer
 {
     public partial class Init : Migration
     {

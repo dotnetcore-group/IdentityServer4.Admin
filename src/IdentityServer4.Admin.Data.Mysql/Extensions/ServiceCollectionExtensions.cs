@@ -13,7 +13,7 @@ namespace IdentityServer4.Admin.Data.Mysql.Extensions
         public static IServiceCollection AddIdentityContextMySql(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("SSOConnection");
-            var migrationsAssembly = typeof(IS4DbContext).GetTypeInfo().Assembly.GetName().Name;
+            var migrationsAssembly = typeof(ServiceCollectionExtensions).GetTypeInfo().Assembly.GetName().Name;
 
             var operationalStoreOptions = new OperationalStoreOptions();
             services.AddSingleton(operationalStoreOptions);

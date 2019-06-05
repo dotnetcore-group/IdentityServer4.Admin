@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IdentityServer4.Admin.BuildingBlock;
+using IdentityServer4.SSO.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
+using System;
 
 namespace IdentityServer4.SSO
 {
@@ -14,11 +12,19 @@ namespace IdentityServer4.SSO
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            Console.Title = "IdentityServer4 Admin SSO";
+
+            var webHost = CreateWebHostBuilder(args).Build();
+
+            webHost.MigrationAndSeedDataDB();
+
+            webHost.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseUrls("https://+:5005","http://+:5006")
+                .UseStartup<Startup>()
+                .UseSerilogLogger();
     }
 }

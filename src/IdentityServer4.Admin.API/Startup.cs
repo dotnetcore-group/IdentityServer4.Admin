@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.Admin.API.Extensions;
 using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.Services;
+using IdentityServer4.Admin.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,18 +27,12 @@ namespace IdentityServer4.Admin.API
 
             // Identity
             services.ConfigureIdentityDatabase(Configuration);
+            
+            // Auth
+            services.AddIdentityServerAuth(Configuration);
 
-            services.AddSmartSql(builder =>
-            {
-                builder.UseXmlConfig();
-            })
-                .AddRepositoryFromAssembly(options =>
-                {
-                    options.AssemblyString = "IdentityServer4.Admin.Domain";
-                    options.Filter = type => type.FullName.EndsWith("Repository");
-                });
-
-            services.AddScoped<IClientService, ClientService>();
+            // Register Services
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,8 +48,26 @@ namespace IdentityServer4.Admin.API
                 app.UseHsts();
                 app.UseHttpsRedirection();
             }
-
+            app.UseAuthentication();
             app.UseMvc();
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            // Adding dependencies from another layers (isolated from Presentation)
+            NativeInjectorBootStrapper.RegisterServices(services);
+
+            // SmartSql
+            services.AddSmartSql(builder =>
+            {
+                builder.UseXmlConfig();
+            })
+                .AddRepositoryFromAssembly(options =>
+                {
+                    options.AssemblyString = "IdentityServer4.Admin.Domain";
+                    options.Filter = type => type.FullName.EndsWith("Repository");
+                });
+
         }
     }
 }
