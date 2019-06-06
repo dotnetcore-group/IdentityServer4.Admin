@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.Services;
 using IdentityServer4.Admin.BuildingBlock.Bus;
+using IdentityServer4.Admin.BuildingBlock.Email;
 using IdentityServer4.Admin.Data;
 using IdentityServer4.Admin.Data.Database;
 using IdentityServer4.Admin.Data.EventSourcing;
@@ -9,6 +10,7 @@ using IdentityServer4.Admin.Domain.CommandHandlers;
 using IdentityServer4.Admin.Domain.Commands;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Events;
+using IdentityServer4.Admin.Domain.Core.Notifications;
 using IdentityServer4.Admin.Domain.Interfaces;
 using IdentityServer4.Admin.Identity.Authorization;
 using IdentityServer4.Admin.Identity.Entities;
@@ -30,6 +32,9 @@ namespace IdentityServer4.Admin.IoC
             // Domain Bus (Mediator)
             services.AddScoped<IMediatorHandler, InMemoryBus>();
 
+            // Email Service
+            services.AddScoped<IEmailSender, EmailSender>();
+
             // Authorization Polices
             services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
 
@@ -39,6 +44,7 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<SystemUser>();
 
             // Domain Events
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             // Domain Commands
             services.AddScoped<IRequestHandler<RegisterNewUserWithoutPassCommand, bool>, UserCommandHandler>();

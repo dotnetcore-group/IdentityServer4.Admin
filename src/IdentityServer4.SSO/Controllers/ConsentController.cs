@@ -200,10 +200,10 @@ namespace IdentityServer4.SSO.Controllers
                 ScopesConsented = model?.ScopesConsented ?? Enumerable.Empty<string>(),
 
                 ReturnUrl = returnUrl,
-
+                RedirectUrl = client.RedirectUris?.FirstOrDefault(),
                 ClientName = client.ClientName ?? client.ClientId,
                 ClientUrl = client.ClientUri,
-                ClientLogoUrl = client.LogoUri,
+                ClientLogoUrl = string.IsNullOrWhiteSpace(client.LogoUri) ? "/images/white.svg" : client.LogoUri,
                 AllowRememberConsent = client.AllowRememberConsent
             };
 

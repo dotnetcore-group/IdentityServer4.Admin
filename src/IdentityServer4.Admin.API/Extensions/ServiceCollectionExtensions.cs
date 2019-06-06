@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
 namespace IdentityServer4.Admin.API.Extensions
@@ -24,6 +25,8 @@ namespace IdentityServer4.Admin.API.Extensions
 
         public static IServiceCollection AddIdentityServerAuth(this IServiceCollection services, IConfiguration configuration)
         {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services
                 .AddAuthentication(options =>
                 {
@@ -32,9 +35,9 @@ namespace IdentityServer4.Admin.API.Extensions
                 })
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = configuration.GetValue<string>("ApplicationSettings:AuthorityUrl");
+                    options.Authority = configuration.GetValue<string>("AuthorityUrl");
                     options.RequireHttpsMetadata = false;
-                    options.ApiSecret = "wtfDvtL297yZ6sguv1T6c4@=-rt~aN%a03?H}mdK8YJYkMo4KLR:Yybr6pRse,@+>Q^ZsyYtyH}N+=#s-pVWc9!A1,m%z#WbxHu:";
+                    options.ApiSecret = "Q&tGrEQMypEk.XxPU:%bWDZMdpZeJiyMwpLv4F7d**w9x:7KuJ#fy,E8KPHpKz++";
                     options.ApiName = "ids4_api";
 
                 });
@@ -51,18 +54,20 @@ namespace IdentityServer4.Admin.API.Extensions
                     Version = "v1",
                     Title = "Identity Server 4 User Management API ",
                     Description = "Swagger surface",
-                    Contact = new Contact { Name = "Bruno Brito", Email = "bhdebrito@gmail.com", Url = "http://www.brunobrito.net.br" },
-                    License = new License { Name = "MIT", Url = "https://github.com/brunohbrito/JP-Project/blob/master/LICENSE" },
+                    Contact = new Contact { Name = "Ande Zeng", Email = "zengande@outlook.com", Url = "zengande.github.io" },
+                    License = new License { Name = "MIT", Url = "" },
 
                 });
 
                 options.AddSecurityDefinition("oauth2", new OAuth2Scheme
                 {
+                    Type = "oauth2",
                     Flow = "implicit",
                     AuthorizationUrl = $"{configuration.GetValue<string>("AuthorityUrl")}/connect/authorize",
+                    TokenUrl = $"{configuration.GetValue<string>("AuthorityUrl")}/connect/token",
                     Scopes = new Dictionary<string, string> {
-                        { "jp_api.user", "User Management API - full access" },
-                        { "jp_api.is4", "IS4 Management API - full access" },
+                        { "ids4_api.user", "User Management API - full access" },
+                        { "ids4_api.ids4", "IDS4 Management API - full access" },
                     }
                 });
                 options.OperationFilter<AuthorizeCheckOperationFilter>();

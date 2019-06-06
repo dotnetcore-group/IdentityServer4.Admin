@@ -45,7 +45,7 @@ namespace IdentityServer4.Admin.Data.Mysql.Extensions
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
-                .AddClaimsPrincipalFactory<ClaimsPrincipalFactory>()
+                //.AddClaimsPrincipalFactory<ClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
 
             return services;

@@ -21,25 +21,31 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using IdentityServer4.Admin.Identity.Entities;
 using Microsoft.AspNetCore.Http;
+using IdentityServer4.Admin.Domain.Core.ClaimTypes;
+using IdentityServer4.Admin.Domain.Core.Notifications;
+using MediatR;
 
 namespace IdentityServer4.SSO.Controllers
 {
     [AllowAnonymous]
     public class AccountController : Controller
     {
+        #region DI
         private readonly IUserService _users;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly DomainNotificationHandler _notifications;
         public AccountController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
             IUserService users,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            INotificationHandler<DomainNotification> notifications)
         {
             _users = users;
             _interaction = interaction;
@@ -47,8 +53,12 @@ namespace IdentityServer4.SSO.Controllers
             _schemeProvider = schemeProvider;
             _events = events;
             _signInManager = signInManager;
+            _notifications = (_notifications as DomainNotificationHandler) ??
+                throw new ArgumentNullException(nameof(_notifications));
         }
+        #endregion
 
+        #region LOGIN
         /// <summary>
         /// Entry point into the login workflow
         /// </summary>
@@ -149,7 +159,7 @@ namespace IdentityServer4.SSO.Controllers
                 Id = user.Id,
                 SecurityStamp = user.SecurityStamp,
                 AccessFailedCount = user.AccessFailedCount,
-                
+
                 Email = user.Email,
                 EmailConfirmed = user.EmailConfirmed,
                 LockoutEnabled = user.LockoutEnabled,
@@ -281,8 +291,9 @@ namespace IdentityServer4.SSO.Controllers
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
         }
+        #endregion
 
-
+        #region LOGOUT
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -335,12 +346,21 @@ namespace IdentityServer4.SSO.Controllers
 
             return View("LoggedOut", vm);
         }
+        #endregion
 
+        #region REGISTER
 
+        #endregion
 
-        /*****************************************/
-        /* helper APIs for the AccountController */
-        /*****************************************/
+        #region EMAIL CONFIRM
+
+        #endregion
+
+        #region RESET PASSWORD
+
+        #endregion
+
+        #region PRIVATE METHODS
         private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
         {
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
@@ -544,6 +564,47 @@ namespace IdentityServer4.SSO.Controllers
 
         private async Task<UserViewModel> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
         {
+            SocialViewModel user;
+            if (provider.Equals("github", StringComparison.OrdinalIgnoreCase))
+            {
+                user = GetSocialFromGitHub(provider, providerUserId, claims);
+            }
+            else
+            {
+                user = GetSocialFromOther(provider, providerUserId, claims);
+            }
+
+            var userExist = await _users.CheckUsername(user.Username) ||
+                            await _users.CheckEmail(user.Email);
+
+            if (userExist)
+                await _users.AddLogin(user);
+            else
+                await _users.RegisterWithoutPassword(user);
+
+            return await _users.FindByProviderAsync(provider, providerUserId);
+        }
+
+        private SocialViewModel GetSocialFromGitHub(string provider, string providerUserId, IEnumerable<Claim> claims)
+        {
+            if (claims?.Count() <= 0)
+            {
+                return null;
+            }
+            var username = claims.FirstOrDefault(c => c.Type == GitHubClaimTypes.UserName)?.Value;
+            var nickname = claims.FirstOrDefault(c => c.Type == GitHubClaimTypes.Name)?.Value;
+
+            return new SocialViewModel
+            {
+                Username = username,
+                Name = nickname,
+                Provider = provider,
+                ProviderId = providerUserId
+            };
+        }
+
+        private SocialViewModel GetSocialFromOther(string provider, string providerUserId, IEnumerable<Claim> claims)
+        {
             // create a list of claims that we want to transfer into our store
             var filtered = new List<Claim>();
 
@@ -584,7 +645,7 @@ namespace IdentityServer4.SSO.Controllers
             //picture
             var picture = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Picture)?.Value ?? claims.FirstOrDefault(x => x.Type == "image")?.Value;
 
-            var user = new SocialViewModel()
+            return new SocialViewModel()
             {
                 Username = email,
                 Name = name,
@@ -593,16 +654,6 @@ namespace IdentityServer4.SSO.Controllers
                 Provider = provider,
                 ProviderId = providerUserId
             };
-
-            var userExist = await _users.CheckUsername(user.Username) ||
-                            await _users.CheckEmail(user.Email);
-
-            if (userExist)
-                await _users.AddLogin(user);
-            else
-                await _users.RegisterWithoutPassword(user);
-
-            return await _users.FindByProviderAsync(provider, providerUserId);
         }
 
         private void ProcessLoginCallbackForOidc(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)
@@ -630,5 +681,6 @@ namespace IdentityServer4.SSO.Controllers
         private void ProcessLoginCallbackForSaml2p(AuthenticateResult externalResult, List<Claim> localClaims, AuthenticationProperties localSignInProps)
         {
         }
+        #endregion
     }
 }

@@ -10,7 +10,7 @@ namespace IdentityServer4.Admin.Domain.Commands
         public Guid Id { get; protected set; }
         public string Email { get; protected set; }
         public string PhoneNumber { get; protected set; }
-        public string Name { get; protected set; }
+        public string Nickname { get; protected set; }
         public string Username { get; protected set; }
         public string Password { get; protected set; }
         public string ConfirmPassword { get; protected set; }

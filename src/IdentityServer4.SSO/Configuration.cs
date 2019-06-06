@@ -16,13 +16,13 @@ namespace IdentityServer4.SSO
             new IdentityResources.Email(),
             new IdentityResource("username", new[]{"username" }),
             new IdentityResource("roles", "Roles", new[] { JwtClaimTypes.Role }),
-            new IdentityResource("is4-rights", "IdentityServer4 Admin Panel Permissions", new [] { "is4-rights"})
+            new IdentityResource("ids4_api-rights", "IdentityServer4 Admin Panel Permissions", new [] { "ids4_api-rights"})
         };
 
         public static IEnumerable<ApiResource> GetApiResources() => new List<ApiResource> {
              new ApiResource {
-                Name = "jp_api",
-                DisplayName = "JP API",
+                Name = "ids4_api",
+                DisplayName = "IDS4 API",
                 Description = "OAuth2 Server Management Api",
                 ApiSecrets = { new Secret("Q&tGrEQMypEk.XxPU:%bWDZMdpZeJiyMwpLv4F7d**w9x:7KuJ#fy,E8KPHpKz++".Sha256()) },
 
@@ -31,20 +31,20 @@ namespace IdentityServer4.SSO
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
-                    "is4-rights",
+                    "ids4_api-rights",
                     "username",
                     "roles"
                 },
 
                 Scopes = {
-                    new Scope() { Name = "jp_api.user",
+                    new Scope() { Name = "ids4_api.user",
                         DisplayName = "User Management - Full access",
                         Description = "Full access to User Management",
                         Required = true
                     },
-                    new Scope() { Name = "jp_api.is4",
+                    new Scope() { Name = "ids4_api.ids4",
                         DisplayName = "OAuth2 Server",
-                        Description = "Manage mode to IS4",
+                        Description = "Manage mode to IDS4",
                         Required = true
                     }
                  }
@@ -65,8 +65,8 @@ namespace IdentityServer4.SSO
                     },
                     AllowedScopes =
                     {
-                        "jp_api.user",
-                        "jp_api.is4",
+                        "ids4_api.user",
+                        "ids4_api.ids4",
                     }
             }
         };

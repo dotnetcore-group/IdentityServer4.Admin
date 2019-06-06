@@ -4,11 +4,14 @@ namespace IdentityServer4.Admin.Domain.Validations
 {
     public class RegisterNewUserWithoutPassCommandValidation : UserValidation<RegisterNewUserWithoutPassCommand>
     {
-        public RegisterNewUserWithoutPassCommandValidation()
+        public RegisterNewUserWithoutPassCommandValidation(bool emailValidation = true)
         {
-            ValidateName();
+            ValidateNickname();
             ValidateUsername();
-            ValidateEmail();
+            if (emailValidation)
+            {
+                ValidateEmail();
+            }
             ValidateProvider();
             ValidateProviderId();
         }

@@ -28,9 +28,10 @@ namespace IdentityServer4.Admin.Application.Services
             _bus = bus;
         }
 
-        public Task AddLogin(SocialViewModel user)
+        public async Task AddLogin(SocialViewModel user)
         {
-            throw new NotImplementedException();
+            //var registerCommand = _mapper.Map<AddLoginCommand>(model);
+            //return _bus.SendCommand(registerCommand);
         }
 
         public async Task<bool> CheckEmail(string email)
@@ -53,7 +54,7 @@ namespace IdentityServer4.Admin.Application.Services
 
         public Task<ClaimsPrincipal> CreateUserPrincipalAsync(ApplicationUser user)
         {
-            throw new NotImplementedException();
+            return _signInManager.CreateUserPrincipalAsync(user);
         }
 
         public async Task<ApplicationUser> FindByEmailAsync(string email)

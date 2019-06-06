@@ -26,7 +26,14 @@ namespace IdentityServer4.Admin.Identity
             builder.Entity<IdentityRoleClaim<Guid>>().ToTable(TableNames.IdentityRoleClaims);
             builder.Entity<IdentityUserRole<Guid>>().ToTable(TableNames.IdentityUserRoles);
 
-            builder.Entity<ApplicationUser>().ToTable(TableNames.IdentityUsers);
+            builder.Entity<ApplicationUser>(b =>
+            {
+                b.ToTable(TableNames.IdentityUsers);
+
+                b.HasIndex(u => u.Uid).IsUnique();
+                b.Property(u => u.Nickname).HasMaxLength(100).IsUnicode().IsRequired(false);
+                b.Property(u => u.Avatar).HasMaxLength(1000).IsRequired(false);
+            });
             builder.Entity<IdentityUserLogin<Guid>>().ToTable(TableNames.IdentityUserLogins);
             builder.Entity<IdentityUserClaim<Guid>>().ToTable(TableNames.IdentityUserClaims);
             builder.Entity<IdentityUserToken<Guid>>().ToTable(TableNames.IdentityUserTokens);

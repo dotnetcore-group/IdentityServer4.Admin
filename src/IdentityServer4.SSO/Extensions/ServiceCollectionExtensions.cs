@@ -2,6 +2,7 @@
 using IdentityModel;
 using IdentityServer4.Admin.Application.AutoMapper;
 using IdentityServer4.Admin.Data.Mysql.Extensions;
+using IdentityServer4.Admin.Identity.Entities;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
@@ -24,7 +25,8 @@ namespace IdentityServer4.SSO.Extensions
         public static IServiceCollection ConfigureIdentityServerDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             var idsBuilder = services.AddIdentityServer()
-                .AddDeveloperSigningCredential();
+                .AddDeveloperSigningCredential()
+                .AddAspNetIdentity<ApplicationUser>();
 
             idsBuilder.UseIdentityServerMySqlDatabase(configuration);
 

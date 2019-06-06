@@ -12,7 +12,7 @@ namespace IdentityServer4.Admin.Application.AutoMapper
         public ViewModelToDomainMappingProfile()
         {
             CreateMap<SocialViewModel, RegisterNewUserWithoutPassCommand>(MemberList.Source)
-                .ConstructUsing(c => new RegisterNewUserWithoutPassCommand(c.Email, c.Email, c.Name, c.Provider, c.ProviderId));
+                .ConstructUsing(c => new RegisterNewUserWithoutPassCommand(c.Username, c.Email, c.Name, c.Provider, c.ProviderId));
         }
     }
 }

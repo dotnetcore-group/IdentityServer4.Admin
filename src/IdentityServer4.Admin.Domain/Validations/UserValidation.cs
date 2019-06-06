@@ -6,11 +6,11 @@ namespace IdentityServer4.Admin.Domain.Validations
 {
     public abstract class UserValidation<T> : AbstractValidator<T> where T : UserCommand
     {
-        protected void ValidateName()
+        protected void ValidateNickname()
         {
-            RuleFor(c => c.Name)
-                .NotEmpty().WithMessage("Please ensure you have entered the Username")
-                .Length(2, 150).WithMessage("The Username must have between 2 and 150 characters");
+            RuleFor(c => c.Nickname)
+                .NotEmpty().WithMessage("Please ensure you have entered the Nickname")
+                .Length(2, 150).WithMessage("The Nickname must have between 2 and 150 characters");
         }
 
 

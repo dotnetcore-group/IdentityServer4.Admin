@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.EntityFramework.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace IdentityServer4.Admin.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientsController : ControllerBase
     {
         private readonly IClientService _clientService;

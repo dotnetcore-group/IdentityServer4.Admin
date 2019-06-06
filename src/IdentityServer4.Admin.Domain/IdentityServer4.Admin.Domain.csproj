@@ -11,10 +11,12 @@
   <ItemGroup>
     <PackageReference Include="IdentityServer4.EntityFramework.Storage" Version="2.4.0" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="2.2.0" />
+    <PackageReference Include="ServiceStack.Text" Version="5.5.0" />
     <PackageReference Include="SmartSql.DyRepository" Version="4.0.58" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IdentityServer4.Admin.BuildingBlock\IdentityServer4.Admin.BuildingBlock.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Domain.Core\IdentityServer4.Admin.Domain.Core.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj" />
   </ItemGroup>
