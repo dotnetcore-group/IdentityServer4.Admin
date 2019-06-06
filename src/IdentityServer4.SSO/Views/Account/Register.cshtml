@@ -1,0 +1,26 @@
+﻿@model IdentityServer4.SSO.Models.Account.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+@section Styles{
+    <link href="~/css/register.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-lg-8 col-12 order-lg-first order-last">
+        <div class="form-container">
+            <h1>Register a new account.</h1>
+            <form class="register-form">
+                <label asp-for="UserName">
+                    <input asp-for="UserName" />
+                </label>
+            </form>
+            <button class="btn btn-primary">Next</button>
+        </div>
+    </div>
+    <div class="col-lg-4 col-12 order-lg-last order-first">
+        <partial name="_RegisterStepsPartial" />
+    </div>
+</div>

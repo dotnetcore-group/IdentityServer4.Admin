@@ -3,65 +3,63 @@
 @inject IConfiguration Configuration
 @{
     ViewBag.Title = Localizer["Title"];
+    Layout = "_AccountLayout";
 }
 
 @section Styles{
     <link href="~/css/login.css" rel="stylesheet" />
 }
 
-<div class="container">
-    <br class="d-md-none" />
-    <div class="content justify-content-center">
-        @await Html.PartialAsync("_ValidationSummary")
-        @if (Model.EnableLocalLogin)
-        {
-            <div class="main">
-                <h1 class="title">@Localizer["Title-Login"]</h1>
-                <form asp-route="Login">
-                    <div class="control-box">
-                        <input class="input-control" placeholder="Username" value="@Configuration.GetSection(" ApplicationSettings:DefaultUser").Value" asp-for=Username autofocus>
-                    </div>
-                    <div class="control-box">
-                        <input type="password" class="input-control" placeholder="Password" value="@Configuration.GetSection(" ApplicationSettings:DefaultPass").Value" asp-for=Password autocomplete="off">
-                    </div>
+<div class="content justify-content-center">
+    @await Html.PartialAsync("_ValidationSummary")
+    @if (Model.EnableLocalLogin)
+    {
+        <div class="main">
+            <h1 class="title">@Localizer["Title-Login"]</h1>
+            <form asp-route="Login">
+                <div class="control-box">
+                    <input class="input-control" placeholder="Username" value="@Configuration.GetSection(" ApplicationSettings:DefaultUser").Value" asp-for=Username autofocus>
+                </div>
+                <div class="control-box">
+                    <input type="password" class="input-control" placeholder="Password" value="@Configuration.GetSection(" ApplicationSettings:DefaultPass").Value" asp-for=Password autocomplete="off">
+                </div>
 
-                    <div class="op-box">
-                        <button class="login-btn" name="button" value="login">@Localizer["Body-Login"]</button>
-                        @if (Model.AllowRememberLogin)
-                        {
-                            <label asp-for=RememberLogin class="remember">
-                                <input asp-for=RememberLogin>@Localizer["Body-RememberLogin"]
-                            </label>
-                            <span class="dot">·</span>
-                        }
-                        <a class="forgot-link" asp-action="ForgotPassword">@Localizer["Body-Forgot"]</a>
-                    </div>
-                </form>
-            </div>
-        }
-        <div class="external">
-            <p>
-                @Localizer["Foot-Register-Tip"]
-                <a class="register-link" asp-action="Register">@Localizer["Foot-Register-now"]</a>
-            </p>
-            @*Model.EnableExternalProviders &&*@
-            @if (Model.VisibleExternalProviders.Any())
-            {
-                <p class="external-logins">
-                    <span>@Localizer["External-Tip"]</span>
-
-                    @foreach (var provider in Model.ExternalProviders)
+                <div class="op-box">
+                    <button class="login-btn" name="button" value="login">@Localizer["Body-Login"]</button>
+                    @if (Model.AllowRememberLogin)
                     {
-                        <a class="external-login-item @(provider.NormalizedName)"
-                           asp-action="ExternalLogin"
-                           asp-route-provider="@provider.DisplayName"
-                           asp-route-returnUrl="@Model.ReturnUrl">
-                            <i class="fa @(provider.Fontawesome)"></i>
-                            <span>@(provider.DisplayName)</span>
-                        </a>
+                        <label asp-for=RememberLogin class="remember">
+                            <input asp-for=RememberLogin>@Localizer["Body-RememberLogin"]
+                        </label>
+                        <span class="dot">·</span>
                     }
-                </p>
-            }
+                    <a class="forgot-link" asp-action="ForgotPassword">@Localizer["Body-Forgot"]</a>
+                </div>
+            </form>
         </div>
+    }
+    <div class="external">
+        <p>
+            @Localizer["Foot-Register-Tip"]
+            <a class="register-link" asp-action="Register">@Localizer["Foot-Register-now"]</a>
+        </p>
+        @*Model.EnableExternalProviders &&*@
+        @if (Model.VisibleExternalProviders.Any())
+        {
+            <p class="external-logins">
+                <span>@Localizer["External-Tip"]</span>
+
+                @foreach (var provider in Model.ExternalProviders)
+                {
+                    <a class="external-login-item @(provider.NormalizedName)"
+                       asp-action="ExternalLogin"
+                       asp-route-provider="@provider.DisplayName"
+                       asp-route-returnUrl="@Model.ReturnUrl">
+                        <i class="fa @(provider.Fontawesome)"></i>
+                        <span>@(provider.DisplayName)</span>
+                    </a>
+                }
+            </p>
+        }
     </div>
 </div>

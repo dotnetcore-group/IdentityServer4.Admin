@@ -349,7 +349,25 @@ namespace IdentityServer4.SSO.Controllers
         #endregion
 
         #region REGISTER
+        [HttpGet]
+        public async Task<IActionResult> Register(string returnUrl)
+        {
+            var model = await BuildRegisterViewModelAsync(returnUrl);
+            return View(model);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterInputModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // todo : register user
+            }
+
+            var vm = await BuildRegisterViewModelAsync(model);
+
+            return View(vm);
+        }
         #endregion
 
         #region EMAIL CONFIRM
@@ -419,6 +437,23 @@ namespace IdentityServer4.SSO.Controllers
                 Username = context?.LoginHint,
                 ExternalProviders = providers.ToArray()
             };
+        }
+
+        private async Task<RegisterViewModel> BuildRegisterViewModelAsync(string returnUrl)
+        {
+            var vm = new RegisterViewModel { ReturnUrl = returnUrl };
+
+            return await Task.FromResult(vm);
+        }
+
+        private async Task<RegisterViewModel> BuildRegisterViewModelAsync(RegisterInputModel model)
+        {
+            var vm = await BuildRegisterViewModelAsync(model?.ReturnUrl);
+            vm.UserName = model.UserName;
+            vm.Password = model.Password;
+            vm.Nickname = model.Nickname;
+            vm.ConfirmPassword = model.ConfirmPassword;
+            return vm;
         }
 
         private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model)
