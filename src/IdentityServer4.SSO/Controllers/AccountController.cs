@@ -53,7 +53,7 @@ namespace IdentityServer4.SSO.Controllers
             _schemeProvider = schemeProvider;
             _events = events;
             _signInManager = signInManager;
-            _notifications = (_notifications as DomainNotificationHandler) ??
+            _notifications = (notifications as DomainNotificationHandler) ??
                 throw new ArgumentNullException(nameof(_notifications));
         }
         #endregion
