@@ -6,10 +6,6 @@
     Layout = "_AccountLayout";
 }
 
-@section Styles{
-    <link href="~/css/login.css" rel="stylesheet" />
-}
-
 <div class="content justify-content-center">
     @await Html.PartialAsync("_ValidationSummary")
     @if (Model.EnableLocalLogin)
@@ -18,14 +14,14 @@
             <h1 class="title">@Localizer["Title-Login"]</h1>
             <form asp-route="Login">
                 <div class="control-box">
-                    <input class="input-control" placeholder="Username" value="@Configuration.GetSection(" ApplicationSettings:DefaultUser").Value" asp-for=Username autofocus>
+                    <input class="input-control" placeholder="@Localizer["Username-Placeholder"]" value="@Configuration.GetSection(" ApplicationSettings:DefaultUser").Value" asp-for="Username" autofocus>
                 </div>
                 <div class="control-box">
-                    <input type="password" class="input-control" placeholder="Password" value="@Configuration.GetSection(" ApplicationSettings:DefaultPass").Value" asp-for=Password autocomplete="off">
+                    <input type="password" class="input-control" placeholder="@Localizer["Password-Placeholder"]" value="@Configuration.GetSection(" ApplicationSettings:DefaultPass").Value" asp-for="Password" autocomplete="off">
                 </div>
 
                 <div class="op-box">
-                    <button class="login-btn" name="button" value="login">@Localizer["Body-Login"]</button>
+                    <button class="submit-btn" name="button" value="login">@Localizer["Body-Login"]</button>
                     @if (Model.AllowRememberLogin)
                     {
                         <label asp-for=RememberLogin class="remember">
@@ -33,7 +29,7 @@
                         </label>
                         <span class="dot">·</span>
                     }
-                    <a class="forgot-link" asp-action="ForgotPassword">@Localizer["Body-Forgot"]</a>
+                    <a class="other-link" asp-action="ForgotPassword">@Localizer["Body-Forgot"]</a>
                 </div>
             </form>
         </div>

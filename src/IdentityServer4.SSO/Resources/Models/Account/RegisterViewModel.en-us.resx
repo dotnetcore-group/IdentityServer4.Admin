@@ -117,40 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Body-Forgot" xml:space="preserve">
-    <value>忘记密码？</value>
+  <data name="Confirm Password" xml:space="preserve">
+    <value>Confirm Password</value>
   </data>
-  <data name="Body-Login" xml:space="preserve">
-    <value>登录</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="Body-RememberLogin" xml:space="preserve">
-    <value>记住我</value>
-  </data>
-  <data name="Body-Sign" xml:space="preserve">
-    <value>使用账号登录</value>
-  </data>
-  <data name="External-Tip" xml:space="preserve">
-    <value>您还可以使用这些方式登录：</value>
-  </data>
-  <data name="Foot-Copyright" xml:space="preserve">
-    <value>copyright</value>
-  </data>
-  <data name="Foot-Register-now" xml:space="preserve">
-    <value>现在去注册</value>
-  </data>
-  <data name="Foot-Register-Tip" xml:space="preserve">
-    <value>你还没有账号？</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>登录</value>
-  </data>
-  <data name="Title-Login" xml:space="preserve">
-    <value>登录到 IDS4</value>
-  </data>
-  <data name="Password-Placeholder" xml:space="preserve">
-    <value>登录密码</value>
-  </data>
-  <data name="Username-Placeholder" xml:space="preserve">
-    <value>用户名或邮箱</value>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
   </data>
 </root>

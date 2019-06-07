@@ -1,6 +1,241 @@
-﻿
+﻿body {
+    min-height: 600px;
+    overflow-y: hidden;
+}
+
+
 @media (min-width: 1200px) {
     .container {
         max-width: 960px;
     }
 }
+
+a {
+    color: #1f9eec;
+}
+
+.errors {
+    font-size: 14px;
+    border-radius: 0px;
+}
+
+#selectLanguage {
+    line-height: 40px;
+}
+
+    #selectLanguage label {
+        margin-bottom: 0px;
+        font-size: 13px;
+    }
+
+    #selectLanguage .culture-select {
+        float: right;
+        border: none;
+        height: 42px;
+        display: block;
+        padding-left: 10px;
+    }
+
+.culture-select .current {
+    font-weight: 600;
+}
+
+.culture-select:focus {
+    outline: none;
+}
+
+.culture-select .list {
+    left: auto;
+    right: 0px;
+}
+
+.content {
+    margin: 0px -15px;
+    box-sizing: border-box;
+    border: 1px solid #e1e1e1;
+    background: #ffffff;
+}
+
+    .content .main, .content .external {
+        padding: 0px 150px;
+    }
+
+    .content .main {
+        padding-top: 30px;
+        padding-bottom: 20px;
+    }
+
+    .content .external {
+        background: #f4f8fa;
+        padding-top: 20px;
+    }
+
+.main .title {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.control-box {
+    border: 1px solid #e1e1e1;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    width: 360px;
+}
+
+    .control-box .input-control {
+        width: 100%;
+        border: none;
+        background: transparent;
+        padding: 6px 8px;
+        font-size: 14px;
+        transition: all ease .2s;
+    }
+
+.input-control:focus {
+    outline-color: #1f9eec;
+}
+
+.op-box {
+    margin-top: 25px;
+}
+
+
+    .op-box .remember {
+        line-height: 30px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+        .op-box .remember input {
+            margin-right: 3px;
+        }
+
+    .op-box .dot {
+        font-weight: 600;
+    }
+
+    .op-box .other-link {
+        font-size: 14px;
+        display: inline-block;
+        line-height: 30px;
+        color: #1f9eec;
+    }
+
+.external p {
+    color: #a0abb3;
+    font-size: 14px;
+    padding-bottom: 20px;
+    margin: 0px;
+}
+
+.external .external-logins {
+}
+
+.external-logins .external-login-item {
+    margin-right: 5px;
+    background: #1f9eec;
+    color: #ffffff;
+    padding: 3px 5px;
+    border-radius: 2px;
+    transition: all ease .3s;
+}
+
+.external-login-item:hover {
+    text-decoration: none;
+}
+
+.external-login-item.google {
+    background-color: #DB4437;
+}
+
+    .external-login-item.google:hover {
+        background-color: #be3226;
+    }
+
+.external-login-item.facebook {
+    background-color: #3B5998;
+}
+
+    .external-login-item.facebook:hover {
+        background-color: #284786;
+    }
+
+.external-login-item.twitter {
+    background-color: #1DA1F2;
+}
+
+    .external-login-item.twitter:hover {
+        background-color: #148cd5;
+    }
+
+.external-login-item.github {
+    background-color: #24292e
+}
+
+    .external-login-item.github:hover {
+        background-color: #141619
+    }
+
+.op-box .submit-btn {
+    background: #1f9eec;
+    color: #ffffff;
+    border: none;
+    line-height: 30px;
+    border-radius: 15px;
+    margin-right: 8px;
+    font-size: 14px;
+    padding: 0px 10px;
+    min-width: 80px;
+    text-transform: uppercase;
+}
+
+    .op-box .submit-btn:focus {
+        outline: none;
+    }
+
+.footer-list {
+    display: inline-block;
+    height: 60px;
+}
+
+    .footer-list li {
+        list-style: none;
+        float: left;
+        margin-right: 8px;
+        color: #3e3e3e;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: capitalize;
+    }
+
+        .footer-list li::after {
+            content: "·";
+            margin-left: 8px;
+        }
+
+        .footer-list li:last-child::after {
+            display: none;
+        }
+
+        .footer-list li a {
+            color: #797979;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: capitalize;
+            transition: all ease-in .3s;
+        }
+            .footer-list li a:hover {
+                text-decoration: none;
+                color: #3e3e3e;
+            }
+
+
+.loggedout-container{
+    height: 100vh;
+    min-height: 600px;
+}
+
+    .loggedout-container .left {
+        background: #9cccff
+    }

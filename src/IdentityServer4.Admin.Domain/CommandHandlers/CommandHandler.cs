@@ -1,6 +1,8 @@
 ﻿using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Commands;
+using IdentityServer4.Admin.Domain.Core.Notifications;
 using IdentityServer4.Admin.Domain.Interfaces;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,12 +13,12 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
     {
         private readonly IUnitOfWork _uow;
         internal readonly IMediatorHandler _bus;
-        //private readonly DomainNotificationHandler _notifications;
+        private readonly DomainNotificationHandler _notifications;
 
-        public CommandHandler(IUnitOfWork uow, IMediatorHandler bus)
+        public CommandHandler(IUnitOfWork uow, IMediatorHandler bus, INotificationHandler<DomainNotification> notifications)
         {
             _uow = uow;
-            //_notifications = (DomainNotificationHandler)notifications;
+            _notifications = (DomainNotificationHandler)notifications;
             _bus = bus;
         }
 
@@ -24,16 +26,16 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
         {
             foreach (var error in message.ValidationResult.Errors)
             {
-                //_bus.RaiseEvent(new DomainNotification(message.MessageType, error.ErrorMessage));
+                _bus.RaiseEvent(new DomainNotification(message.MessageType, error.ErrorMessage));
             }
         }
 
         public bool Commit()
         {
-            //if (_notifications.HasNotifications()) return false;
+            if (_notifications.HasNotifications()) return false;
             if (_uow.Commit()) return true;
 
-            //_bus.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
+            _bus.RaiseEvent(new DomainNotification("Commit", "We had a problem during saving your data."));
             return false;
         }
     }

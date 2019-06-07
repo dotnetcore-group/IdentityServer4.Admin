@@ -117,40 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Body-Forgot" xml:space="preserve">
-    <value>忘记密码？</value>
+  <data name="Confirm Password Placeholder" xml:space="preserve">
+    <value>请再次输入密码</value>
   </data>
-  <data name="Body-Login" xml:space="preserve">
-    <value>登录</value>
+  <data name="Email Placeholder" xml:space="preserve">
+    <value>请输入邮箱地址</value>
   </data>
-  <data name="Body-RememberLogin" xml:space="preserve">
-    <value>记住我</value>
+  <data name="Existing Account" xml:space="preserve">
+    <value>已有 IDS4 的账号？</value>
   </data>
-  <data name="Body-Sign" xml:space="preserve">
-    <value>使用账号登录</value>
+  <data name="Log in" xml:space="preserve">
+    <value>现在去登录</value>
   </data>
-  <data name="External-Tip" xml:space="preserve">
-    <value>您还可以使用这些方式登录：</value>
+  <data name="Password Placeholder" xml:space="preserve">
+    <value>请设置登录密码</value>
   </data>
-  <data name="Foot-Copyright" xml:space="preserve">
-    <value>copyright</value>
+  <data name="Register Button" xml:space="preserve">
+    <value>注册</value>
   </data>
-  <data name="Foot-Register-now" xml:space="preserve">
-    <value>现在去注册</value>
+  <data name="Register Title" xml:space="preserve">
+    <value>注册 IDS4 账号</value>
   </data>
-  <data name="Foot-Register-Tip" xml:space="preserve">
-    <value>你还没有账号？</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>登录</value>
-  </data>
-  <data name="Title-Login" xml:space="preserve">
-    <value>登录到 IDS4</value>
-  </data>
-  <data name="Password-Placeholder" xml:space="preserve">
-    <value>登录密码</value>
-  </data>
-  <data name="Username-Placeholder" xml:space="preserve">
-    <value>用户名或邮箱</value>
+  <data name="Statement" xml:space="preserve">
+    <value>点击“注册”，即代表您同意我们的 &lt;a target="_blank" href="/privacy"&gt;隐私协议&lt;/a&gt; 和 &lt;a target="_blank" href="/terms"&gt;服务条款&lt;/a&gt;。</value>
   </data>
 </root>

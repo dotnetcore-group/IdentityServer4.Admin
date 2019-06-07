@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+@inject IViewLocalizer Localizer
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +20,7 @@
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/jquery-nice-select/css/nice-select.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/account.css" rel="stylesheet" />
     @RenderSection("Styles", required: false)
@@ -27,7 +28,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container" style="padding: 0px;">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IDS4 SSO</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -58,15 +59,20 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - IdentityServer4.SSO - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer">
+        <div class="container-fluid text-center">
+            <ul class="footer-list">
+                <li><a href="/privacy" target="_blank">@Localizer["Privacy Statement"]</a></li>
+                <li><a href="/terms" target="_blank">@Localizer["Terms of Service"]</a></li>
+                <li>&copy; @DateTime.UtcNow.Year - IDS4 SSO</li>
+            </ul>
         </div>
     </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/jquery-nice-select/js/jquery.nice-select.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -75,6 +81,7 @@
                 crossorigin="anonymous"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
         </script>
+        <script src="~/lib/jquery-nice-select/js/jquery.nice-select.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
@@ -82,7 +89,11 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
-
+    <script>
+        $(document).ready(function () {
+            $('.culture-select').niceSelect();
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

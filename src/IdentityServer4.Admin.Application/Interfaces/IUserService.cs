@@ -17,5 +17,6 @@ namespace IdentityServer4.Admin.Application.Interfaces
         Task AddLogin(SocialViewModel user);
         Task RegisterWithoutPassword(SocialViewModel user);
         Task<ClaimsPrincipal> CreateUserPrincipalAsync(ApplicationUser user);
+        Task RegisterAsync(RegisterUserViewModel user);
     }
 }

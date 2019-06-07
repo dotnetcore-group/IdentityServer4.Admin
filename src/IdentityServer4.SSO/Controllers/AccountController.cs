@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Http;
 using IdentityServer4.Admin.Domain.Core.ClaimTypes;
 using IdentityServer4.Admin.Domain.Core.Notifications;
 using MediatR;
+using AutoMapper;
 
 namespace IdentityServer4.SSO.Controllers
 {
@@ -31,6 +32,7 @@ namespace IdentityServer4.SSO.Controllers
     public class AccountController : Controller
     {
         #region DI
+        private readonly IMapper _mapper;
         private readonly IUserService _users;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
@@ -39,6 +41,7 @@ namespace IdentityServer4.SSO.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly DomainNotificationHandler _notifications;
         public AccountController(
+            IMapper mapper,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
@@ -47,6 +50,7 @@ namespace IdentityServer4.SSO.Controllers
             SignInManager<ApplicationUser> signInManager,
             INotificationHandler<DomainNotification> notifications)
         {
+            _mapper = mapper;
             _users = users;
             _interaction = interaction;
             _clientStore = clientStore;
@@ -325,6 +329,7 @@ namespace IdentityServer4.SSO.Controllers
 
             if (User?.Identity.IsAuthenticated == true)
             {
+                await _signInManager.SignOutAsync();
                 // delete local authentication cookie
                 await HttpContext.SignOutAsync();
 
@@ -338,7 +343,7 @@ namespace IdentityServer4.SSO.Controllers
                 // build a return URL so the upstream provider will redirect back
                 // to us after the user has logged out. this allows us to then
                 // complete our single sign-out processing.
-                string url = Url.Action("Logout", new { logoutId = vm.LogoutId });
+                string url = Url.Action(nameof(Logout), new { logoutId = vm.LogoutId });
 
                 // this triggers a redirect to the external provider for sign-out
                 return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
@@ -362,6 +367,19 @@ namespace IdentityServer4.SSO.Controllers
             if (ModelState.IsValid)
             {
                 // todo : register user
+                var user = new RegisterUserViewModel
+                {
+                    Email = model.Email,
+                    Password = model.Password,
+                    ConfirmPassword = model.ConfirmPassword
+                };
+                await _users.RegisterAsync(user);
+                if (!_notifications.HasNotifications())
+                {
+                    return RedirectToAction(nameof(Login), new { returnUrl = model.ReturnUrl });
+                }
+                var errors = _notifications.GetNotifications();
+                errors.ForEach(error => ModelState.AddModelError(error.Key, error.Value));
             }
 
             var vm = await BuildRegisterViewModelAsync(model);
@@ -449,9 +467,8 @@ namespace IdentityServer4.SSO.Controllers
         private async Task<RegisterViewModel> BuildRegisterViewModelAsync(RegisterInputModel model)
         {
             var vm = await BuildRegisterViewModelAsync(model?.ReturnUrl);
-            vm.UserName = model.UserName;
+            vm.Email = model.Email;
             vm.Password = model.Password;
-            vm.Nickname = model.Nickname;
             vm.ConfirmPassword = model.ConfirmPassword;
             return vm;
         }

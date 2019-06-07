@@ -1,11 +1,13 @@
 ﻿using IdentityModel;
 using IdentityServer4.Admin.BuildingBlock.Email;
 using IdentityServer4.Admin.Domain.Commands;
+using IdentityServer4.Admin.Domain.Commands.User;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Notifications;
 using IdentityServer4.Admin.Domain.Events.User;
 using IdentityServer4.Admin.Domain.Interfaces;
 using IdentityServer4.Admin.Identity.Entities;
+using IdGen;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using ServiceStack;
@@ -19,14 +21,22 @@ using System.Threading.Tasks;
 namespace IdentityServer4.Admin.Domain.CommandHandlers
 {
     public class UserCommandHandler : CommandHandler,
-        IRequestHandler<RegisterNewUserWithoutPassCommand, bool>
+        IRequestHandler<RegisterNewUserWithoutPassCommand, bool>,
+        IRequestHandler<RegisterNewUserCommand, bool>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
-        public UserCommandHandler(IUnitOfWork uow, IMediatorHandler bus, UserManager<ApplicationUser> userManager, IEmailSender emailSender) : base(uow, bus)
+        private readonly IIdGenerator<long> _idGenerator;
+        public UserCommandHandler(IUnitOfWork uow,
+            IMediatorHandler bus,
+            INotificationHandler<DomainNotification> notifications,
+            UserManager<ApplicationUser> userManager,
+            IEmailSender emailSender,
+            IIdGenerator<long> idGenerator) : base(uow, bus, notifications)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _idGenerator = idGenerator;
         }
 
         public async Task<bool> Handle(RegisterNewUserWithoutPassCommand request, CancellationToken cancellationToken)
@@ -42,7 +52,8 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
                 Id = Guid.NewGuid(),
                 Email = request.Email,
                 UserName = request.Username,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = request.PhoneNumber,
+                Uid = _idGenerator.CreateId()
             };
 
             if (!string.IsNullOrEmpty(user.Email))
@@ -71,6 +82,46 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             }
             return false;
 
+        }
+
+        public async Task<bool> Handle(RegisterNewUserCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+            var user = new ApplicationUser
+            {
+                Id = Guid.NewGuid(),
+                Email = request.Email,
+                UserName = request.Username,
+                Nickname = request.Nickname,
+                PhoneNumber = request.PhoneNumber,
+                Uid = _idGenerator.CreateId()
+            };
+
+            var emailAlreadyExist = await _userManager.FindByEmailAsync(user.Email);
+            if (emailAlreadyExist != null)
+            {
+                await _bus.RaiseEvent(new DomainNotification("1001", "E-mail already exist. If you don't remember your passwork, reset it."));
+                return false;
+            }
+            var usernameAlreadyExist = await _userManager.FindByNameAsync(user.UserName);
+
+            if (usernameAlreadyExist != null)
+            {
+                await _bus.RaiseEvent(new DomainNotification("1002", "Username already exist. If you don't remember your passwork, reset it."));
+                return false;
+            }
+
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
+            {
+                await _bus.RaiseEvent(new UserRegisteredEvent(user.Id, user.UserName, user.Email));
+                return true;
+            }
+            return false;
         }
 
         private async Task<Guid?> CreateUserWithProvider(ApplicationUser user, string provider, string providerId)

@@ -27,13 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.SSO", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.Admin.Data.Mysql", "src\IdentityServer4.Admin.Data.Mysql\IdentityServer4.Admin.Data.Mysql.csproj", "{5374CD7D-EBCF-422A-9FF5-E4D4B47F108F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.Admin.BuildingBlock", "src\IdentityServer4.Admin.BuildingBlock\IdentityServer4.Admin.BuildingBlock.csproj", "{ACFC8755-0C1C-4E55-8D89-B9E914DFA057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.Admin.BuildingBlock", "src\IdentityServer4.Admin.BuildingBlock\IdentityServer4.Admin.BuildingBlock.csproj", "{ACFC8755-0C1C-4E55-8D89-B9E914DFA057}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.Admin.Domain.Core", "src\IdentityServer4.Admin.Domain.Core\IdentityServer4.Admin.Domain.Core.csproj", "{D87AACAB-6180-4BD8-885B-B3B550356883}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.Admin.Domain.Core", "src\IdentityServer4.Admin.Domain.Core\IdentityServer4.Admin.Domain.Core.csproj", "{D87AACAB-6180-4BD8-885B-B3B550356883}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.Admin.IoC", "src\IdentityServer4.Admin.IoC\IdentityServer4.Admin.IoC.csproj", "{08E8FC7F-E940-4681-AA00-92CD8675FFF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.Admin.IoC", "src\IdentityServer4.Admin.IoC\IdentityServer4.Admin.IoC.csproj", "{08E8FC7F-E940-4681-AA00-92CD8675FFF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.Admin.Identity", "src\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj", "{4AD3FBFB-7091-40C3-8130-87F66A195D59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.Admin.Identity", "src\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj", "{4AD3FBFB-7091-40C3-8130-87F66A195D59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

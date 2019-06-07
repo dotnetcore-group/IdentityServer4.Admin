@@ -1,0 +1,23 @@
+﻿@model IdentityServer4.SSO.Models.Account.LogoutViewModel
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Logout";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<div class="content justify-content-center">
+    <div class="main">
+        <h1 class="title">@Localizer["Login Title"]</h1>
+        <form asp-action="Logout">
+            <input type="hidden" name="logoutId" value="@Model.LogoutId" />
+            <p>你确定要退出吗？</p>
+            <div class="op-box">
+                <button class="btn-rounded" >@Localizer["Logout Button"]</button>
+                <a asp-action="Index" asp-controller="Home" class="other-link">返回主页</a>
+            </div>
+        </form>
+    </div>
+    <div class="external">
+        <p>@Localizer["Tip"]</p>
+    </div>
+</div>
