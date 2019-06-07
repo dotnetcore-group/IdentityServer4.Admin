@@ -35,4 +35,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\lottie\" />
+  </ItemGroup>
+
 </Project>
