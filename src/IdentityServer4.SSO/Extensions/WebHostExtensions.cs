@@ -36,9 +36,9 @@ namespace IdentityServer4.SSO.Extensions
 
 
             // Create admin role
-            if (!roleManager.RoleExistsAsync("Administrador").Result)
+            if (!roleManager.RoleExistsAsync("Administrator").Result)
             {
-                var role = new ApplicationRole { Name = "Administrador" };
+                var role = new ApplicationRole { Name = "Administrator" };
 
                 roleManager.CreateAsync(role).Wait();
 
@@ -60,7 +60,7 @@ namespace IdentityServer4.SSO.Extensions
                     userManager.AddClaimAsync(user, new Claim("is4-rights", "manager")).Wait();
                     userManager.AddClaimAsync(user, new Claim("username", configuration.GetValue("DefaultUser:UserName", ""))).Wait();
                     userManager.AddClaimAsync(user, new Claim("email", configuration.GetValue("DefaultUser:Email", ""))).Wait();
-                    userManager.AddToRoleAsync(user, "Administrador");
+                    userManager.AddToRoleAsync(user, "Administrator");
                 }
             }
         }

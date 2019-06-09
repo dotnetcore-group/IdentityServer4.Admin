@@ -16,6 +16,7 @@ namespace IdentityServer4.Admin.Identity.Authorization
         {
 
         }
+
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
         {
             var identity = await base.GenerateClaimsAsync(user).ConfigureAwait(false);

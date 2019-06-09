@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IdentityModel;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Admin.Application.AutoMapper;
 using IdentityServer4.Admin.Data.Mysql.Extensions;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
@@ -25,6 +27,8 @@ namespace IdentityServer4.Admin.API.Extensions
 
         public static IServiceCollection AddIdentityServerAuth(this IServiceCollection services, IConfiguration configuration)
         {
+            //IdentityModelEventSource.ShowPII = true;
+
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services
@@ -38,8 +42,8 @@ namespace IdentityServer4.Admin.API.Extensions
                     options.Authority = configuration.GetValue<string>("AuthorityUrl");
                     options.RequireHttpsMetadata = false;
                     options.ApiSecret = "Q&tGrEQMypEk.XxPU:%bWDZMdpZeJiyMwpLv4F7d**w9x:7KuJ#fy,E8KPHpKz++";
-                    options.ApiName = "ids4_api";
-
+                    options.ApiName = "ids4_admin_api";
+                    options.RoleClaimType = JwtClaimTypes.Role;
                 });
 
             return services;
@@ -66,9 +70,8 @@ namespace IdentityServer4.Admin.API.Extensions
                     AuthorizationUrl = $"{configuration.GetValue<string>("AuthorityUrl")}/connect/authorize",
                     TokenUrl = $"{configuration.GetValue<string>("AuthorityUrl")}/connect/token",
                     Scopes = new Dictionary<string, string> {
-                        { "ids4_api.user", "User Management API - full access" },
-                        { "ids4_api.ids4", "IDS4 Management API - full access" },
-                    }
+                        { "ids4_admin_api", "User Management API - full access" }
+                    },
                 });
                 options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
@@ -91,6 +94,20 @@ namespace IdentityServer4.Admin.API.Extensions
             return services;
         }
 
+        public static IServiceCollection AddAuthorizationPolicies(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyNames.Admin,
+                    policy => policy.RequireAssertion(c =>
+                        c.User.IsInRole("Administrator")));
+
+                options.AddPolicy(PolicyNames.AuthenticatedUser, policy =>
+                    policy.RequireAuthenticatedUser());
+            });
+
+            return services;
+        }
     }
 
     public class AuthorizeCheckOperationFilter : IOperationFilter
@@ -112,5 +129,11 @@ namespace IdentityServer4.Admin.API.Extensions
                 };
             }
         }
+    }
+
+    public class PolicyNames
+    {
+        public const string Admin = "Admin";
+        public const string AuthenticatedUser = "User";
     }
 }

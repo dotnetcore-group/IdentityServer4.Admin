@@ -6,8 +6,10 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartSql.DyRepository;
 
 namespace IdentityServer4.Admin.API
 {
@@ -23,12 +25,24 @@ namespace IdentityServer4.Admin.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<RouteOptions>(options =>
+            {
+                options.LowercaseUrls = true;
+            });
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+            });
 
             // Identity
             services.ConfigureIdentityDatabase(Configuration);
-            
+
+            services.AddAuthorizationPolicies();
+
             // Auth
             services.AddIdentityServerAuth(Configuration);
 
@@ -81,7 +95,7 @@ namespace IdentityServer4.Admin.API
                 .AddRepositoryFromAssembly(options =>
                 {
                     options.AssemblyString = "IdentityServer4.Admin.Domain";
-                    options.Filter = type => type.FullName.EndsWith("Repository");
+                    options.Filter = type => type.Namespace == "IdentityServer4.Admin.Domain.Interfaces.DyRepositories";
                 });
 
         }

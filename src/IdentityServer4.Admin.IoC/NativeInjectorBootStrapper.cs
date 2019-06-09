@@ -61,7 +61,8 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<EventStoreContext>()
                 .AddScoped<IUnitOfWork, UnitOfWork>()
                 .AddScoped<IEventStoreRepository, EventStoreRepository>()
-                .AddScoped<IEventStore, DbEventStore>(); ;
+                .AddScoped<IEventStore, DbEventStore>()
+                .AddScoped<IClientRepository, ClientRepository>();
         }
     }
 }
