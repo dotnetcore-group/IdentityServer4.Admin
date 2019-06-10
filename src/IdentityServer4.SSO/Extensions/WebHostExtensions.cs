@@ -48,6 +48,7 @@ namespace IdentityServer4.SSO.Extensions
                 var user = new ApplicationUser
                 {
                     UserName = configuration.GetValue("DefaultUser:UserName", ""),
+                    Nickname = configuration.GetValue("DefaultUser:Nickname", ""),
                     Email = configuration.GetValue("DefaultUser:Email", ""),
                     EmailConfirmed = true,
                     Uid = 587538818672885760,

@@ -62,7 +62,7 @@
                                                 Identity Scopes
                                             </h2>
                                             <p>
-                                                access your <b>@Model.UserName</b> account
+                                                @Localizer["access your account", Model.UserName]
                                                 <button type="button" class="btn-more" data-toggle="collapse" data-target="#identity-collapse" aria-expanded="true" aria-controls="identity-collapse"><i class="fa fa-ellipsis-h"></i></button>
                                             </p>
                                         </div>
@@ -89,7 +89,7 @@
                                         <div class="scope-title">
                                             <h2>Resource Scopes</h2>
                                             <p>
-                                                access your public data
+                                                @Localizer["access your public data"]
                                                 <button type="button" class="btn-more" data-toggle="collapse" data-target="#resource-collapse" aria-expanded="false" aria-controls="resource-collapse"><i class="fa fa-ellipsis-h"></i></button>
                                             </p>
                                         </div>
@@ -119,7 +119,7 @@
                     }
                     <div class="consent-buttons">
                         <button name="button" class="confirm-btn" value="yes" autofocus>@Localizer["Allow"]</button>
-                        <p class="consent-tip">Authorizing will redirect to</p>
+                        <p class="consent-tip">@Localizer["Redirect to"]</p>
                         <p class="consent-redirect">@Model.RedirectUrl</p>
                     </div>
                 </form>
