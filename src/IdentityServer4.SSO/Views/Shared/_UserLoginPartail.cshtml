@@ -1,3 +1,19 @@
-﻿<a asp-controller="Account" asp-action="Login">Log In</a>
-|
-<a asp-controller="Account" asp-action="Register">Register</a>
+﻿@using IdentityServer4.Admin.Identity.Entities
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> _userManager
+@{
+    var isAuthenticated = ViewContext.HttpContext.User.Identity.IsAuthenticated;
+    var user = await _userManager.GetUserAsync(ViewContext.HttpContext.User);
+}
+
+@if (isAuthenticated)
+{
+    <a asp-controller="User" asp-action="Profile">@user?.UserName</a>
+}
+else
+{
+    <a asp-controller="Account" asp-action="Login">Log In</a>
+    <a asp-controller="Account" asp-action="Register">
+        Register
+    </a>
+}

@@ -50,7 +50,8 @@ namespace IdentityServer4.SSO.Extensions
                     UserName = configuration.GetValue("DefaultUser:UserName", ""),
                     Email = configuration.GetValue("DefaultUser:Email", ""),
                     EmailConfirmed = true,
-
+                    Uid = 587538818672885760,
+                    Avatar = "/files/avatars/201906/587538818672885760.jpg",
                 };
 
                 var result = userManager.CreateAsync(user, configuration.GetValue("DefaultUser:Password", "")).Result;

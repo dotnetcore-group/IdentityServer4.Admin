@@ -27,7 +27,7 @@
 <body>
     <div class="container">
         <main role="main" class="consent">
-            
+
             <div class="consent-header">
                 <div class="header-item">
                     <a href="@(Model.ClientUrl)" target="_blank" title="@(Model.ClientName)">
@@ -47,47 +47,76 @@
                 <form asp-action="Index" class="consent-form">
 
                     <input type="hidden" asp-for="ReturnUrl" />
-                    <ul class="list-group">
+
+                    <div class="scopes-container">
                         @if (Model.IdentityScopes.Any())
                         {
-
-                            @foreach (var scope in Model.IdentityScopes)
-                            {
-                                <partial name="_ScopeListItem" model="scope" />
-                            }
+                            <div class="accordion" id="identity-accordion">
+                                <div class="scopes">
+                                    <div class="scopes-header" id="identity-scopes">
+                                        <div class="scope-img">
+                                            <img src="@Model.Avatar" alt="" />
+                                        </div>
+                                        <div class="scope-title">
+                                            <h2>
+                                                Identity Scopes
+                                            </h2>
+                                            <p>
+                                                access your <b>@Model.UserName</b> account
+                                                <button type="button" class="btn-more" data-toggle="collapse" data-target="#identity-collapse" aria-expanded="true" aria-controls="identity-collapse"><i class="fa fa-ellipsis-h"></i></button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div id="identity-collapse" class="collapse" aria-labelledby="identity-scopes" data-parent="#identity-accordion">
+                                        @foreach (var scope in Model.IdentityScopes)
+                                        {
+                                            <partial name="_ScopeListItem" model="scope" />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         }
+
 
                         @if (Model.ResourceScopes.Any())
                         {
-                            @foreach (var scope in Model.ResourceScopes)
-                            {
-                                <partial name="_ScopeListItem" model="scope" />
-                            }
-
-                        }
-                    </ul>
-                    @if (Model.AllowRememberConsent)
-                    {
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <div class="col-md-3 col-sm-3 col-lg-2">
-                                    <label class="switch switch-label switch-danger">
-                                        <input class="switch-input"
-                                               id="rememberConsent"
-                                               type="checkbox"
-                                               asp-for="RememberConsent">
-                                        <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                                    </label>
-                                </div>
-                                <div class="col-9 text-left">
-                                    <label for="rememberConsent" class="form-control-static">
-                                        <strong>@Localizer["Body-Remember-My-Decision"]</strong>
-                                    </label>
+                            <div class="accordion" id="resource-accordion">
+                                <div class="scopes">
+                                    <div class="scopes-header" id="resource-scopes">
+                                        <div class="scope-img">
+                                            <img src="~/images/ids4.jpg" />
+                                        </div>
+                                        <div class="scope-title">
+                                            <h2>Resource Scopes</h2>
+                                            <p>
+                                                access your public data
+                                                <button type="button" class="btn-more" data-toggle="collapse" data-target="#resource-collapse" aria-expanded="false" aria-controls="resource-collapse"><i class="fa fa-ellipsis-h"></i></button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div id="resource-collapse" class="collapse" aria-labelledby="resource-scopes" data-parent="#resource-accordion">
+                                        @foreach (var scope in Model.ResourceScopes)
+                                        {
+                                            <partial name="_ScopeListItem" model="scope" />
+                                        }
+                                    </div>
                                 </div>
                             </div>
+                        }
+                    </div>
+
+                    @if (Model.AllowRememberConsent)
+                    {
+                        <div class="remember-consent">
+                            <label for="rememberConsent" class="form-control-static">
+                                <input class="switch-input"
+                                       id="rememberConsent"
+                                       type="checkbox"
+                                       asp-for="RememberConsent">
+                                <strong>@Localizer["Remember My Decision"]</strong>
+                            </label>
                         </div>
                     }
-
                     <div class="consent-buttons">
                         <button name="button" class="confirm-btn" value="yes" autofocus>@Localizer["Allow"]</button>
                         <p class="consent-tip">Authorizing will redirect to</p>

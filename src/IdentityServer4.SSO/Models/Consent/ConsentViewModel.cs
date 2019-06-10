@@ -12,6 +12,8 @@ namespace IdentityServer4.SSO.Models.Consent
         public string ClientLogoUrl { get; set; }
         public string RedirectUrl { get; set; }
         public bool AllowRememberConsent { get; set; }
+        public string UserName { get; set; }
+        public string Avatar { get; set; }
 
         public IEnumerable<ScopeViewModel> IdentityScopes { get; set; }
         public IEnumerable<ScopeViewModel> ResourceScopes { get; set; }

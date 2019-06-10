@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Admin.Identity.Entities;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.SSO.Extensions;
@@ -9,6 +10,7 @@ using IdentityServer4.SSO.Models;
 using IdentityServer4.SSO.Models.Consent;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -22,14 +24,16 @@ namespace IdentityServer4.SSO.Controllers
         private readonly IResourceStore _resourceStore;
         private readonly IEventService _events;
         private readonly ILogger<ConsentController> _logger;
-
+        private readonly UserManager<ApplicationUser> _userManager;
         public ConsentController(
+            UserManager<ApplicationUser> userManager,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IResourceStore resourceStore,
             IEventService events,
             ILogger<ConsentController> logger)
         {
+            _userManager = userManager;
             _interaction = interaction;
             _clientStore = clientStore;
             _resourceStore = resourceStore;
@@ -169,7 +173,7 @@ namespace IdentityServer4.SSO.Controllers
                     var resources = await _resourceStore.FindEnabledResourcesByScopeAsync(request.ScopesRequested);
                     if (resources != null && (resources.IdentityResources.Any() || resources.ApiResources.Any()))
                     {
-                        return CreateConsentViewModel(model, returnUrl, request, client, resources);
+                        return await CreateConsentViewModelAsync(model, returnUrl, request, client, resources);
                     }
                     else
                     {
@@ -189,11 +193,12 @@ namespace IdentityServer4.SSO.Controllers
             return null;
         }
 
-        private ConsentViewModel CreateConsentViewModel(
+        private async Task<ConsentViewModel> CreateConsentViewModelAsync(
             ConsentInputModel model, string returnUrl,
             AuthorizationRequest request,
             Client client, Resources resources)
         {
+            var user = await _userManager.GetUserAsync(User);
             var vm = new ConsentViewModel
             {
                 RememberConsent = model?.RememberConsent ?? true,
@@ -204,7 +209,10 @@ namespace IdentityServer4.SSO.Controllers
                 ClientName = client.ClientName ?? client.ClientId,
                 ClientUrl = client.ClientUri,
                 ClientLogoUrl = string.IsNullOrWhiteSpace(client.LogoUri) ? "/images/white.svg" : client.LogoUri,
-                AllowRememberConsent = client.AllowRememberConsent
+                AllowRememberConsent = client.AllowRememberConsent,
+
+                UserName = user?.UserName,
+                Avatar = user?.Avatar
             };
 
             vm.IdentityScopes = resources.IdentityResources.Select(x => CreateScopeViewModel(x, vm.ScopesConsented.Contains(x.Name) || model == null)).ToArray();

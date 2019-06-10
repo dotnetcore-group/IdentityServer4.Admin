@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.Services;
 using IdentityServer4.Admin.BuildingBlock.Bus;
+using IdentityServer4.Admin.BuildingBlock.Drawing;
 using IdentityServer4.Admin.BuildingBlock.Email;
 using IdentityServer4.Admin.Data;
 using IdentityServer4.Admin.Data.Database;
@@ -37,7 +38,8 @@ namespace IdentityServer4.Admin.IoC
             services.AddScoped<IMediatorHandler, InMemoryBus>();
 
             // Email Service
-            services.AddSingleton<IIdGenerator<long>>(p => new IdGenerator(0))
+            services.AddSingleton<RandomDrawing>()
+                .AddSingleton<IIdGenerator<long>>(p => new IdGenerator(0))
                 .AddScoped<IEmailSender, EmailSender>();
 
             // Authorization Polices

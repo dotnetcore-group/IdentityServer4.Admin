@@ -93,14 +93,75 @@
     .confirm-btn:focus {
         outline: none;
     }
-.consent-buttons p{
+
+.consent-buttons p {
     margin: 0px;
     padding-top: 5px;
     font-size: 14px;
     color: #494949;
 }
 
-p.consent-redirect{
+p.consent-redirect {
     color: #2a2a2a;
     font-weight: 600;
+}
+
+.scopes-container {
+    margin-bottom: 15px;
+}
+
+.scopes {
+    margin-bottom: 15px;
+}
+
+.remember-consent {
+    margin-bottom: 15px;
+}
+
+.scopes .btn-more {
+    background: #d9d9d9;
+    color: #858585;
+    border: none;
+    line-height: 14px;
+    width: 25px;
+    text-align: center;
+    font-size: 12px;
+    transition: all ease .3s;
+    margin-left: 5px;
+}
+
+    .scopes .btn-more:hover {
+        background: #c7c7c7
+    }
+
+    .scopes .btn-more:focus {
+        outline: none;
+    }
+
+.scopes-header {
+    display: grid;
+    grid-template-columns: 50px auto;
+}
+
+    .scopes-header .scope-img img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .scopes-header .scope-title {
+        margin-left: 10px;
+    }
+
+.scope-title h2 {
+    font-size: 16px;
+}
+
+.scope-title p {
+    font-size: 14px;
+    color: #858585
+}
+
+.scope-item {
+    list-style: none;
+    padding-left: 60px;
 }

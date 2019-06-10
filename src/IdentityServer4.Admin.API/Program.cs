@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.Admin.BuildingBlock;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System;
 
 namespace IdentityServer4.Admin.API
 {
@@ -8,6 +9,8 @@ namespace IdentityServer4.Admin.API
     {
         public static void Main(string[] args)
         {
+            Console.Title = "IdentityServer4 Admin API";
+
             CreateWebHostBuilder(args).Build().Run();
         }
 
