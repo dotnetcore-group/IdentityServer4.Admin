@@ -26,7 +26,8 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
 {
     public class UserCommandHandler : CommandHandler,
         IRequestHandler<RegisterNewUserWithoutPassCommand, bool>,
-        IRequestHandler<RegisterNewUserCommand, bool>
+        IRequestHandler<RegisterNewUserCommand, bool>,
+        IRequestHandler<AddLoginCommand, bool>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
@@ -63,7 +64,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             {
                 Id = Guid.NewGuid(),
                 Email = request.Email,
-                UserName = request.Username,
+                UserName = request.UserName,
                 PhoneNumber = request.PhoneNumber,
                 Uid = _idGenerator.CreateId()
             };
@@ -109,7 +110,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             {
                 Id = Guid.NewGuid(),
                 Email = request.Email,
-                UserName = request.Username,
+                UserName = request.UserName,
                 Nickname = request.Nickname,
                 PhoneNumber = request.PhoneNumber,
                 Uid = uid,
@@ -136,6 +137,35 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
                 await _bus.RaiseEvent(new UserRegisteredEvent(user.Id, user.UserName, user.Email));
                 return true;
             }
+            return false;
+        }
+
+
+        public async Task<bool> Handle(AddLoginCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false; ;
+            }
+            var user = await _userManager.FindByNameAsync(request.UserName);
+            if (user != null)
+            {
+                var result = await _userManager.AddLoginAsync(user, new UserLoginInfo(request.Provider, request.ProviderId, request.Provider));
+                if (result.Succeeded)
+                {
+                    await _bus.RaiseEvent(new NewLoginAddedEvent(user.Id, request.UserName, request.Provider, request.ProviderId));
+                    return true;
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        await _bus.RaiseEvent(new DomainNotification(result.ToString(), error.Description));
+                    }
+                }
+            }
+
             return false;
         }
 

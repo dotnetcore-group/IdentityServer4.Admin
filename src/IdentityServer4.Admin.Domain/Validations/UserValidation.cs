@@ -27,9 +27,9 @@ namespace IdentityServer4.Admin.Domain.Validations
                 .NotEqual(Guid.Empty);
         }
 
-        protected void ValidateUsername()
+        protected void ValidateUserName()
         {
-            RuleFor(c => c.Username)
+            RuleFor(c => c.UserName)
                 .NotEmpty().WithMessage("Please ensure you have entered the Username")
                 .Length(2, 50).WithMessage("The Username must have between 2 and 50 characters");
         }

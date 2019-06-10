@@ -7,7 +7,7 @@ namespace IdentityServer4.Admin.Domain.Validations
         public RegisterNewUserWithoutPassCommandValidation(bool emailValidation = true)
         {
             ValidateNickname();
-            ValidateUsername();
+            ValidateUserName();
             if (emailValidation)
             {
                 ValidateEmail();

@@ -14,6 +14,9 @@ namespace IdentityServer4.Admin.Application.AutoMapper
         {
             CreateMap<SocialViewModel, RegisterNewUserWithoutPassCommand>(MemberList.Source)
                 .ConstructUsing(c => new RegisterNewUserWithoutPassCommand(c.Username, c.Email, c.Name, c.Provider, c.ProviderId));
+            CreateMap<SocialViewModel, AddLoginCommand>(MemberList.Source)
+                .ConstructUsing(c => new AddLoginCommand(c.Username, c.Provider, c.ProviderId));
+
             CreateMap<RegisterUserViewModel, RegisterNewUserCommand>(MemberList.Source)
                 .ConstructUsing(c => new RegisterNewUserCommand(c.Email, c.Password, c.ConfirmPassword));
         }

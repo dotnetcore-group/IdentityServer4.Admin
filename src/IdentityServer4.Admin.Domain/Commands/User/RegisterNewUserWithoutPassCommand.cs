@@ -11,7 +11,7 @@ namespace IdentityServer4.Admin.Domain.Commands
         {
             Provider = provider;
             ProviderId = providerId;
-            Username = username;
+            UserName = username;
             Email = email;
             Nickname = nickname;
         }

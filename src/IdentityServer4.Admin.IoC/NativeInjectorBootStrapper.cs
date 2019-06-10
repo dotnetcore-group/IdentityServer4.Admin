@@ -52,11 +52,13 @@ namespace IdentityServer4.Admin.IoC
 
             // Domain Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
-                .AddScoped<INotificationHandler<UserRegisteredEvent>, UserEventHandler>();
+                .AddScoped<INotificationHandler<UserRegisteredEvent>, UserEventHandler>()
+                .AddScoped<INotificationHandler<NewLoginAddedEvent>, UserEventHandler>();
 
             // Domain Commands
             services.AddScoped<IRequestHandler<RegisterNewUserWithoutPassCommand, bool>, UserCommandHandler>()
-                .AddScoped<IRequestHandler<RegisterNewUserCommand, bool>, UserCommandHandler>();
+                .AddScoped<IRequestHandler<RegisterNewUserCommand, bool>, UserCommandHandler>()
+                .AddScoped<IRequestHandler<AddLoginCommand, bool>, UserCommandHandler>();
 
             // Repositories
             services.AddScoped<IDS4DbContext>()

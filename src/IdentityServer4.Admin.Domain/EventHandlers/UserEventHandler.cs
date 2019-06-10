@@ -9,11 +9,16 @@ using System.Threading.Tasks;
 namespace IdentityServer4.Admin.Domain.EventHandlers
 {
     public class UserEventHandler
-        : INotificationHandler<UserRegisteredEvent>
+        : INotificationHandler<UserRegisteredEvent>,
+        INotificationHandler<NewLoginAddedEvent>
     {
         public async Task Handle(UserRegisteredEvent notification, CancellationToken cancellationToken)
         {
-            
+
+        }
+
+        public async Task Handle(NewLoginAddedEvent notification, CancellationToken cancellationToken)
+        {
         }
     }
 }

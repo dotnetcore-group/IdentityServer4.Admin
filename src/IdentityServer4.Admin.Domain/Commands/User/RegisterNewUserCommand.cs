@@ -10,7 +10,7 @@ namespace IdentityServer4.Admin.Domain.Commands.User
         public RegisterNewUserCommand(string email, string password, string confirmPassword)
         {
             Email = email;
-            Username = email;
+            UserName = email;
             Nickname = email;
             Password = password;
             ConfirmPassword = confirmPassword;

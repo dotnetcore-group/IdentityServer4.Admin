@@ -31,8 +31,8 @@ namespace IdentityServer4.Admin.Application.Services
 
         public async Task AddLogin(SocialViewModel user)
         {
-            //var registerCommand = _mapper.Map<AddLoginCommand>(model);
-            //return _bus.SendCommand(registerCommand);
+            var command = _mapper.Map<AddLoginCommand>(user);
+            await _bus.SendCommand(command);
         }
 
         public async Task<bool> CheckEmail(string email)
