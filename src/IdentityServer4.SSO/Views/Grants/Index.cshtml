@@ -2,85 +2,73 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-@if (!Model.Grants.Any())
-{
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-header">Clients</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <div class="alert alert-warning" role="alert">Applications</div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
+@{
+    ViewBag.Title = "Grants";
 }
+
+@section Styles{
+    <link href="~/css/grants.css" rel="stylesheet" />
+}
+
 @if (Model.Grants.Any())
 {
     <div class="row justify-content-center">
         @foreach (var grant in Model.Grants)
         {
-            <div class="col-sm-12 col-md-8 col-lg-4">
-                <div class="card">
-                    <div class="card-header text-white bg-success"><strong>@grant.ClientName</strong></div>
-                    <div class="card-body">
-                        <div class="row grant">
-                            <div class="col-sm-4">
-                                @if (grant.ClientLogoUrl != null)
-                                {
-                                    <img src="@Url.Content(grant.ClientLogoUrl)" class="img-fluid">
-                                }
-                            </div>
-                            <div class="col-sm-8">
-                                <p>
-                                    <span class="created">Created: </span> @grant.Created.ToString("yyyy-MM-dd")
-                                </p>
-                                @if (grant.Expires.HasValue)
-                                {
-                                    <p>
-                                        <span class="expires">Expires: </span> @grant.Expires.Value.ToString("yyyy-MM-dd")
-                                    </p>
-                                }
-                                @if (grant.IdentityGrantNames.Any())
-                                {
-                                    <p>
-                                        <div class="granttype">Grants: </div>
-                                        <ul>
-                                            @foreach (var name in grant.IdentityGrantNames)
-                                            {
-                                                <li>@name</li>
-                                            }
-                                        </ul>
-                                    </p>
-                                }
-                                @if (grant.ApiGrantNames.Any())
-                                {
-                                    <p>
-                                        <div class="granttype">API Grants: </div>
-                                        <ul>
-                                            @foreach (var name in grant.ApiGrantNames)
-                                            {
-                                                <li>@name</li>
-                                            }
-                                        </ul>
-                                    </p>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <form asp-action="Revoke">
-                            <input type="hidden" name="clientId" value="@grant.ClientId">
-                            <button class="btn btn-danger">Revoke Access</button>
-                        </form>
-                    </div>
+            <div class="grant-item">
+                <div class="grant-logo">
+                    @if (grant.ClientLogoUrl != null)
+                    {
+                        <a target="_blank" href="@(grant.ClientUrl ?? "javascript:;")">
+                            <img src="@Url.Content(grant.ClientLogoUrl)" class="img-fluid">
+                        </a>
+                    }
+                </div>
+                <div class="grant-detail">
+                    <h2>@grant.ClientName</h2>
+
+                    <p>
+                        <span class="created">Created: </span> @grant.Created.ToString("yyyy-MM-dd")
+                    </p>
+                    @if (grant.Expires.HasValue)
+                    {
+                        <p>
+                            <span class="expires">Expires: </span> @grant.Expires.Value.ToString("yyyy-MM-dd")
+                        </p>
+                    }
+                    @if (grant.IdentityGrantNames.Any())
+                    {
+                        <p>
+                            <strong class="granttype">Identity Grants: </strong>
+                            @foreach (var name in grant.IdentityGrantNames)
+                            {
+                                <span title="@name" class="badge badge-pill badge-info">@name</span>
+                            }
+                        </p>
+                    }
+                    @if (grant.ApiGrantNames.Any())
+                    {
+                        <p>
+                            <strong>@Localizer["API Grants"]</strong>
+                            @foreach (var name in grant.ApiGrantNames)
+                            {
+                                <span title="@name" class="badge badge-pill badge-info">@name</span>
+                            }
+                        </p>
+                    }
+
+                    <form asp-action="Revoke">
+                        <input type="hidden" name="clientId" value="@grant.ClientId">
+                        <button class="btn btn-danger">@Localizer["Revoke Access"]</button>
+                    </form>
                 </div>
             </div>
         }
+    </div>
+}
+else
+{
+    <div class="row justify-content-center">
+        Nothing at all
     </div>
 }

@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/Views/Shared/_BlankLayout.cshtml";
+    ViewBag.Title = "Log Out";
+}
+@section Styles{
+<link href="~/lib/jquery-nice-select/css/nice-select.css" rel="stylesheet" />
+<link href="~/css/account.css" rel="stylesheet" />
+}
+
+<div class="container-fluid">
+    <div class="row loggedout-container">
+        <div class="col-lg-6 col-md-6 col-12 d-lg-block d-md-block d-none left">
+            <div class="left-bg" id="bodymovin"></div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 right">
+            <div class="right-header">
+                <partial name="_SelectLanguagePartial" />
+            </div>
+            <div class="right-body">
+                <div class="right-content">
+                    <div>
+                        <h1>IDS4 SSO</h1>
+                        <p>IDS4 SSO is an SSO system implemented with IdentityServer4.</p>
+                        <a asp-controller="Home" asp-action="Index">Go Back Home</a>
+                    </div>
+                    <a asp-controller="Account" asp-action="Register" class="link-btns btn-rounded btn-rounded-primary">Register</a>
+                    <a asp-controller="Account" asp-action="Login" class="link-btns btn-rounded-ghost btn-rounded-primary-ghost">Log In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script src="~/lib/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.3/lottie.min.js"
+        integrity="sha256-OAlwSucuUQl3R0kDYAHKr0idmTfxytzGtIPGFVCsI+E="
+        crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        lottie.loadAnimation({
+            container: document.getElementById("bodymovin"), // the dom element that will contain the animation
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '/animations/bike.json' // the path to the animation json
+        });
+        $('.culture-select').niceSelect();
+    })
+</script>
+}

@@ -8,13 +8,17 @@ using IdentityServer4.Admin.Data.EventSourcing;
 using IdentityServer4.Admin.Data.Repositories;
 using IdentityServer4.Admin.Domain.CommandHandlers;
 using IdentityServer4.Admin.Domain.Commands;
+using IdentityServer4.Admin.Domain.Commands.User;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Events;
 using IdentityServer4.Admin.Domain.Core.Notifications;
+using IdentityServer4.Admin.Domain.EventHandlers;
+using IdentityServer4.Admin.Domain.Events.User;
 using IdentityServer4.Admin.Domain.Interfaces;
 using IdentityServer4.Admin.Identity.Authorization;
 using IdentityServer4.Admin.Identity.Entities;
 using IdentityServer4.Admin.Infrastructures.Data.Database;
+using IdGen;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +37,8 @@ namespace IdentityServer4.Admin.IoC
             services.AddScoped<IMediatorHandler, InMemoryBus>();
 
             // Email Service
-            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddSingleton<IIdGenerator<long>>(p => new IdGenerator(0))
+                .AddScoped<IEmailSender, EmailSender>();
 
             // Authorization Polices
             services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
@@ -44,17 +49,20 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<SystemUser>();
 
             // Domain Events
-            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
+                .AddScoped<INotificationHandler<UserRegisteredEvent>, UserEventHandler>();
 
             // Domain Commands
-            services.AddScoped<IRequestHandler<RegisterNewUserWithoutPassCommand, bool>, UserCommandHandler>();
+            services.AddScoped<IRequestHandler<RegisterNewUserWithoutPassCommand, bool>, UserCommandHandler>()
+                .AddScoped<IRequestHandler<RegisterNewUserCommand, bool>, UserCommandHandler>();
 
             // Repositories
             services.AddScoped<IDS4DbContext>()
                 .AddScoped<EventStoreContext>()
                 .AddScoped<IUnitOfWork, UnitOfWork>()
                 .AddScoped<IEventStoreRepository, EventStoreRepository>()
-                .AddScoped<IEventStore, DbEventStore>(); ;
+                .AddScoped<IEventStore, DbEventStore>()
+                .AddScoped<IClientRepository, ClientRepository>();
         }
     }
 }

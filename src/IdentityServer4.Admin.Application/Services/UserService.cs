@@ -2,6 +2,7 @@
 using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.ViewModels;
 using IdentityServer4.Admin.Domain.Commands;
+using IdentityServer4.Admin.Domain.Commands.User;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -80,6 +81,12 @@ namespace IdentityServer4.Admin.Application.Services
         public async Task<SignInResult> PasswordSignInAsync(string userName, string password, bool rememberLogin, bool lockoutOnFailure)
         {
             return await _signInManager.PasswordSignInAsync(userName, password, rememberLogin, lockoutOnFailure: true);
+        }
+
+        public async Task RegisterAsync(RegisterUserViewModel user)
+        {
+            var command = _mapper.Map<RegisterNewUserCommand>(user);
+            await _bus.SendCommand(command);
         }
 
         public async Task RegisterWithoutPassword(SocialViewModel user)

@@ -58,3 +58,41 @@ body {
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
 }
+
+.btn-rounded {
+    height: 34px;
+    line-height: 34px;
+    border-radius: 17px;
+    border: none;
+    padding: 0px 15px;
+    min-width: 80px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+    .btn-rounded:focus {
+        outline: none
+    }
+
+.btn-rounded-primary {
+    background: #1f9eec;
+    color: #ffffff !important;
+}
+
+.btn-rounded-ghost {
+    height: 34px;
+    line-height: 34px;
+    border-radius: 17px;
+    border: none;
+    padding: 0px 15px;
+    min-width: 80px;
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid #e5e5e5;
+}
+
+.btn-rounded-primary-ghost {
+    border: 1px solid #1f9eec;
+    color: #1f9eec !important;
+    box-sizing: border-box;
+}

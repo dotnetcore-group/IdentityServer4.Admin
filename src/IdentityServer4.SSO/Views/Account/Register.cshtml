@@ -1,26 +1,44 @@
 ﻿@model IdentityServer4.SSO.Models.Account.RegisterViewModel
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = Localizer["Register Title"];
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-@section Styles{
-    <link href="~/css/register.css" rel="stylesheet" />
-}
+<div class="content justify-content-center">
+    @await Html.PartialAsync("_ValidationSummary")
+    <div class="main">
+        <h1 class="title">@Localizer["Register Title"]</h1>
+        <form asp-route="Login">
+            <div class="control-group">
+                <label asp-for="Email"></label>
+                <div class="control-box">
+                    <input class="input-control" placeholder="@Localizer["Email Placeholder"]" asp-for=Email autocomplete="off">
+                </div>
+            </div>
+            <div class="control-group">
+                <label asp-for="Password"></label>
+                <div class="control-box">
+                    <input type="password" class="input-control" placeholder="@Localizer["Password Placeholder"]" asp-for=Password autocomplete="off">
+                </div>
+            </div>
+            <div class="control-group">
+                <label asp-for="ConfirmPassword"></label>
+                <div class="control-box">
+                    <input type="password" class="input-control" placeholder="@Localizer["Confirm Password Placeholder"]" asp-for=ConfirmPassword autocomplete="off">
+                </div>
+            </div>
+            <div class="op-box">
+                <button class="submit-btn" name="button" value="login">@Localizer["Register Button"]</button>
 
-<div class="row">
-    <div class="col-lg-8 col-12 order-lg-first order-last">
-        <div class="form-container">
-            <h1>Register a new account.</h1>
-            <form class="register-form">
-                <label asp-for="UserName">
-                    <input asp-for="UserName" />
-                </label>
-            </form>
-            <button class="btn btn-primary">Next</button>
-        </div>
+            </div>
+        </form>
     </div>
-    <div class="col-lg-4 col-12 order-lg-last order-first">
-        <partial name="_RegisterStepsPartial" />
+    <div class="external">
+        <p>@Localizer["Statement"]</p>
+        <p>
+            @Localizer["Existing Account"]
+            <a class="register-link" asp-action="Login">@Localizer["Log in"]</a>
+        </p>
     </div>
 </div>

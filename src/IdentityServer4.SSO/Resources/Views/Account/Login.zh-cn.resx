@@ -147,4 +147,10 @@
   <data name="Title-Login" xml:space="preserve">
     <value>登录到 IDS4</value>
   </data>
+  <data name="Password-Placeholder" xml:space="preserve">
+    <value>登录密码</value>
+  </data>
+  <data name="Username-Placeholder" xml:space="preserve">
+    <value>用户名或邮箱</value>
+  </data>
 </root>
