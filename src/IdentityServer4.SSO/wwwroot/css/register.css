@@ -11,7 +11,8 @@
     }
 
         .steps-container .step:before {
-            content: '*.';
+            font-family: 'FontAwesome';
+            content: '\f111';
             margin-left: -5px;
             margin-right: 10px;
             color: #007bff;
