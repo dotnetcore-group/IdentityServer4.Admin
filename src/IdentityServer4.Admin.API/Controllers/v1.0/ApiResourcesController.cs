@@ -16,10 +16,10 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
 {
     [Route(ApiRouteTemplate)]
     [ApiVersion("1.0")]
-    public class ApiResourceController : ApiController
+    public class ApiResourcesController : ApiController
     {
         private readonly IApiResourceService _apiService;
-        public ApiResourceController(INotificationHandler<DomainNotification> notifications,
+        public ApiResourcesController(INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediator,
             IApiResourceService apiService)
             : base(notifications, mediator)

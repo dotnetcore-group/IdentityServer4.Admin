@@ -36,13 +36,6 @@ namespace IdentityServer4.Admin.Data.Mysql.Extensions
                 options.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly))
             );
 
-            return services;
-        }
-
-        public static IServiceCollection AddIdentityMySql(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddIdentityContextMySql(configuration);
-
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 //.AddClaimsPrincipalFactory<ClaimsPrincipalFactory>()

@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.Admin.API.Extensions;
 using IdentityServer4.Admin.Application.Interfaces;
+using IdentityServer4.Admin.Application.ViewModels.Client;
 using IdentityServer4.Admin.BuildingBlock.Mvc;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Notifications;
@@ -18,10 +19,10 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
     [Route(ApiRouteTemplate)]
     [Authorize(Policy = PolicyNames.Admin)]
     [ApiVersion("1.0")]
-    public class ClientController : ApiController
+    public class ClientsController : ApiController
     {
         private readonly IClientService _clientService;
-        public ClientController(INotificationHandler<DomainNotification> notifications,
+        public ClientsController(INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediator,
             IClientService clientService) : base(notifications, mediator)
         {
@@ -29,14 +30,14 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         }
 
         [HttpGet]
-        public async Task<ActionResult<JsonResponse<IList<Client>>>> Get()
+        public async Task<ActionResult<JsonResponse<IList<ClientViewModel>>>> Get()
         {
             var clients = await _clientService.GetClientsAsync();
 
             return JsonResponse(clients);
         }
 
-        [HttpGet("{clientId}")]
+        [HttpGet, Route("{clientId}")]
         public async Task<ActionResult<JsonResponse<Client>>> Get(string clientId)
         {
             var client = await _clientService.GetClientDetails(clientId);

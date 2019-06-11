@@ -6,6 +6,6 @@ namespace IdentityServer4.Admin.Domain.Interfaces
 {
     public interface IClientRepository : IRepository<Client>, IAsyncRepository<Client>
     {
-        Task<Client> GetClient(string clientId);
+        Task<Client> GetClientAsync(string clientId);
     }
 }

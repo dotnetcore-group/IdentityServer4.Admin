@@ -49,7 +49,10 @@ namespace IdentityServer4.Admin.IoC
             // Application Services
             services.AddScoped<IClientService, ClientService>()
                 .AddScoped<IUserService, UserService>()
+                .AddScoped<IUserManagerService, UserManagerService>()
+                .AddScoped<IRoleService, RoleService>()
                 .AddScoped<IApiResourceService, ApiResourceService>()
+                .AddScoped<IIdentityResourceService, IdentityResourceService>()
                 .AddScoped<SystemUser>();
 
             // Domain Events
@@ -72,6 +75,7 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IEventStore, DbEventStore>()
                 .AddScoped<IClientRepository, ClientRepository>()
                 .AddScoped<IApiResourceRepository, ApiResourceRepository>()
+                .AddScoped<IIdentityResourceRepository, IdentityResourceRepository>()
                 .AddScoped<IApiSecretRepository, ApiSecretRepository>()
                 .AddScoped<IApiScopeRepository, ApiScopeRepository>();
         }

@@ -21,7 +21,7 @@ namespace IdentityServer4.SSO.Extensions
     {
         public static void ConfigureIdentityDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddIdentityMySql(configuration);
+            services.AddIdentityContextMySql(configuration);
         }
 
         public static IServiceCollection ConfigureIdentityServerDatabase(this IServiceCollection services, IConfiguration configuration)

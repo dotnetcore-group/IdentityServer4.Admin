@@ -15,10 +15,19 @@ namespace IdentityServer4.Admin.Data.Repositories
         {
         }
 
-        public Task<Client> GetClient(string clientId)
+        public async Task<Client> GetClientAsync(string clientId)
         {
-            return DbSet
+            return await DbSet
                 .AsNoTracking()
+                .Include(c => c.AllowedCorsOrigins)
+                .Include(c => c.AllowedGrantTypes)
+                .Include(c => c.AllowedScopes)
+                .Include(c => c.Claims)
+                .Include(c => c.ClientSecrets)
+                .Include(c => c.RedirectUris)
+                .Include(c => c.PostLogoutRedirectUris)
+                .Include(c => c.IdentityProviderRestrictions)
+                .Include(c => c.Properties)
                 .FirstOrDefaultAsync(c => c.ClientId == clientId);
         }
     }
