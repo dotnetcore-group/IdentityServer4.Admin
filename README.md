@@ -5,6 +5,7 @@
 
 <p align="center"><img src="./ids4-admin.jpg"/>
 <p align="center">IdentityServer4 AdminUI and Single Sign On</p>
+
 ## Screenshots
 
 1. Login
