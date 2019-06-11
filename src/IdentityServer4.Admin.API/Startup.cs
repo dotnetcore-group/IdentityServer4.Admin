@@ -75,9 +75,9 @@ namespace IdentityServer4.Admin.API
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("./v1/swagger.json", "ID4 User Management");
+                c.SwaggerEndpoint("./v1/swagger.json", "IdentityServer4 Admin API");
                 c.OAuthClientId("Swagger");
-                c.OAuthAppName("User Management UI - full access");
+                c.OAuthAppName("IdentityServer4 Admin API - full access");
             });
             app.UseMvc();
         }

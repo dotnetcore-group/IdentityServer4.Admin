@@ -14,6 +14,8 @@ namespace IdentityServer4.Admin.API.Controllers
     [ApiController]
     public abstract class ApiController : ControllerBase
     {
+        public const string ApiRouteTemplate = "api/v{version:apiVersion}/[controller]";
+
         protected readonly DomainNotificationHandler _notifications;
         protected readonly IMediatorHandler _mediator;
         public ApiController(INotificationHandler<DomainNotification> notifications,

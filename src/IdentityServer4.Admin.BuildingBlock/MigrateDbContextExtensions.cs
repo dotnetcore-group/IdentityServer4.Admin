@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IdentityServer4.Admin.BuildingBlock
 {
@@ -40,6 +41,50 @@ namespace IdentityServer4.Admin.BuildingBlock
                             context.Database.Migrate();
                         }
                         seeder?.Invoke(context, services);
+                        context.Dispose();
+                    });
+
+                    logger.LogInformation("数据库初始化成功！");
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"数据库初始化失败：{e.Message}");
+                }
+            }
+
+            return webHost;
+        }
+
+        public static async Task<IWebHost> MigrateDbContextAsync<TContext>(this IWebHost webHost, Func<TContext, IServiceProvider, Task> seeder)
+            where TContext : DbContext
+        {
+            using (var scope = webHost.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger<TContext>>();
+                var context = services.GetService<TContext>();
+
+                try
+                {
+                    logger.LogInformation($"执行数据库初始化操作：context {typeof(TContext).Name}");
+                    var retry = Policy.Handle<Exception>()
+                            .WaitAndRetryAsync(new TimeSpan[]
+                            {
+                                 TimeSpan.FromSeconds(5),
+                                 TimeSpan.FromSeconds(10),
+                                 TimeSpan.FromSeconds(15),
+                            });
+                    await retry.ExecuteAsync(async () =>
+                    {
+                        var migrations = context.Database.GetPendingMigrations();
+
+                        logger.LogInformation($"Migrations: {string.Join(",", migrations)}");
+
+                        if (migrations?.Count() > 0)
+                        {
+                            await context.Database.MigrateAsync();
+                        }
+                        await seeder?.Invoke(context, services);
                         context.Dispose();
                     });
 

@@ -56,7 +56,7 @@ namespace IdentityServer4.Admin.API.Extensions
                 options.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
-                    Title = "Identity Server 4 User Management API ",
+                    Title = "IdentityServer4 Admin API",
                     Description = "Swagger surface",
                     Contact = new Contact { Name = "Ande Zeng", Email = "zengande@outlook.com", Url = "zengande.github.io" },
                     License = new License { Name = "MIT", Url = "" },
@@ -70,7 +70,7 @@ namespace IdentityServer4.Admin.API.Extensions
                     AuthorizationUrl = $"{configuration.GetValue<string>("AuthorityUrl")}/connect/authorize",
                     TokenUrl = $"{configuration.GetValue<string>("AuthorityUrl")}/connect/token",
                     Scopes = new Dictionary<string, string> {
-                        { "ids4_admin_api", "User Management API - full access" }
+                        { "ids4_admin_api", "IDS4 Admin API - full access" }
                     },
                 });
                 options.OperationFilter<AuthorizeCheckOperationFilter>();

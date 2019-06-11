@@ -9,15 +9,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4.Admin.API.Controllers.v1_0
+namespace IdentityServer4.Admin.API.Controllers.v1._0
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route(ApiRouteTemplate)]
     [ApiVersion("1.0")]
     [Authorize(Policy = PolicyNames.AuthenticatedUser)]
     public class UserController : ApiController
     {
         public UserController(INotificationHandler<DomainNotification> notifications,
-            IMediatorHandler mediator) 
+            IMediatorHandler mediator)
             : base(notifications, mediator)
         {
         }

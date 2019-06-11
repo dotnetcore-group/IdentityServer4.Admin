@@ -12,16 +12,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4.Admin.API.Controllers.v1_0
+namespace IdentityServer4.Admin.API.Controllers.v1._0
 {
 
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route(ApiRouteTemplate)]
     [Authorize(Policy = PolicyNames.Admin)]
     [ApiVersion("1.0")]
-    public class ClientsController : ApiController
+    public class ClientController : ApiController
     {
         private readonly IClientService _clientService;
-        public ClientsController(INotificationHandler<DomainNotification> notifications,
+        public ClientController(INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediator,
             IClientService clientService) : base(notifications, mediator)
         {

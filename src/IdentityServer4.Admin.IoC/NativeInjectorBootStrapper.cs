@@ -9,6 +9,7 @@ using IdentityServer4.Admin.Data.EventSourcing;
 using IdentityServer4.Admin.Data.Repositories;
 using IdentityServer4.Admin.Domain.CommandHandlers;
 using IdentityServer4.Admin.Domain.Commands;
+using IdentityServer4.Admin.Domain.Commands.ApiResource;
 using IdentityServer4.Admin.Domain.Commands.User;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Events;
@@ -48,6 +49,7 @@ namespace IdentityServer4.Admin.IoC
             // Application Services
             services.AddScoped<IClientService, ClientService>()
                 .AddScoped<IUserService, UserService>()
+                .AddScoped<IApiResourceService, ApiResourceService>()
                 .AddScoped<SystemUser>();
 
             // Domain Events
@@ -58,7 +60,9 @@ namespace IdentityServer4.Admin.IoC
             // Domain Commands
             services.AddScoped<IRequestHandler<RegisterNewUserWithoutPassCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<RegisterNewUserCommand, bool>, UserCommandHandler>()
-                .AddScoped<IRequestHandler<AddLoginCommand, bool>, UserCommandHandler>();
+                .AddScoped<IRequestHandler<AddLoginCommand, bool>, UserCommandHandler>()
+                .AddScoped<IRequestHandler<SetApiSecretCommand, bool>, ApiResourceCommandHandler>()
+                .AddScoped<IRequestHandler<SetApiScopeCommand, bool>, ApiResourceCommandHandler>();
 
             // Repositories
             services.AddScoped<IDS4DbContext>()
@@ -66,7 +70,10 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IUnitOfWork, UnitOfWork>()
                 .AddScoped<IEventStoreRepository, EventStoreRepository>()
                 .AddScoped<IEventStore, DbEventStore>()
-                .AddScoped<IClientRepository, ClientRepository>();
+                .AddScoped<IClientRepository, ClientRepository>()
+                .AddScoped<IApiResourceRepository, ApiResourceRepository>()
+                .AddScoped<IApiSecretRepository, ApiSecretRepository>()
+                .AddScoped<IApiScopeRepository, ApiScopeRepository>();
         }
     }
 }

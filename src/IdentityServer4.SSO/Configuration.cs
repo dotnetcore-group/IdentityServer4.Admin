@@ -24,14 +24,14 @@ namespace IdentityServer4.SSO
         public static IEnumerable<ApiResource> GetApiResources() => new List<ApiResource> {
              new ApiResource {
                 Name = "ids4_admin_api",
-                DisplayName = "IDS4 Management API",
-                Description = "IdentityServer4 Management API",
-                ApiSecrets = { new Secret("Q&tGrEQMypEk.XxPU:%bWDZMdpZeJiyMwpLv4F7d**w9x:7KuJ#fy,E8KPHpKz++".Sha256()) },
+                DisplayName = "IDS4 Admin API",
+                Description = "IdentityServer4 Admin API",
+                ApiSecrets = { new Secret("Q&tGrEQMypEk.XxPU:%bWDZMdpZeJiyMwpLv4F7d**w9x:7KuJ#fy,E8KPHpKz++".Sha256()) { Type= "Sha256" } },
 
                 Scopes = {
                     new Scope() { Name = "ids4_admin_api",
-                        DisplayName = "IDS4 Management API",
-                        Description = "IdentityServer4 Management API",
+                        DisplayName = "IDS4 Admin API",
+                        Description = "IdentityServer4 Admin API",
                         Required = true,
                         UserClaims = {
                             StandardScopes.OpenId,
@@ -49,9 +49,10 @@ namespace IdentityServer4.SSO
         public static IEnumerable<Client> GetClients() => new List<Client>
         {
             new Client {
-                ClientId="IDS4-Admin",
+                ClientId="IDS4-AdminUI",
                 ClientName="IdentityServer4 AdminUI",
                 ClientUri="http://localhost:5000",
+                LogoUri ="/images/ids4-admin.jpg",
                 AllowedGrantTypes = GrantTypes.Hybrid,
                 AllowAccessTokensViaBrowser = true,
 

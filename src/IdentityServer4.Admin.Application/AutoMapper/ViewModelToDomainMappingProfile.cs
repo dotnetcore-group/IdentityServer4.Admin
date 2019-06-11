@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using IdentityServer4.Admin.Application.ViewModels;
+using IdentityServer4.Admin.Application.ViewModels.ApiResource;
 using IdentityServer4.Admin.Domain.Commands;
+using IdentityServer4.Admin.Domain.Commands.ApiResource;
 using IdentityServer4.Admin.Domain.Commands.User;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,11 @@ namespace IdentityServer4.Admin.Application.AutoMapper
 
             CreateMap<RegisterUserViewModel, RegisterNewUserCommand>(MemberList.Source)
                 .ConstructUsing(c => new RegisterNewUserCommand(c.Email, c.Password, c.ConfirmPassword));
+
+            CreateMap<SetApiSecretViewModel, SetApiSecretCommand>(MemberList.Source)
+                .ConstructUsing(c => new SetApiSecretCommand(c.ApiResourceName, c.Description, c.Value, c.Type, c.Expiration, (int)c.HashType.GetValueOrDefault(HashType.Sha256)));
+            CreateMap<SetApiScopeViewModel, SetApiScopeCommand>()
+                .ConstructUsing(c => new SetApiScopeCommand(c.ApiResourceName, c.Name, c.DisplayName, c.Description, c.Required, c.Emphasize, c.ShowInDiscoveryDocument, c.UserClaims));
         }
     }
 }

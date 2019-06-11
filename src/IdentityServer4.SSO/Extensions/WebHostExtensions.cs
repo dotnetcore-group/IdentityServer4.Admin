@@ -13,6 +13,7 @@ using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Stores;
+using System.Threading.Tasks;
 
 namespace IdentityServer4.SSO.Extensions
 {
@@ -20,30 +21,30 @@ namespace IdentityServer4.SSO.Extensions
     {
         public static IWebHost MigrationAndSeedDataDB(this IWebHost webHost)
         {
-            webHost.MigrateDbContext<IDS4DbContext>(EnsureSeedIDS4Data)
-                .MigrateDbContext<AppIdentityDbContext>(EnsureSeedIdentityData)
-                .MigrateDbContext<EventStoreContext>(null);
+            Task.WaitAll(
+                webHost.MigrateDbContextAsync<IDS4DbContext>(EnsureSeedIDS4DataAsync),
+                webHost.MigrateDbContextAsync<AppIdentityDbContext>(EnsureSeedIdentityDataAsync)
+            );
+            webHost.MigrateDbContext<EventStoreContext>(null);
 
             return webHost;
         }
 
-        private static void EnsureSeedIdentityData(AppIdentityDbContext context, IServiceProvider sp)
+        private static async Task EnsureSeedIdentityDataAsync(AppIdentityDbContext context, IServiceProvider sp)
         {
             var configuration = sp.GetRequiredService<IConfiguration>();
             var userManager = sp.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = sp.GetRequiredService<RoleManager<ApplicationRole>>();
 
-
-
             // Create admin role
-            if (!roleManager.RoleExistsAsync("Administrator").Result)
+            if (!await roleManager.RoleExistsAsync("Administrator"))
             {
                 var role = new ApplicationRole { Name = "Administrator" };
 
-                roleManager.CreateAsync(role).Wait();
+                await roleManager.CreateAsync(role);
 
                 // Create admin user
-                if (userManager.FindByNameAsync(configuration.GetValue("DefaultUser:UserName", "")).Result != null) return;
+                if (await userManager.FindByNameAsync(configuration.GetValue("DefaultUser:UserName", "")) != null) return;
 
                 var user = new ApplicationUser
                 {
@@ -55,29 +56,29 @@ namespace IdentityServer4.SSO.Extensions
                     Avatar = "/files/avatars/201906/587538818672885760.jpg",
                 };
 
-                var result = userManager.CreateAsync(user, configuration.GetValue("DefaultUser:Password", "")).Result;
+                var result = await userManager.CreateAsync(user, configuration.GetValue("DefaultUser:Password", ""));
 
                 if (result.Succeeded)
                 {
-                    userManager.AddClaimAsync(user, new Claim("is4-rights", "manager")).Wait();
-                    userManager.AddClaimAsync(user, new Claim("username", configuration.GetValue("DefaultUser:UserName", ""))).Wait();
-                    userManager.AddClaimAsync(user, new Claim("email", configuration.GetValue("DefaultUser:Email", ""))).Wait();
-                    userManager.AddToRoleAsync(user, "Administrator");
+                    await userManager.AddClaimAsync(user, new Claim("is4-rights", "manager"));
+                    await userManager.AddClaimAsync(user, new Claim("username", configuration.GetValue("DefaultUser:UserName", "")));
+                    await userManager.AddClaimAsync(user, new Claim("email", configuration.GetValue("DefaultUser:Email", "")));
+                    await userManager.AddToRoleAsync(user, "Administrator");
                 }
             }
         }
 
-        private static void EnsureSeedIDS4Data(IDS4DbContext context, IServiceProvider sp)
+        private static async Task EnsureSeedIDS4DataAsync(IDS4DbContext context, IServiceProvider sp)
         {
             if (!context.Clients.Any())
             {
                 foreach (var client in Configuration.GetClients())
                 {
                     var entity = client.ToEntity();
-                    context.Clients.Add(entity);
+                    await context.Clients.AddAsync(entity);
                 }
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
             if (!context.IdentityResources.Any())
@@ -86,20 +87,20 @@ namespace IdentityServer4.SSO.Extensions
 
                 foreach (var resource in identityResources)
                 {
-                    context.IdentityResources.Add(resource.ToEntity());
+                    await context.IdentityResources.AddAsync(resource.ToEntity());
                 }
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
 
             if (!context.ApiResources.Any())
             {
                 foreach (var resource in Configuration.GetApiResources().ToList())
                 {
-                    context.ApiResources.Add(resource.ToEntity());
+                    await context.ApiResources.AddAsync(resource.ToEntity());
                 }
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }
