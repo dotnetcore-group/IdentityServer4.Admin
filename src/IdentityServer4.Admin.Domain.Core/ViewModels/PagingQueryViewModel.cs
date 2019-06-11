@@ -7,6 +7,10 @@ namespace IdentityServer4.Admin.Domain.Core.ViewModels
 {
     public class PagingQueryViewModel
     {
+        public PagingQueryViewModel() : this(1, 10, null)
+        {
+
+        }
         public PagingQueryViewModel(int pageIndex, int pageSize, string search)
         {
             PageIndex = pageIndex;
