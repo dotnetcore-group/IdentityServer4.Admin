@@ -10,5 +10,6 @@ namespace IdentityServer4.Admin.Application.ViewModels.User
         public string Uid { get; set; }
         public string UserName { get; set; }
         public string Nickname { get; set; }
+        public string Gravatar { get; set; }
     }
 }

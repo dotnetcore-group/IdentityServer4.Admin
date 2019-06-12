@@ -10,6 +10,11 @@ namespace IdentityServer4.Admin.Application.Interfaces
 {
     public interface IUserManagerService
     {
+        /// <summary>
+        /// get users
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
         Task<PagingDataViewModel<PagingUserViewModel>> GetUsersAsync(PagingQueryViewModel vm);
     }
 }

@@ -8,9 +8,6 @@ using IdentityServer4.Admin.Domain.Core.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentityServer4.Admin.API.Controllers.v1._0

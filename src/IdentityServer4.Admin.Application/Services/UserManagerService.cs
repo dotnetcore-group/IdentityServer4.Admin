@@ -27,8 +27,8 @@ namespace IdentityServer4.Admin.Application.Services
 
         public async Task<PagingDataViewModel<PagingUserViewModel>> GetUsersAsync(PagingQueryViewModel vm)
         {
-            IEnumerable<ApplicationUser> users = null;
-            var total = 0;
+            int total;
+            IEnumerable<ApplicationUser> users;
             if (string.IsNullOrEmpty(vm.Search))
             {
                 users = await _userManager.Users.Skip(vm.Skip).Take(vm.PageSize).ToListAsync();
@@ -36,14 +36,12 @@ namespace IdentityServer4.Admin.Application.Services
             }
             else
             {
-                var where = new Func<ApplicationUser, bool>(u => u.UserName.Contains(vm.Search) ||
-                    u.Nickname.Contains(vm.Search) ||
-                    u.Email.Contains(vm.Search));
+                var filter = UserFilter(vm.Search);
+                total = await _userManager.Users.CountAsync(filter);
 
-                total = _userManager.Users.Count(where);
-
-                users = _userManager.Users.Where(where).Skip(vm.Skip)
-                    .Take(vm.PageSize);
+                users = await _userManager.Users.Where(filter).Skip(vm.Skip)
+                    .Take(vm.PageSize)
+                    .ToListAsync();
             }
 
             var data = _mapper.Map<IEnumerable<PagingUserViewModel>>(users);
@@ -53,5 +51,10 @@ namespace IdentityServer4.Admin.Application.Services
                 Total = total
             };
         }
+
+        private Expression<Func<ApplicationUser, bool>> UserFilter(string search) =>
+            u => u.UserName.Contains(search) ||
+                    u.Nickname.Contains(search) ||
+                    u.Email.Contains(search);
     }
 }

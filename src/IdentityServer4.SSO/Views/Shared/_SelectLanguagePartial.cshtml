@@ -8,8 +8,7 @@
 @inject IOptions<RequestLocalizationOptions> LocOptions
 
 @{
-    var requestCulture = Context.Features.Get<IRequestCultureFeature>
-        ();
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var cultureItems = LocOptions.Value.SupportedUICultures
     .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
     .ToList();

@@ -28,3 +28,5 @@
 /src/IdentityServer4.Admin.IoC/obj
 /src/IdentityServer4.Management/bin/Debug/netcoreapp2.2
 /src/IdentityServer4.Management/obj
+/src/IdentityServer4.AdminUI/bin/Debug/netcoreapp2.2
+/src/IdentityServer4.AdminUI/obj

@@ -1,0 +1,52 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section Styles{
+    <link href="~/lib/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
+<h2>Index</h2>
+
+<table id="clients-table" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th width="100px">@Localizer["Logo"]</th>
+            <th>@Localizer["ClientId"]</th>
+            <th>@Localizer["ClientName"]</th>
+            <th>@Localizer["Enabled"]</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $('#clients-table').DataTable({
+                autoWidth: true,
+                paging: false,
+                order: [],
+                ajax: {
+                    url: '/clients/list',
+                    type: 'get',
+                    dataSrc: function (response) {
+                        return response.data
+                    }
+                },
+                columns: [
+                    {
+                        data: "logoUri", orderable: false, render: function (data) {
+                            return '<img width="40" src="' + data + '"/>'
+                        }
+                    },
+                    { data: "clientId" },
+                    { data: "clientName" },
+                    { data: "enabled" },
+                ]
+            });
+        });
+    </script>
+}

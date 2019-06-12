@@ -15,7 +15,8 @@ namespace IdentityServer4.Admin.Application.AutoMapper
         public EntityToViewModelMappingProfile()
         {
             CreateMap<ApplicationUser, UserViewModel>(MemberList.Destination);
-            CreateMap<ApplicationUser, PagingUserViewModel>(MemberList.Destination);
+            CreateMap<ApplicationUser, PagingUserViewModel>(MemberList.Destination)
+                .ForMember(v => v.Gravatar, options => options.MapFrom(src => src.Avatar));
 
             CreateMap<ApplicationRole, RoleViewModel>(MemberList.Destination);
 

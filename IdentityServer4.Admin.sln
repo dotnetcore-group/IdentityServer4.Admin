@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4.Admin.Ident
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Frontend", "1. Frontend", "{76789303-1DC4-4F57-9CF1-FFEFDE6B650E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.Management", "src\IdentityServer4.Management\IdentityServer4.Management.csproj", "{82CFF9FE-0B20-4995-9A12-77B890A53BF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer4.AdminUI", "src\IdentityServer4.AdminUI\IdentityServer4.AdminUI.csproj", "{82CFF9FE-0B20-4995-9A12-77B890A53BF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

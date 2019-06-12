@@ -6,7 +6,11 @@ namespace IdentityServer4.Admin.BuildingBlock.Mvc
 {
     public class JsonResponse<T>
     {
-        public JsonResponse(IEnumerable<string> errors) : this(false, default, errors)
+        public JsonResponse() : this(false, default, null)
+        {
+
+        }
+        public JsonResponse(IEnumerable<string> errors = null) : this(false, default, errors)
         {
 
         }
