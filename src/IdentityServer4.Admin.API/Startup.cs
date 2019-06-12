@@ -1,6 +1,4 @@
 ﻿using IdentityServer4.Admin.API.Extensions;
-using IdentityServer4.Admin.Application.Interfaces;
-using IdentityServer4.Admin.Application.Services;
 using IdentityServer4.Admin.IoC;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -9,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SmartSql.DyRepository;
 
 namespace IdentityServer4.Admin.API
 {
@@ -86,18 +83,6 @@ namespace IdentityServer4.Admin.API
         {
             // Adding dependencies from another layers (isolated from Presentation)
             NativeInjectorBootStrapper.RegisterServices(services);
-
-            // SmartSql
-            services.AddSmartSql(builder =>
-            {
-                builder.UseXmlConfig();
-            })
-                .AddRepositoryFromAssembly(options =>
-                {
-                    options.AssemblyString = "IdentityServer4.Admin.Domain";
-                    options.Filter = type => type.Namespace == "IdentityServer4.Admin.Domain.Interfaces.DyRepositories";
-                });
-
         }
     }
 }

@@ -18,10 +18,4 @@
     <ProjectReference Include="..\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Maps\Client.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
