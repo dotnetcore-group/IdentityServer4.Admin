@@ -79,6 +79,19 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
 
         #region Property
 
+        [HttpGet, Route("{clientId}/properties")]
+        public async Task<ActionResult<JsonResponse<IEnumerable<PropertyViewModel>>>> Properties(string clientId)
+        {
+            var properties = await _clientService.GetPropertiesAsync(clientId);
+            return JsonResponse(properties);
+        }
+
+        [HttpDelete, Route("{clientId}/properties/{id}")]
+        public async Task<ActionResult<JsonResponse<bool>>> RemoveProperty(string clientId, int id)
+        {
+            return JsonResponse(false);
+        }
+
         #endregion
 
         #region Secret
@@ -90,6 +103,12 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
             return JsonResponse(secrets);
         }
 
+        [HttpDelete, Route("{clientId}/secrets/{id}")]
+        public async Task<ActionResult<JsonResponse<bool>>> RemoveSecret(string clientId, int id)
+        {
+            return JsonResponse(false);
+        }
+
         #endregion
 
         #region Claim
@@ -99,6 +118,12 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         {
             var claims = await _clientService.GetClaimsAsync(clientId);
             return JsonResponse(claims);
+        }
+
+        [HttpDelete, Route("{clientId}/claims/{id}")]
+        public async Task<ActionResult<JsonResponse<bool>>> RemoveClaim(string clientId, int id)
+        {
+            return JsonResponse(false);
         }
 
         #endregion

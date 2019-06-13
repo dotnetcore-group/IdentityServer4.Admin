@@ -24,6 +24,8 @@ namespace IdentityServer4.Admin.Application.AutoMapper
 
             CreateMap<Secret, SecretViewModel>(MemberList.Destination);
 
+            CreateMap<Property, PropertyViewModel>();
+
             CreateMap<ApiScope, ScopeViewModel>();
 
             CreateMap<UserClaim, ClaimViewModel>(MemberList.Destination);

@@ -14,7 +14,7 @@ namespace IdentityServer4.Admin.Application.Interfaces
         Task<ApiResource> GetApiResourceAsync(string name);
         Task AddAsync(ApiResource apiResource);
         Task UpdateAsync(ApiResource apiResource);
-        Task RemoveAsync(RemoveApiResourceViewModel vm);
+        Task RemoveAsync(string name);
         Task<IEnumerable<SecretViewModel>> GetSecretsAsync(string name);
         Task RemoveSecrectAsync(RemoveApiSecretViewModel vm);
         Task SetSecretAsync(SetApiSecretViewModel vm);

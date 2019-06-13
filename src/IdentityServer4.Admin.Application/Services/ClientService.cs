@@ -16,6 +16,7 @@ namespace IdentityServer4.Admin.Application.Services
     public class ClientService : IClientService
     {
         private readonly IClientRepository _clientRepository;
+        private readonly IClientPropertyRepository _clientPropertyRepository;
         private readonly IClientSecretRepository _clientSecretRepository;
         private readonly IClientClaimRepository _clientCliamRepository;
         private readonly IMapper _mapper;
@@ -23,11 +24,13 @@ namespace IdentityServer4.Admin.Application.Services
         public ClientService(IClientRepository clientRepository,
             IClientSecretRepository clientSecretRepository,
             IClientClaimRepository clientCliamRepository,
+            IClientPropertyRepository clientPropertyRepository,
             IMapper mapper, IMediatorHandler bus)
         {
             _clientRepository = clientRepository;
             _clientSecretRepository = clientSecretRepository;
             _clientCliamRepository = clientCliamRepository;
+            _clientPropertyRepository = clientPropertyRepository;
             _mapper = mapper;
             _bus = bus;
         }
@@ -72,6 +75,12 @@ namespace IdentityServer4.Admin.Application.Services
         {
             var claims = await _clientCliamRepository.FindByClientIdAsync(clientId);
             return _mapper.Map<IEnumerable<ClaimViewModel>>(claims);
+        }
+
+        public async Task<IEnumerable<PropertyViewModel>> GetPropertiesAsync(string clientId)
+        {
+            var properties = await _clientPropertyRepository.FindByClientIdAsync(clientId);
+            return _mapper.Map<IEnumerable<PropertyViewModel>>(properties);
         }
     }
 }

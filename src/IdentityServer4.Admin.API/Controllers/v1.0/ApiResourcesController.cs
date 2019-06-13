@@ -54,7 +54,14 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
             return JsonResponse(true);
         }
 
-        #region SECRET
+        [HttpDelete, Route("{name}")]
+        public async Task<ActionResult<JsonResponse<bool>>> Delete(string name)
+        {
+            await _apiService.RemoveAsync(name);
+            return JsonResponse(true);
+        }
+
+        #region Secret
         [HttpGet, Route("{name}/secrets")]
         public async Task<ActionResult<JsonResponse<IEnumerable<SecretViewModel>>>> Secrets(string name)
         {
@@ -87,7 +94,7 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         }
         #endregion
 
-        #region SCOPE
+        #region Scope
         [HttpGet, Route("{name}/scopes")]
         public async Task<ActionResult<JsonResponse<IEnumerable<ScopeViewModel>>>> Scopes(string name)
         {

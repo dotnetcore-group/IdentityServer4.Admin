@@ -17,5 +17,6 @@ namespace IdentityServer4.Admin.Application.Interfaces
         Task UpdateAsync(UpdateClientViewModel model);
         Task<IEnumerable<SecretViewModel>> GetSecretsAsync(string clientId);
         Task<IEnumerable<ClaimViewModel>> GetClaimsAsync(string clientId);
+        Task<IEnumerable<PropertyViewModel>> GetPropertiesAsync(string clientId);
     }
 }

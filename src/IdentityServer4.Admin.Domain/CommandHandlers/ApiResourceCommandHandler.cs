@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using IdentityServer4.Admin.Domain.Commands.ApiResource;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Notifications;
+using IdentityServer4.Admin.Domain.Events.ApiResource;
 using IdentityServer4.Admin.Domain.Interfaces;
 using IdentityServer4.EntityFramework.Entities;
 using MediatR;
@@ -14,6 +15,7 @@ using MediatR;
 namespace IdentityServer4.Admin.Domain.CommandHandlers
 {
     public class ApiResourceCommandHandler : CommandHandler,
+        IRequestHandler<RemoveApiResourceCommand, bool>,
         IRequestHandler<SetApiSecretCommand, bool>,
         IRequestHandler<SetApiScopeCommand, bool>
     {
@@ -99,6 +101,28 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             if (Commit())
             {
                 return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> Handle(RemoveApiResourceCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+
+            var resource = await _apiResourceRepository.FindByNameAsync(request.ApiResource.Name);
+            if (resource != null)
+            {
+                await _apiResourceRepository.RemoveAsync(resource);
+                if (Commit())
+                {
+                    await _bus.RaiseEvent(new ApiResourceRemovedEvent(request.ApiResource.Name));
+                    return true;
+                }
             }
 
             return false;

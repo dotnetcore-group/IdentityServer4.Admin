@@ -64,9 +64,10 @@ namespace IdentityServer4.Admin.Application.Services
             return secrets?.Select(r => _mapper.Map<SecretViewModel>(r));
         }
 
-        public Task RemoveAsync(RemoveApiResourceViewModel vm)
+        public async Task RemoveAsync(string name)
         {
-            throw new NotImplementedException();
+            var command = new RemoveApiResourceCommand(name);
+            await _bus.SendCommand(command);
         }
 
         public Task RemoveScopeAsync(RemoveApiScopeViewModel vm)
