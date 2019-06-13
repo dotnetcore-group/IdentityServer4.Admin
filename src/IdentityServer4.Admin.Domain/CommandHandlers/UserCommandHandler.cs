@@ -90,7 +90,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             var id = await CreateUserWithProvider(user, request.Provider, request.ProviderId);
             if (id.HasValue)
             {
-                await _bus.RaiseEvent(new UserRegisteredEvent(id.Value, user.UserName, user.Email));
+                await _bus.RaiseEvent(new UserRegisteredEvent(id.Value.ToString(), user.UserName, user.Email));
                 return true;
             }
             return false;
@@ -134,7 +134,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
-                await _bus.RaiseEvent(new UserRegisteredEvent(user.Id, user.UserName, user.Email));
+                await _bus.RaiseEvent(new UserRegisteredEvent(user.Id.ToString(), user.UserName, user.Email));
                 return true;
             }
             return false;
@@ -154,7 +154,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
                 var result = await _userManager.AddLoginAsync(user, new UserLoginInfo(request.Provider, request.ProviderId, request.Provider));
                 if (result.Succeeded)
                 {
-                    await _bus.RaiseEvent(new NewLoginAddedEvent(user.Id, request.UserName, request.Provider, request.ProviderId));
+                    await _bus.RaiseEvent(new NewLoginAddedEvent(user.Id.ToString(), request.UserName, request.Provider, request.ProviderId));
                     return true;
                 }
                 else

@@ -1,9 +1,11 @@
-﻿using IdentityServer4.Admin.Application.Interfaces;
+﻿using IdentityServer4.Admin.API.Extensions;
+using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.ViewModels.IdentityResource;
 using IdentityServer4.Admin.BuildingBlock.Mvc;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
 {
     [Route(ApiRouteTemplate)]
     [ApiVersion("1.0")]
+    [Authorize(Policy = PolicyNames.Admin)]
     public class IdentityResourcesController : ApiController
     {
         private readonly IIdentityResourceService _identityResourceService;

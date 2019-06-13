@@ -10,6 +10,7 @@ using IdentityServer4.Admin.Data.Repositories;
 using IdentityServer4.Admin.Domain.CommandHandlers;
 using IdentityServer4.Admin.Domain.Commands;
 using IdentityServer4.Admin.Domain.Commands.ApiResource;
+using IdentityServer4.Admin.Domain.Commands.Client;
 using IdentityServer4.Admin.Domain.Commands.User;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Events;
@@ -65,7 +66,9 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IRequestHandler<RegisterNewUserCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<AddLoginCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<SetApiSecretCommand, bool>, ApiResourceCommandHandler>()
-                .AddScoped<IRequestHandler<SetApiScopeCommand, bool>, ApiResourceCommandHandler>();
+                .AddScoped<IRequestHandler<SetApiScopeCommand, bool>, ApiResourceCommandHandler>()
+                .AddScoped<IRequestHandler<CreateClientCommand, bool>, ClientCommandHandler>()
+                .AddScoped<IRequestHandler<RemoveClientCommand, bool>, ClientCommandHandler>();
 
             // Repositories
             services.AddScoped<IDS4DbContext>()
@@ -74,6 +77,8 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IEventStoreRepository, EventStoreRepository>()
                 .AddScoped<IEventStore, DbEventStore>()
                 .AddScoped<IClientRepository, ClientRepository>()
+                .AddScoped<IClientSecretRepository, ClientSecretRepository>()
+                .AddScoped<IClientClaimRepository, ClientClaimRepository>()
                 .AddScoped<IApiResourceRepository, ApiResourceRepository>()
                 .AddScoped<IIdentityResourceRepository, IdentityResourceRepository>()
                 .AddScoped<IApiSecretRepository, ApiSecretRepository>()

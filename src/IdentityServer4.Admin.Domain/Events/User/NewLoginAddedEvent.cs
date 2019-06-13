@@ -11,7 +11,7 @@ namespace IdentityServer4.Admin.Domain.Events.User
         public string Provider { get; }
         public string ProviderId { get; }
 
-        public NewLoginAddedEvent(Guid aggregateId, string userName, string provider, string providerId)
+        public NewLoginAddedEvent(string aggregateId, string userName, string provider, string providerId)
         {
             UserName = userName;
             Provider = provider;

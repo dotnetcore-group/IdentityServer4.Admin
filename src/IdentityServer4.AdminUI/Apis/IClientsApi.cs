@@ -2,15 +2,13 @@
 using IdentityServer4.Admin.BuildingBlock.Mvc;
 using IdentityServer4.Models;
 using Refit;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentityServer4.AdminUI.Apis
 {
-    [Headers("Authorization: Bearer")]
-    public interface IClientsApi
+
+    public interface IClientsApi : IApi
     {
         [Get("/clients")]
         Task<JsonResponse<IList<ClientViewModel>>> GetClientsAsync();

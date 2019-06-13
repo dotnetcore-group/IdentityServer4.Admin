@@ -10,7 +10,7 @@ namespace IdentityServer4.Admin.Domain.Events.User
         public string UserName { get; set; }
         public string Email { get; set; }
 
-        public UserRegisteredEvent(Guid aggregateId, string userName, string email)
+        public UserRegisteredEvent(string aggregateId, string userName, string email)
         {
             AggregateId = aggregateId;
             UserName = userName;

@@ -7,7 +7,16 @@
     <link href="~/lib/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 }
 
-<h2>Index</h2>
+@section Breadcrumb{
+    <h1>
+        Clients
+        <small>Manage your clients</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Clients</li>
+    </ol>
+}
 
 <table id="clients-table" width="100%" cellspacing="0">
     <thead>

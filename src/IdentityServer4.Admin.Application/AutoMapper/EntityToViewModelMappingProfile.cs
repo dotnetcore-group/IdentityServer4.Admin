@@ -22,13 +22,14 @@ namespace IdentityServer4.Admin.Application.AutoMapper
 
             CreateMap<ApiResource, ApiResourceViewModel>();
 
-            CreateMap<ApiSecret, SecretViewModel>(MemberList.Destination);
+            CreateMap<Secret, SecretViewModel>(MemberList.Destination);
 
             CreateMap<ApiScope, ScopeViewModel>();
 
             CreateMap<UserClaim, ClaimViewModel>(MemberList.Destination);
 
             CreateMap<Models.Client, ClientViewModel>(MemberList.Destination);
+            CreateMap<ClientClaim, ClaimViewModel>(MemberList.Destination);
 
             CreateMap<IdentityResource, IdentityResourceViewModel>(MemberList.Destination);
 

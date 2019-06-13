@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer4.AdminUI.Apis
 {
-    [Headers("Authorization: Bearer")]
-    public interface IUsersApi
+    public interface IUsersApi : IApi
     {
         [Get("/users")]
         Task<JsonResponse<PagingDataViewModel<PagingUserViewModel>>> GetUsersAsync([Query]PagingQueryViewModel vm);

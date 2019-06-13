@@ -3,14 +3,16 @@ using System;
 using IdentityServer4.Admin.Data.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentityServer4.Admin.Data.Mysql.Migrations.EventStore
 {
     [DbContext(typeof(EventStoreContext))]
-    partial class EventStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20190613060818_UpdateAggregateIdType")]
+    partial class UpdateAggregateIdType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

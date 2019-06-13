@@ -7,6 +7,6 @@ namespace IdentityServer4.Admin.Domain.Commands.ApiResource
 {
     public abstract class ApiResourceCommand : Command
     {
-        public Models.ApiResource ApiResource { get; protected set; }
+        public IdentityServer4.Models.ApiResource ApiResource { get; protected set; }
     }
 }

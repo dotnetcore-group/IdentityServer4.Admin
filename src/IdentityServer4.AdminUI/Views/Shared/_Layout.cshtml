@@ -40,15 +40,7 @@
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
-                    Fixed Layout
-                    <small>Blank example to the fixed layout</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Layout</a></li>
-                    <li class="active">Fixed</li>
-                </ol>
+                @RenderSection("Breadcrumb", required: false)
             </section>
 
             <!-- Main content -->
@@ -88,7 +80,9 @@
 
     <!-- AdminLTE App -->
     <script src="~/lib/adminlte/js//adminlte.min.js"></script>
-
+    <script>
+        var mkey = '@ViewBag.MenuKey';
+    </script>
     <script src="~/js/site.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
