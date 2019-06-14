@@ -69,6 +69,7 @@ namespace IdentityServer4.Admin.API
                 app.UseHttpsRedirection();
             }
             app.UseAuthentication();
+            app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -76,6 +77,7 @@ namespace IdentityServer4.Admin.API
                 c.OAuthClientId("Swagger");
                 c.OAuthAppName("IdentityServer4 Admin API - full access");
             });
+
             app.UseMvc();
         }
 

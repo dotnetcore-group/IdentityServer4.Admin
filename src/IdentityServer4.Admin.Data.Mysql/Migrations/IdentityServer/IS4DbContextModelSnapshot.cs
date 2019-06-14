@@ -17,6 +17,20 @@ namespace IdentityServer4.Admin.Data.Mysql.Migrations.IdentityServer
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("IdentityServer4.Admin.Domain.Entities.Startup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Initialized");
+
+                    b.Property<DateTime?>("InitializedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Startups");
+                });
+
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResource", b =>
                 {
                     b.Property<int>("Id")

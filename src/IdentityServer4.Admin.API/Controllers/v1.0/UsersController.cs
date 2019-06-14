@@ -32,5 +32,12 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
             var users = await _userManagerService.GetUsersAsync(vm);
             return JsonResponse(users);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<JsonResponse<bool>>> Post([FromBody]CreateUserViewModel user)
+        {
+            await _userManagerService.CreateAsync(user);
+            return JsonResponse(true);
+        }
     }
 }

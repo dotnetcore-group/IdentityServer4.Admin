@@ -49,6 +49,7 @@ namespace IdentityServer4.Admin.IoC
 
             // Application Services
             services.AddScoped<IClientService, ClientService>()
+                .AddScoped<IStartupService, StartupService>()
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<IUserManagerService, UserManagerService>()
                 .AddScoped<IRoleService, RoleService>()
@@ -63,6 +64,7 @@ namespace IdentityServer4.Admin.IoC
 
             // Domain Commands
             services.AddScoped<IRequestHandler<RegisterNewUserWithoutPassCommand, bool>, UserCommandHandler>()
+                .AddScoped<IRequestHandler<CreateUserCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<RegisterNewUserCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<AddLoginCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<RemoveApiResourceCommand, bool>, ApiResourceCommandHandler>()
@@ -77,6 +79,7 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IUnitOfWork, UnitOfWork>()
                 .AddScoped<IEventStoreRepository, EventStoreRepository>()
                 .AddScoped<IEventStore, DbEventStore>()
+                .AddScoped<IStartupRepository, StartupRepository>()
                 .AddScoped<IClientRepository, ClientRepository>()
                 .AddScoped<IClientSecretRepository, ClientSecretRepository>()
                 .AddScoped<IClientClaimRepository, ClientClaimRepository>()

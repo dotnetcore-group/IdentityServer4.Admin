@@ -16,5 +16,11 @@ namespace IdentityServer4.Admin.Application.Interfaces
         /// <param name="vm"></param>
         /// <returns></returns>
         Task<PagingDataViewModel<PagingUserViewModel>> GetUsersAsync(PagingQueryViewModel vm);
+        /// <summary>
+        /// Create a new user account
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Task CreateAsync(CreateUserViewModel user);
     }
 }

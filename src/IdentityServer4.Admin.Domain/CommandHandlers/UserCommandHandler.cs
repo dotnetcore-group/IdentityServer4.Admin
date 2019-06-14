@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 namespace IdentityServer4.Admin.Domain.CommandHandlers
 {
     public class UserCommandHandler : CommandHandler,
+        IRequestHandler<CreateUserCommand, bool>,
         IRequestHandler<RegisterNewUserWithoutPassCommand, bool>,
         IRequestHandler<RegisterNewUserCommand, bool>,
         IRequestHandler<AddLoginCommand, bool>
@@ -169,6 +170,54 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             return false;
         }
 
+        /// <summary>
+        /// handler create user command
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+
+            var emailExisted = await _userManager.FindByEmailAsync(request.Email) != null;
+            if (emailExisted)
+            {
+                await _bus.RaiseEvent(new DomainNotification("email_already_existed", $"email {request.Email} already exist."));
+                return false;
+            }
+            var nameExisted = await _userManager.FindByNameAsync(request.UserName) != null;
+            if (nameExisted)
+            {
+                await _bus.RaiseEvent(new DomainNotification("name_already_existed", $"username {request.UserName} already exist."));
+                return false;
+            }
+
+            var id = _idGenerator.CreateId();
+            var user = new ApplicationUser
+            {
+                UserName = request.UserName,
+                Email = request.Email,
+                Nickname = request.Nickname,
+                EmailConfirmed = request.EmailConfirmed,
+                Uid = id
+            };
+
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
+            {
+                await _bus.RaiseEvent(new UserCreatedEvent(user.Id.ToString(), user.UserName, user.Email, user.Uid));
+                return true;
+            }
+
+            await _bus.RaiseEvent(new DomainNotification("unknown_error", $"an unknown error occurred."));
+            return false;
+        }
+
         private async Task<Guid?> CreateUserWithProvider(ApplicationUser user, string provider, string providerId)
         {
             if (!string.IsNullOrEmpty(provider))
@@ -249,5 +298,6 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             }
             return PathUtils.CombinePaths(domain, requestPath, $"{uid}.jpg");
         }
+
     }
 }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.ViewModels.User;
+using IdentityServer4.Admin.Domain.Commands.User;
+using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.ViewModels;
 using IdentityServer4.Admin.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -18,11 +20,20 @@ namespace IdentityServer4.Admin.Application.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IMediatorHandler _bus;
         public UserManagerService(UserManager<ApplicationUser> userManager,
-            IMapper mapper)
+            IMapper mapper,
+            IMediatorHandler bus)
         {
+            _bus = bus;
             _userManager = userManager;
             _mapper = mapper;
+        }
+
+        public async Task CreateAsync(CreateUserViewModel user)
+        {
+            var command = _mapper.Map<CreateUserCommand>(user);
+            await _bus.SendCommand(command);
         }
 
         public async Task<PagingDataViewModel<PagingUserViewModel>> GetUsersAsync(PagingQueryViewModel vm)

@@ -16,7 +16,7 @@ namespace IdentityServer4.Admin.Domain.Interfaces
         void Update(TEntity entity);
         void Remove(TEntity entity);
         int SaveChanges();
-
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> where);
     }
 
     public interface IAsyncRepository<TEntity> : IDisposable
@@ -28,6 +28,6 @@ namespace IdentityServer4.Admin.Domain.Interfaces
         Task UpdateAsync(TEntity entity);
         Task RemoveAsync(TEntity entity);
         Task<int> SaveChangesAsync();
-
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where);
     }
 }

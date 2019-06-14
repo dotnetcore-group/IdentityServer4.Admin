@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace IdentityServer4.Admin.Data.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity>, 
-        IAsyncRepository<TEntity> 
+    public class Repository<TEntity> : IRepository<TEntity>,
+        IAsyncRepository<TEntity>
         where TEntity : class, new()
     {
         protected readonly IDS4DbContext DbContext;
@@ -57,7 +57,12 @@ namespace IdentityServer4.Admin.Data.Repositories
 
         public void Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            DbSet.Update(entity);
+        }
+
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> where)
+        {
+            return DbSet.FirstOrDefault(where);
         }
 
         #region Async Methods
@@ -92,7 +97,14 @@ namespace IdentityServer4.Admin.Data.Repositories
         {
             DbSet.Update(entity);
             return Task.CompletedTask;
-        } 
+        }
+
+        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where)
+        {
+            return DbSet.FirstOrDefaultAsync(where);
+        }
+
+
         #endregion
     }
 }

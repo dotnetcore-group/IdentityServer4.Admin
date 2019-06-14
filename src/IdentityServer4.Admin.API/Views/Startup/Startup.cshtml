@@ -1,0 +1,108 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IdentityServer4.Admin.Application.ViewModels.StartupViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Startup - IDS4 Admin</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white mb-3">
+            <div class="container">
+                <a class="navbar-brand" href="/">IDS4 Admin Startup</a>
+
+
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        @if (ViewContext.ModelState.IsValid == false)
+        {
+            <div class="errors alert alert-danger">
+                <div asp-validation-summary="All" class="danger"></div>
+            </div>
+        }
+        <main role="main" class="pb-3">
+            <section>
+                <h2>Default admin user</h2>
+                <form asp-action="Startup" method="post">
+                    <div class="form-group row">
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="DefaultUser.UserName"></label>
+                            <input asp-for="DefaultUser.UserName" class="form-control" placeholder="Enter username">
+                            @*<small  id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="DefaultUser.Email"></label>
+                            <input class="form-control" asp-for="DefaultUser.Email" placeholder="Enter email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="DefaultUser.Password"></label>
+                            <input class="form-control" asp-for="DefaultUser.Password" placeholder="Enter email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="DefaultUser.ComfirmPassword">Confirm password</label>
+                            <input class="form-control" asp-for="DefaultUser.ComfirmPassword" placeholder="Enter email">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Submit</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"
+                asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.validator"
+                crossorigin="anonymous"
+                integrity="sha256-F6h55Qw6sweK+t7SiOJX+2bpSAa3b/fnlrVCJvmEj1A=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"
+                asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"
+                crossorigin="anonymous"
+                integrity="sha256-9GycpJnliUjJDVDqP0UEu/bsm9U+3dnQUH8+3W10vkY=">
+        </script>
+    </environment>
+</body>
+</html>

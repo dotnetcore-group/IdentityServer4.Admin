@@ -1,12 +1,9 @@
-﻿using IdentityServer4.EntityFramework.Entities;
+﻿using IdentityServer4.Admin.Domain.Entities;
+using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Extensions;
 using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IdentityServer4.Admin.Infrastructures.Data.Database
@@ -67,6 +64,8 @@ namespace IdentityServer4.Admin.Infrastructures.Data.Database
 
         public DbSet<PersistedGrant> PersistedGrants { get; set; }
         public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
+
+        public DbSet<Startup> Startups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

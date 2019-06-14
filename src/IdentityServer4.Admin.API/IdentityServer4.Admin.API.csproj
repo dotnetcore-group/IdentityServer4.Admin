@@ -25,4 +25,8 @@
     <ProjectReference Include="..\IdentityServer4.Admin.IoC\IdentityServer4.Admin.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
