@@ -9,20 +9,32 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
+using IdentityServer4.Admin.Application.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 
 namespace IdentityServer4.SSO.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IStartupService _startup;
         private readonly IIdentityServerInteractionService _interaction;
-        public HomeController(IIdentityServerInteractionService interaction)
+        public HomeController(IIdentityServerInteractionService interaction,
+            IStartupService startup)
         {
             _interaction = interaction;
+            _startup = startup;
         }
 
         public IActionResult Index()
         {
+            var initialized = _startup.IsInitialized();
+            if (!initialized)
+            {
+                return LocalRedirect("/startup");
+            }
+
             return View();
+
         }
 
         public IActionResult Privacy()

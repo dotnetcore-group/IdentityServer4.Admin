@@ -69,7 +69,6 @@ namespace IdentityServer4.Admin.API
                 app.UseHttpsRedirection();
             }
             app.UseAuthentication();
-            app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

@@ -1,5 +1,8 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model IdentityServer4.Admin.Application.ViewModels.StartupViewModel
+@{ 
+    Layout = null;
+}
 
 <!DOCTYPE html>
 <html>
@@ -40,7 +43,7 @@
         <main role="main" class="pb-3">
             <section>
                 <h2>Default admin user</h2>
-                <form asp-action="Startup" method="post">
+                <form asp-action="Index" asp-controller="Startup" method="post">
                     <div class="form-group row">
                         <div class="col-12 col-lg-6">
                             <label asp-for="DefaultUser.UserName"></label>
