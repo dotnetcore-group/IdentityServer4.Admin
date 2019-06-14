@@ -25,6 +25,7 @@ using IdentityServer4.Admin.Domain.Core.ClaimTypes;
 using IdentityServer4.Admin.Domain.Core.Notifications;
 using MediatR;
 using AutoMapper;
+using Microsoft.Extensions.Localization;
 
 namespace IdentityServer4.SSO.Controllers
 {
@@ -40,8 +41,10 @@ namespace IdentityServer4.SSO.Controllers
         private readonly IEventService _events;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly DomainNotificationHandler _notifications;
+        private readonly IStringLocalizer<AccountController> _localizer;
         public AccountController(
             IMapper mapper,
+            IStringLocalizer<AccountController> localizer,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
@@ -51,6 +54,7 @@ namespace IdentityServer4.SSO.Controllers
             INotificationHandler<DomainNotification> notifications)
         {
             _mapper = mapper;
+            _localizer = localizer;
             _users = users;
             _interaction = interaction;
             _clientStore = clientStore;
@@ -245,7 +249,7 @@ namespace IdentityServer4.SSO.Controllers
                 if (user == null)
                 {
                     await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
-                    ModelState.AddModelError("", AccountOptions.InvalidCredentialsErrorMessage);
+                    ModelState.AddModelError("", _localizer["Invalid_Credentials"]);
                 }
 
                 if (user != null)
@@ -286,7 +290,7 @@ namespace IdentityServer4.SSO.Controllers
                     else
                     {
                         await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
-                        ModelState.AddModelError("", AccountOptions.InvalidCredentialsErrorMessage);
+                        ModelState.AddModelError("", _localizer["Invalid_Credentials"]);
                     }
                 }
             }

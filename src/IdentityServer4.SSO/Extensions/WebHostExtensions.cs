@@ -32,8 +32,6 @@ namespace IdentityServer4.SSO.Extensions
 
         private static async Task EnsureSeedIdentityDataAsync(AppIdentityDbContext context, IServiceProvider sp)
         {
-            var configuration = sp.GetRequiredService<IConfiguration>();
-            var userManager = sp.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = sp.GetRequiredService<RoleManager<ApplicationRole>>();
 
             // Create admin role
@@ -42,29 +40,6 @@ namespace IdentityServer4.SSO.Extensions
                 var role = new ApplicationRole { Name = "Administrator" };
 
                 await roleManager.CreateAsync(role);
-
-                // Create admin user
-                if (await userManager.FindByNameAsync(configuration.GetValue("DefaultUser:UserName", "")) != null) return;
-
-                var user = new ApplicationUser
-                {
-                    UserName = configuration.GetValue("DefaultUser:UserName", ""),
-                    Nickname = configuration.GetValue("DefaultUser:Nickname", ""),
-                    Email = configuration.GetValue("DefaultUser:Email", ""),
-                    EmailConfirmed = true,
-                    Uid = 587538818672885760,
-                    Avatar = "/files/avatars/201906/587538818672885760.jpg",
-                };
-
-                var result = await userManager.CreateAsync(user, configuration.GetValue("DefaultUser:Password", ""));
-
-                if (result.Succeeded)
-                {
-                    await userManager.AddClaimAsync(user, new Claim("is4-rights", "manager"));
-                    await userManager.AddClaimAsync(user, new Claim("username", configuration.GetValue("DefaultUser:UserName", "")));
-                    await userManager.AddClaimAsync(user, new Claim("email", configuration.GetValue("DefaultUser:Email", "")));
-                    await userManager.AddToRoleAsync(user, "Administrator");
-                }
             }
         }
 

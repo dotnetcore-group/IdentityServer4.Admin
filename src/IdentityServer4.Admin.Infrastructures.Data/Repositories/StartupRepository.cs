@@ -12,5 +12,28 @@ namespace IdentityServer4.Admin.Data.Repositories
         public StartupRepository(IDS4DbContext dbContext) : base(dbContext)
         {
         }
+
+        public void SetInitialized()
+        {
+            var startup = FirstOrDefault(c => true);
+            if (startup != null)
+            {
+                startup.Initialized = true;
+                startup.InitializedDate = DateTime.UtcNow;
+
+                DbSet.Update(startup);
+            }
+            else
+            {
+                startup = new Startup
+                {
+                    Initialized = true,
+                    InitializedDate = DateTime.UtcNow
+                };
+                DbSet.Add(startup);
+            }
+
+            SaveChanges();
+        }
     }
 }

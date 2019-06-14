@@ -14,6 +14,8 @@ namespace IdentityServer4.Admin.Application.Services
 {
     public class StartupService : IStartupService
     {
+        private static bool _initialized = false;
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IStartupRepository _startupRepository;
         public StartupService(IStartupRepository startupRepository,
@@ -28,12 +30,24 @@ namespace IdentityServer4.Admin.Application.Services
             var userResult = await InitializeAdminUser(model.DefaultUser);
 
             var result = userResult;
+
+            _initialized = result.result;
+            if (_initialized)
+            {
+                _startupRepository.SetInitialized();
+            }
+
             return result;
         }
 
         public bool IsInitialized()
         {
-            return _startupRepository.FirstOrDefault(s => true)?.Initialized ?? false;
+            if (!_initialized)
+            {
+                _initialized = _startupRepository.FirstOrDefault(s => true)?.Initialized ?? false;
+            }
+
+            return _initialized;
         }
 
         private async Task<(bool result, List<DomainError> errors)> InitializeAdminUser(DefaultUser user)
@@ -56,7 +70,8 @@ namespace IdentityServer4.Admin.Application.Services
             var result = createResult.Succeeded &&
                 addRoleResult.Succeeded;
 
-            return (result, errors?.Select(e => new DomainError { Code = e.Code, Description = e.Description }).ToList());
+            return (result, errors?.Select(e => new DomainError { Code = e.Code, Description = e.Description })
+                .Distinct(new DomainErrorEqualityComparer()).ToList());
         }
     }
 }

@@ -7,5 +7,6 @@ namespace IdentityServer4.Admin.Domain.Interfaces
 {
     public interface IStartupRepository : IRepository<Startup>, IAsyncRepository<Startup>
     {
+        void SetInitialized();
     }
 }

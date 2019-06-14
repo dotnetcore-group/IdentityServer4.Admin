@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Panda.DynamicWebApi;
@@ -40,6 +41,10 @@ namespace IdentityServer4.AdminUI
             //    options.CheckConsentNeeded = context => false;
             //    options.MinimumSameSitePolicy = SameSiteMode.None;
             //});
+
+            services.Configure<RouteOptions>(options=> {
+                options.LowercaseUrls = true;
+            });
 
             services.AddOidcServices(Configuration);
 

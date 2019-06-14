@@ -22,7 +22,7 @@
     <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/jquery-nice-select/css/nice-select.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href="~/css/account.css" rel="stylesheet" />
+    <link href="~/css/startup.css" rel="stylesheet" />
     @RenderSection("Styles", required: false)
 </head>
 <body>
@@ -50,16 +50,6 @@
         </main>
     </div>
 
-    <footer class="border-top footer">
-        <div class="container-fluid text-center" style="height:60px">
-            <ul class="footer-list">
-                <li><a href="/privacy" target="_blank">@Localizer["Privacy Statement"]</a></li>
-                <li><a href="/terms" target="_blank">@Localizer["Terms of Service"]</a></li>
-                <li>&copy; @DateTime.UtcNow.Year - IDS4 SSO</li>
-            </ul>
-        </div>
-    </footer>
-
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
@@ -80,7 +70,7 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
-    @*<partial name="_ValidationScriptsPartial" />*@
+    <partial name="_ValidationScriptsPartial"/>
     <script>
         $(document).ready(function () {
             $('.culture-select').niceSelect();

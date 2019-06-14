@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4.Admin.Domain.Core.ViewModels;
 using IdentityServer4.AdminUI.Apis;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -16,10 +17,15 @@ namespace IdentityServer4.AdminUI.Controllers
             _usersApi = usersApi;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var users = await _usersApi.GetUsersAsync(new Admin.Domain.Core.ViewModels.PagingQueryViewModel());
-            return Content(JsonConvert.SerializeObject(users));
+            return View();
+        }
+
+        public async Task<IActionResult> List([FromQuery]PagingQueryViewModel model)
+        {
+            var response = await _usersApi.GetUsersAsync(model);
+            return Json(response);
         }
     }
 }

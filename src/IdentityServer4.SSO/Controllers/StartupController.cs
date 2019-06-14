@@ -18,6 +18,10 @@ namespace IdentityServer4.Admin.API.Controllers
         [HttpGet, Route("/startup")]
         public IActionResult Index()
         {
+            if(_startup.IsInitialized())
+            {
+                return NotFound();
+            }
             var model = new StartupViewModel();
 
             return View(model);
@@ -26,6 +30,10 @@ namespace IdentityServer4.Admin.API.Controllers
         [HttpPost, Route("/startup")]
         public async Task<IActionResult> Index(StartupViewModel model)
         {
+            if (_startup.IsInitialized())
+            {
+                return NotFound();
+            }
             var result = await _startup.Initialize(model);
 
             if (result.result)
@@ -40,5 +48,6 @@ namespace IdentityServer4.Admin.API.Controllers
 
             return View(model);
         }
+
     }
 }

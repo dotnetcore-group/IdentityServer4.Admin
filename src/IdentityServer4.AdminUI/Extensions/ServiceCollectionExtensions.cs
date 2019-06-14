@@ -34,7 +34,7 @@ namespace IdentityServer4.AdminUI.Extensions
                     options.Authority = configuration.GetValue<string>("IdentityUrl");
                     options.RequireHttpsMetadata = false;
 
-                    options.ClientId = "IDS4-Admin";
+                    options.ClientId = "IDS4-AdminUI";
                     options.ClientSecret = "234E496F-1927-47A4-B64E-8AF93C5F2F10";
                     options.ResponseType = "code id_token";
 

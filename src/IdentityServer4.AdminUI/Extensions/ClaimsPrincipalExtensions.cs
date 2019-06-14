@@ -19,7 +19,7 @@ namespace IdentityServer4.AdminUI.Extensions
                 {
                     Email = claims.GetClaimValue(JwtClaimTypes.Email),
                     UserName = claims.GetClaimValue(JwtClaimTypes.Name),
-                    Gravatar = claims.GetClaimValue("gravatar"),
+                    Gravatar = claims.GetClaimValue("gravatar", "/images/ids4-admin.jpg"),
                     Nickname = claims.GetClaimValue("nickname")
                 };
             }

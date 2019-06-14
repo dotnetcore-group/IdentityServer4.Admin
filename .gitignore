@@ -30,3 +30,4 @@
 /src/IdentityServer4.Management/obj
 /src/IdentityServer4.AdminUI/bin/Debug/netcoreapp2.2
 /src/IdentityServer4.AdminUI/obj
+/src/IdentityServer4.SSO/files/avatars/201906
