@@ -26,6 +26,8 @@ using IdentityServer4.Admin.Domain.Core.Notifications;
 using MediatR;
 using AutoMapper;
 using Microsoft.Extensions.Localization;
+using IdentityServer4.Admin.Domain.Core.Bus;
+using IdentityServer4.Admin.Domain.Events.User;
 
 namespace IdentityServer4.SSO.Controllers
 {
@@ -33,7 +35,7 @@ namespace IdentityServer4.SSO.Controllers
     public class AccountController : Controller
     {
         #region DI
-        private readonly IMapper _mapper;
+        private readonly IMediatorHandler _bus;
         private readonly IUserService _users;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
@@ -43,7 +45,7 @@ namespace IdentityServer4.SSO.Controllers
         private readonly DomainNotificationHandler _notifications;
         private readonly IStringLocalizer<AccountController> _localizer;
         public AccountController(
-            IMapper mapper,
+            IMediatorHandler bus,
             IStringLocalizer<AccountController> localizer,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
@@ -53,7 +55,7 @@ namespace IdentityServer4.SSO.Controllers
             SignInManager<ApplicationUser> signInManager,
             INotificationHandler<DomainNotification> notifications)
         {
-            _mapper = mapper;
+            _bus = bus;
             _localizer = localizer;
             _users = users;
             _interaction = interaction;
@@ -258,6 +260,7 @@ namespace IdentityServer4.SSO.Controllers
                     if (result.Succeeded)
                     {
                         await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
+                        await _bus.RaiseEvent(new UserLoggedInEvent(user.Uid, HttpContext)); ;
 
                         if (context != null)
                         {

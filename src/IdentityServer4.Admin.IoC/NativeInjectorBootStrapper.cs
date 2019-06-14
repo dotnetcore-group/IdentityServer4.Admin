@@ -60,6 +60,7 @@ namespace IdentityServer4.Admin.IoC
             // Domain Events
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
                 .AddScoped<INotificationHandler<UserRegisteredEvent>, UserEventHandler>()
+                .AddScoped<INotificationHandler<UserLoggedInEvent>, UserEventHandler>()
                 .AddScoped<INotificationHandler<NewLoginAddedEvent>, UserEventHandler>();
 
             // Domain Commands
@@ -80,6 +81,7 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IEventStoreRepository, EventStoreRepository>()
                 .AddScoped<IEventStore, DbEventStore>()
                 .AddScoped<IStartupRepository, StartupRepository>()
+                .AddScoped<ILoginLogRepository, LoginLogRepository>()
                 .AddScoped<IClientRepository, ClientRepository>()
                 .AddScoped<IClientSecretRepository, ClientSecretRepository>()
                 .AddScoped<IClientClaimRepository, ClientClaimRepository>()

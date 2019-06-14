@@ -3,14 +3,16 @@ using System;
 using IdentityServer4.Admin.Infrastructures.Data.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentityServer4.Admin.Data.Mysql.Migrations.IdentityServer
 {
     [DbContext(typeof(IDS4DbContext))]
-    partial class IS4DbContextModelSnapshot : ModelSnapshot
+    [Migration("20190614152735_AddUserLoginLogs")]
+    partial class AddUserLoginLogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

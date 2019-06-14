@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Admin.Domain.Entities;
+﻿using IdentityServer4.Admin.Data.EntityConfigurations;
+using IdentityServer4.Admin.Domain.Entities;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Extensions;
 using IdentityServer4.EntityFramework.Interfaces;
@@ -67,13 +68,18 @@ namespace IdentityServer4.Admin.Infrastructures.Data.Database
 
         public DbSet<Startup> Startups { get; set; }
 
+        public DbSet<UserLoginLog> LoginLogs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ConfigureClientContext(_storeOptions);
             modelBuilder.ConfigureResourcesContext(_storeOptions);
             modelBuilder.ConfigurePersistedGrantContext(_operationalOptions);
+
+            modelBuilder.ApplyConfiguration(new UserLoginLogModelConfiguration());
         }
+
 
         public Task<int> SaveChangesAsync()
         {

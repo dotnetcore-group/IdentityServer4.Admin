@@ -1,6 +1,4 @@
-﻿using Panda.DynamicWebApi;
-using Panda.DynamicWebApi.Attributes;
-using Refit;
+﻿using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -89,6 +89,7 @@ namespace IdentityServer4.Admin.API.Extensions
             {
                 cfg.AddProfile<EntityToViewModelMappingProfile>();
                 cfg.AddProfile<ViewModelToDomainMappingProfile>();
+                cfg.AddProfile<EventToEntityMappingProfile>();
             });
 
             return services;
