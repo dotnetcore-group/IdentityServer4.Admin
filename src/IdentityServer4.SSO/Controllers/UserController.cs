@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServer4.SSO.Controllers
 {
+    [Route("[controller]/[action]")]
     public class UserController : Controller
     {
         private readonly IIdGenerator<long> _id;
@@ -33,6 +34,11 @@ namespace IdentityServer4.SSO.Controllers
                 return Unauthorized();
             }
             return View(vm);
+        }
+
+        public IActionResult Logs()
+        {
+            return View();
         }
 
         public IActionResult Settings()

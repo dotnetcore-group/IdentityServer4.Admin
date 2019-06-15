@@ -12,7 +12,7 @@ namespace IdentityServer4.Admin.Domain.Events.User
     public class UserLoggedInEvent : Event
     {
         public long Uid { get; set; }
-        public string Ip { get; set; }
+        public string IP { get; set; }
         public string Browser { get; set; }
         public string OS { get; set; }
         public string Device { get; set; }
@@ -22,7 +22,7 @@ namespace IdentityServer4.Admin.Domain.Events.User
         {
             AggregateId = uid.ToString();
             Uid = uid;
-            Ip = httpContext.Connection.RemoteIpAddress.ToString();
+            IP = httpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             LoginTime = DateTime.UtcNow;
 
             SetUserAgentInfo(httpContext);
