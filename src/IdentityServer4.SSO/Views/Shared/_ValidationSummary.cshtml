@@ -1,6 +1,9 @@
 ﻿@if (ViewContext.ModelState.IsValid == false)
 {
-    <div class="errors alert alert-danger">
-        <div asp-validation-summary="All" class="danger"></div>
+    <div class="ui negative message">
+        <div class="header">
+            Error!
+        </div>
+        <div asp-validation-summary="All" class="list"></div>
     </div>
 }

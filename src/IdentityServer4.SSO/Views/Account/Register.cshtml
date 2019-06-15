@@ -9,7 +9,7 @@
     @await Html.PartialAsync("_ValidationSummary")
     <div class="main">
         <h1 class="title">@Localizer["Register Title"]</h1>
-        <form asp-route="Login">
+        <form asp-action="Register" method="post">
             <div class="control-group">
                 <label asp-for="Email"></label>
                 <div class="control-box">

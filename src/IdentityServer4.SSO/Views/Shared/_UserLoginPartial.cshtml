@@ -1,0 +1,26 @@
+﻿@using IdentityServer4.Admin.Identity.Entities
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> _userManager
+@{
+    var isAuthenticated = ViewContext.HttpContext.User.Identity.IsAuthenticated;
+    var user = await _userManager.GetUserAsync(ViewContext.HttpContext.User);
+}
+
+@if (isAuthenticated)
+{
+    <div class="ui item inline dropdown">
+        <div class="text">
+            <i class="icon user"></i>
+            @user?.UserName
+        </div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <a class="item" asp-controller="User" asp-action="Profile">Profile</a>
+            <a class="item" asp-controller="Account" asp-action="LogOut">Log Out</a>
+        </div>
+    </div>
+}
+else
+{
+    <a class="ui item" asp-controller="Account" asp-action="Login">Log In</a>
+}
