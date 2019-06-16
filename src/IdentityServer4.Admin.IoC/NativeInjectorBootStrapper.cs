@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Admin.Application.Interfaces;
+﻿using FluentValidation;
+using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.Services;
 using IdentityServer4.Admin.BuildingBlock.Bus;
 using IdentityServer4.Admin.BuildingBlock.Drawing;
@@ -18,6 +19,7 @@ using IdentityServer4.Admin.Domain.Core.Notifications;
 using IdentityServer4.Admin.Domain.EventHandlers;
 using IdentityServer4.Admin.Domain.Events.User;
 using IdentityServer4.Admin.Domain.Interfaces;
+using IdentityServer4.Admin.Domain.Validations;
 using IdentityServer4.Admin.Identity.Authorization;
 using IdentityServer4.Admin.Identity.Entities;
 using IdentityServer4.Admin.Infrastructures.Data.Database;
@@ -26,6 +28,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 namespace IdentityServer4.Admin.IoC
 {

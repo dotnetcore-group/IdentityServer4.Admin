@@ -45,19 +45,29 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
     background: #e6ecf1;
 }
 
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    /* Set the fixed height of the footer here */
-    height: 60px;
-    line-height: 60px; /* Vertically center the text there */
+.top-nav {
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2) !important;
 }
+
+    .top-nav .item {
+        /*padding: 1.2em 1.14285714em !important;*/
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        white-space: nowrap;
+        /* Set the fixed height of the footer here */
+        height: 60px;
+        line-height: 60px; /* Vertically center the text there */
+        text-align: center;
+    }
 
 .btn-rounded {
     height: 34px;

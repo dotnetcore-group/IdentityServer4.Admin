@@ -2,3 +2,17 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+$(function () {
+    $('.ui.dropdown')
+        .dropdown();
+
+    var button = document.querySelector("#cookieConsent button[data-cookie-string]");
+    $(button).on('click', function () {
+        document.cookie = button.dataset.cookieString;
+        $(this).closest('#cookieConsent').transition('fade');
+    });
+    $('#close-policy').on('click', function () {
+        $(this).closest('#cookieConsent').transition('fade');
+    });
+});

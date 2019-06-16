@@ -75,7 +75,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
                 var emailAlreadyExist = await _userManager.FindByEmailAsync(user.Email);
                 if (emailAlreadyExist != null)
                 {
-                    await _bus.RaiseEvent(new DomainNotification("1001", "E-mail already exist. If you don't remember your passwork, reset it."));
+                    await _bus.RaiseEvent(new DomainNotification("email_already_existed", "E-mail already exist. If you don't remember your passwork, reset it."));
                     return false;
                 }
             }
@@ -84,7 +84,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
 
             if (usernameAlreadyExist != null)
             {
-                await _bus.RaiseEvent(new DomainNotification("1002", "Username already exist. If you don't remember your passwork, reset it."));
+                await _bus.RaiseEvent(new DomainNotification("username_already_existed", "Username already exist. If you don't remember your passwork, reset it."));
                 return false;
             }
 
@@ -121,14 +121,14 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             var emailAlreadyExist = await _userManager.FindByEmailAsync(user.Email);
             if (emailAlreadyExist != null)
             {
-                await _bus.RaiseEvent(new DomainNotification("1001", "E-mail already exist. If you don't remember your passwork, reset it."));
+                await _bus.RaiseEvent(new DomainNotification("email_already_existed", "E-mail already exist. If you don't remember your passwork, reset it."));
                 return false;
             }
             var usernameAlreadyExist = await _userManager.FindByNameAsync(user.UserName);
 
             if (usernameAlreadyExist != null)
             {
-                await _bus.RaiseEvent(new DomainNotification("1002", "Username already exist. If you don't remember your passwork, reset it."));
+                await _bus.RaiseEvent(new DomainNotification("username_already_existed", "Username already exist. If you don't remember your passwork, reset it."));
                 return false;
             }
 
@@ -224,7 +224,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             {
                 var userByProvider = await _userManager.FindByLoginAsync(provider, providerId);
                 if (userByProvider != null)
-                    await _bus.RaiseEvent(new DomainNotification("1001", $"User already taken with {provider}"));
+                    await _bus.RaiseEvent(new DomainNotification("usertoken_error", $"User already taken with {provider}"));
             }
             var result = await _userManager.CreateAsync(user);
             if (result.Succeeded)

@@ -12,7 +12,7 @@
     {
         <div class="main">
             <h1 class="title">@Localizer["Title-Login"]</h1>
-            <form asp-route="Login">
+            <form asp-action="Login">
                 <div class="control-box">
                     <input class="input-control" placeholder="@Localizer["Username-Placeholder"]" value="@Configuration.GetSection(" ApplicationSettings:DefaultUser").Value" asp-for="Username" autofocus>
                 </div>
