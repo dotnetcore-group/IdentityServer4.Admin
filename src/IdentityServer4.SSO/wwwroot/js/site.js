@@ -8,7 +8,6 @@ $(function () {
         .dropdown();
 
     var button = document.querySelector("#cookieConsent button[data-cookie-string]");
-    console.log(typeof button.dataset.cookieString);
     $(button).on('click', function () {
         document.cookie = button.dataset.cookieString;
         $(this).closest('#cookieConsent').transition('fade');
