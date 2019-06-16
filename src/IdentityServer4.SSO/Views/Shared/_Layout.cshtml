@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - IdentityServer4.SSO</title>
 
     <link rel="stylesheet" href="~/lib/semanticui/semantic.min.css" />
-    <link rel="stylesheet" href="~/lib/semanticui/components/dropdown.min.css"/>
+    <link rel="stylesheet" href="~/lib/semanticui/components/dropdown.min.css" />
     <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
     @RenderSection("Styles", required: false)
@@ -26,12 +26,8 @@
             </div>
         </div>
     </header>
-    <div class="ui container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <partial name="_CookieConsentPartial" />
+    @RenderBody()
 
     <footer class="ui container">
         &copy; 2019 - IdentityServer4.SSO - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

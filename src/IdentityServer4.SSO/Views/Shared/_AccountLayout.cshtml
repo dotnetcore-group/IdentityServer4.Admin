@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="~/lib/semanticui/semantic.min.css" />
     <link rel="stylesheet" href="~/lib/semanticui/components/dropdown.min.css" />
+    <link rel="stylesheet" href="~/lib/semanticui/components/checkbox.min.css" />
     <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/lib/jquery-nice-select/css/nice-select.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
@@ -47,6 +48,7 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/semanticui/semantic.js"></script>
         <script src="~/lib/semanticui/components/dropdown.js"></script>
+        <script src="~/lib/semanticui/components/checkbox.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -58,10 +60,11 @@
 
         <script src="~/lib/semanticui/semantic.min.js"></script>
         <script src="~/lib/semanticui/components/dropdown.min.js"></script>
+        <script src="~/lib/semanticui/components/checkbox.min.js"></script>
     </environment>
     <script src="~/lib/jquery-nice-select/js/jquery.nice-select.min.js"></script>
     <script src="~/js/site.js"></script>
-    @*<partial name="_ValidationScriptsPartial" />*@
+    <partial name="_ValidationScriptsPartial" />
     <script>
         $(document).ready(function () {
             $('.culture-select').niceSelect();

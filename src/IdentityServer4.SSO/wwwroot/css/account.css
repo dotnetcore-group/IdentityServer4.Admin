@@ -188,7 +188,13 @@ a {
     padding: 0px 10px;
     min-width: 80px;
     text-transform: uppercase;
+    cursor: pointer;
+    transition: all ease .3s;
 }
+
+    .op-box .submit-btn:hover {
+        background: #1172ad;
+    }
 
     .op-box .submit-btn:focus {
         outline: none;

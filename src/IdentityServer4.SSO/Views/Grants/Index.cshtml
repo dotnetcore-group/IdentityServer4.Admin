@@ -12,7 +12,7 @@
 
 @if (Model.Grants.Any())
 {
-    <div class="row justify-content-center">
+    <div class="ui container">
         @foreach (var grant in Model.Grants)
         {
             <div class="grant-item">
@@ -28,12 +28,12 @@
                     <h2>@grant.ClientName</h2>
 
                     <p>
-                        <span class="created">Created: </span> @grant.Created.ToString("yyyy-MM-dd")
+                        <span class="created">Created: </span> @grant.Created.ToString("yyyy-MM-dd hh:mm")
                     </p>
                     @if (grant.Expires.HasValue)
                     {
                         <p>
-                            <span class="expires">Expires: </span> @grant.Expires.Value.ToString("yyyy-MM-dd")
+                            <span class="expires">Expires: </span> @grant.Expires.Value.ToString("yyyy-MM-dd hh:mm")
                         </p>
                     }
                     @if (grant.IdentityGrantNames.Any())
@@ -42,7 +42,7 @@
                             <strong class="granttype">Identity Grants: </strong>
                             @foreach (var name in grant.IdentityGrantNames)
                             {
-                                <span title="@name" class="badge badge-pill badge-info">@name</span>
+                                <span title="@name" class="ui mini label teal">@name</span>
                             }
                         </p>
                     }
@@ -52,14 +52,14 @@
                             <strong>@Localizer["API Grants"]</strong>
                             @foreach (var name in grant.ApiGrantNames)
                             {
-                                <span title="@name" class="badge badge-pill badge-info">@name</span>
+                                <span title="@name" class="ui mini label blue">@name</span>
                             }
                         </p>
                     }
 
                     <form asp-action="Revoke">
                         <input type="hidden" name="clientId" value="@grant.ClientId">
-                        <button class="btn btn-danger">@Localizer["Revoke Access"]</button>
+                        <button class="ui button red mini">@Localizer["Revoke Access"]</button>
                     </form>
                 </div>
             </div>
