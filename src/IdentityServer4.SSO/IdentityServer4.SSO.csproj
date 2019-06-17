@@ -5,6 +5,13 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="files\**" />
+    <Content Remove="files\**" />
+    <EmbeddedResource Remove="files\**" />
+    <None Remove="files\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="2.0.1" />

@@ -52,7 +52,7 @@ namespace IdentityServer4.SSO
                 ClientId="IDS4-AdminUI",
                 ClientName="IdentityServer4 AdminUI",
                 ClientUri="http://localhost:5000",
-                LogoUri ="/images/ids4-admin.jpg",
+                LogoUri ="/images/ids4-admin.png",
                 AllowedGrantTypes = GrantTypes.Hybrid,
                 AllowAccessTokensViaBrowser = true,
 

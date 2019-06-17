@@ -30,15 +30,15 @@
 
             <div class="consent-header">
                 <div class="header-item">
-                    <a href="@(Model.ClientUrl)" target="_blank" title="@(Model.ClientName)">
-                        <img src="@Url.Content(Model.ClientLogoUrl)" class="header-img" />
+                    <a href="@Model.ClientUrl" target="_blank" title="@Model.ClientName">
+                        <img src="@Model.ClientLogoUrl" class="header-img" />
                     </a>
                 </div>
                 <div class="header-item">
                     <i class="header-icon fa fa-check-circle"></i>
                 </div>
                 <div class="header-item">
-                    <img src="@Url.Content("/images/ids4.jpg")" class="header-img" />
+                    <img src="~/images/ids4-admin.png" class="header-img" />
                 </div>
             </div>
             <h1 class="title">Authorize @Model.ClientName</h1>

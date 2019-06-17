@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using IdentityServer4.Admin.BuildingBlock.Mvc;
 using IdentityServer4.AdminUI.Apis;
 using IdentityServer4.AdminUI.Extensions;
 using IdentityServer4.AdminUI.Filters;
@@ -49,6 +50,7 @@ namespace IdentityServer4.AdminUI
 
             services.AddMvc(options =>
             {
+                options.Filters.Add<AfterCommandHandlerFilter>();
                 options.Filters.Add<RefitApiExceptionFilter>();
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using IdentityServer4.Admin.BuildingBlock.Mvc;
 using IdentityServer4.Admin.IoC;
 using IdentityServer4.SSO.Extensions;
@@ -10,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Routing;
@@ -51,7 +46,10 @@ namespace IdentityServer4.SSO
                 // route.ConstraintMap.Add("lang", typeof(LanguageRouteConstraint));
             });
 
-            services.AddMvc()
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<AfterCommandHandlerFilter>();
+            })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts => { opts.ResourcesPath = "Resources"; })
                 .AddDataAnnotationsLocalization();
@@ -92,7 +90,8 @@ namespace IdentityServer4.SSO
                 app.UseHttpsRedirection();
             }
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions {
+            app.UseStaticFiles(new StaticFileOptions
+            {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "files")),
                 RequestPath = "/files"
             });
