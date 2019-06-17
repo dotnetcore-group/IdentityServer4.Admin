@@ -1,16 +1,1 @@
-﻿.grant-item {
-    margin-bottom: 15px;
-    padding: 15px;
-    width: 100%;
-    background: #ffffff;
-    border: 1px solid #d8d8d8;
-    display:grid;
-    grid-template-columns: 200px auto;
-}
-
-.grant-logo img{
-    width: 200px;
-}
-
-.grant-detail{
-}
+﻿

@@ -63,7 +63,8 @@ namespace IdentityServer4.SSO.Controllers
                 {
                     Avatar = user.Avatar,
                     Nickname = user.Nickname,
-                    UserName = user.UserName
+                    UserName = user.UserName,
+                    Email = user.Email
                 };
             }
             return null;
