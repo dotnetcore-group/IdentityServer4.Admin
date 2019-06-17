@@ -13,62 +13,68 @@
 @if (Model.Grants.Any())
 {
     <div class="ui container">
-        @foreach (var grant in Model.Grants)
-        {
-            <div class="grant-item">
-                <div class="grant-logo">
+        <div class="ui segment divided items">
+            @foreach (var grant in Model.Grants)
+            {
+                <div class="item">
+
                     @if (grant.ClientLogoUrl != null)
                     {
-                        <a target="_blank" href="@(grant.ClientUrl ?? "javascript:;")">
+                        <a class="image ui small" target="_blank" href="@(grant.ClientUrl ?? "javascript:;")">
                             <img src="@Url.Content(grant.ClientLogoUrl)" class="img-fluid">
                         </a>
                     }
-                </div>
-                <div class="grant-detail">
-                    <h2>@grant.ClientName</h2>
+                    <div class="content">
+                        <h2 class="header">@grant.ClientName</h2>
 
-                    <p>
-                        <span class="created">Created: </span> @grant.Created.ToString("yyyy-MM-dd hh:mm")
-                    </p>
-                    @if (grant.Expires.HasValue)
-                    {
-                        <p>
-                            <span class="expires">Expires: </span> @grant.Expires.Value.ToString("yyyy-MM-dd hh:mm")
-                        </p>
-                    }
-                    @if (grant.IdentityGrantNames.Any())
-                    {
-                        <p>
-                            <strong class="granttype">Identity Grants: </strong>
-                            @foreach (var name in grant.IdentityGrantNames)
-                            {
-                                <span title="@name" class="ui mini label teal">@name</span>
-                            }
-                        </p>
-                    }
-                    @if (grant.ApiGrantNames.Any())
-                    {
-                        <p>
-                            <strong>@Localizer["API Grants"]</strong>
-                            @foreach (var name in grant.ApiGrantNames)
-                            {
-                                <span title="@name" class="ui mini label blue">@name</span>
-                            }
-                        </p>
-                    }
+                        <div class="meta">
+                            <span>Created: @grant.Created.ToString("yyyy-MM-dd hh:mm")</span>
 
-                    <form asp-action="Revoke">
-                        <input type="hidden" name="clientId" value="@grant.ClientId">
-                        <button class="ui button red mini">@Localizer["Revoke Access"]</button>
-                    </form>
+                            @if (grant.Expires.HasValue)
+                            {
+
+                                <span class="expires">Expires: @grant.Expires.Value.ToString("yyyy-MM-dd hh:mm")</span>
+                            }
+                        </div>
+                        <div class="description">
+
+                            @if (grant.IdentityGrantNames.Any())
+                            {
+                                <p>
+                                    <strong class="granttype">Identity Grants: </strong>
+                                    @foreach (var name in grant.IdentityGrantNames)
+                                    {
+                                        <span title="@name" class="ui mini tag label teal">@name</span>
+                                    }
+                                </p>
+                            }
+                            @if (grant.ApiGrantNames.Any())
+                            {
+                                <p>
+                                    <strong>@Localizer["API Grants"]</strong>
+                                    @foreach (var name in grant.ApiGrantNames)
+                                    {
+                                        <span title="@name" class="ui mini tag label blue">@name</span>
+                                    }
+                                </p>
+                            }
+                        </div>
+
+                        <div class="extra">
+                            <form asp-action="Revoke">
+                                <input type="hidden" name="clientId" value="@grant.ClientId">
+                                <button class="ui button red mini">@Localizer["Revoke Access"]</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 }
 else
 {
-    <div class="row justify-content-center">
-        Nothing at all
+    <div class="ui container">
+        <div class="ui text center">Nothing at all</div>
     </div>
 }

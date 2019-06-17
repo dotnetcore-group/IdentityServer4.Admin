@@ -3,34 +3,89 @@
     ViewData["Title"] = "Profile";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
-@section  Styles{ 
-    <link href="~/css/profile.css" rel="stylesheet" />
+@section Styles{
+<link href="~/css/profile.css" rel="stylesheet" />
 }
 
-<div class="content row profile-container">
-    <div class="col-lg-8 col-md-8 col-12">
-        <div class="profile-form">
-            <h2 class="title">Your profile</h2>
-            <form>
-                <div class="form-group">
-                    <label asp-for="Nickname"></label>
-                    <input type="text" asp-for="Nickname" />
+<div class="ui container stackable grid">
+    <div class="four wide column">
+        <div class="ui card profile-card">
+            <div class="blurring dimmable image">
+                <div class="ui inverted dimmer">
+                    <div class="center">
+                        <button id="btn-edit-avatar" class="ui mini primary button"><i class="icon edit"></i> Edit</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="UserName"></label>
-                    <input type="text" asp-for="UserName" />
+                <img src="~/images/ids4-admin.jpg">
+            </div>
+            <div class="content">
+                <a class="header">@Model.Nickname</a>
+                <div class="meta">
+                    <span class="date">@Model.Email</span>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-12">
-        <div class="picture-container">
-            <h2 class="title">Profile picture</h2>
-            <div class="profile-picture">
-                <img src="@Model.Avatar" />
-                <button type="button"><i class="fa fa-pencil"></i>Edit</button>
-            </div>
+    <div class="twelve wide column">
+        <div class="ui segment">
+            <form class="ui mini form" method="post">
+                <div class="fields two">
+                    <div class="field">
+                        <label asp-for="Nickname"></label>
+                        <input asp-for="Nickname" type="text" />
+                    </div>
+                </div>
+                <div class="fields two">
+                    <div class="field">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" type="text" />
+                    </div>
+                </div>
+                <div class="fields two">
+                    <div class="field">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" type="text" />
+                    </div>
+                </div>
+                <div class="fields two">
+                    <div class="field">
+                        <label>Password</label>
+                        <a href="#">Change your password</a>
+                    </div>
+                </div>
+                <button class="ui submit mini primary button">Submit</button>
+            </form>
         </div>
     </div>
 </div>
 
+<div class="ui tiny modal" id="avatar-dialog">
+    <div class="header">
+        Profile Picture
+    </div>
+    <div class="content">
+        ssd
+    </div>
+    <div class="actions">
+        <div class="ui black deny mini button">
+            Cancel
+        </div>
+        <div class="ui positive right mini button">
+            OK
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+    $(function () {
+        $('.profile-card .image').dimmer({
+            on: 'hover'
+        });
+
+        $('#btn-edit-avatar').on('click', function () {
+            $('#avatar-dialog').modal('show');
+        })
+    });
+</script>
+}
