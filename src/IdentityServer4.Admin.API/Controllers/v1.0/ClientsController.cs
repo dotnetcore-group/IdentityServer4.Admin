@@ -49,11 +49,6 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpPost]
         public async Task<ActionResult<JsonResponse<bool>>> Post([FromBody]CreateClientViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                NotifyModelStateErrors();
-                return JsonResponse(false);
-            }
             await _clientService.CreateAsync(model);
             return JsonResponse(true);
         }
@@ -68,11 +63,6 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpPut]
         public async Task<ActionResult<JsonResponse<bool>>> Put([FromBody]UpdateClientViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                NotifyModelStateErrors();
-                return JsonResponse(false);
-            }
             await _clientService.UpdateAsync(model);
             return JsonResponse(true);
         }
