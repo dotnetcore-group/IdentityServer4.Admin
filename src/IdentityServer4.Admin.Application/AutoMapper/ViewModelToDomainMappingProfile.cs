@@ -2,6 +2,7 @@
 using IdentityServer4.Admin.Application.ViewModels;
 using IdentityServer4.Admin.Application.ViewModels.ApiResource;
 using IdentityServer4.Admin.Application.ViewModels.Client;
+using IdentityServer4.Admin.Application.ViewModels.IdentityResource;
 using IdentityServer4.Admin.Application.ViewModels.User;
 using IdentityServer4.Admin.Domain.Commands;
 using IdentityServer4.Admin.Domain.Commands.ApiResource;
@@ -9,7 +10,9 @@ using IdentityServer4.Admin.Domain.Commands.Client;
 using IdentityServer4.Admin.Domain.Commands.Client.Claim;
 using IdentityServer4.Admin.Domain.Commands.Client.Property;
 using IdentityServer4.Admin.Domain.Commands.Client.Secret;
+using IdentityServer4.Admin.Domain.Commands.IdentityResource;
 using IdentityServer4.Admin.Domain.Commands.User;
+using IdentityServer4.Models;
 
 namespace IdentityServer4.Admin.Application.AutoMapper
 {
@@ -42,6 +45,13 @@ namespace IdentityServer4.Admin.Application.AutoMapper
                 .ConstructUsing(c => new SaveClientSecretCommand(c.ClientId, c.Value, c.Description, Domain.Models.HashType.From(c.HashType), c.Expiration));
             CreateMap<SaveClientClaimViewModel, SaveClientClaimCommand>()
                 .ConstructUsing(c => new SaveClientClaimCommand(c.ClientId, c.Type, c.Value));
+
+
+            CreateMap<CreateIdentityResourceViewModel, IdentityResource>(MemberList.Destination);
+            CreateMap<IdentityResource, CreateIdentityResourceCommand>()
+                .ConstructUsing(c => new CreateIdentityResourceCommand(c));
+            CreateMap<UpdateIdentityResourceViewModel, UpdateIdentityResourceCommand>()
+                .ConstructUsing(c => new UpdateIdentityResourceCommand(c.OldName, c));
         }
     }
 }

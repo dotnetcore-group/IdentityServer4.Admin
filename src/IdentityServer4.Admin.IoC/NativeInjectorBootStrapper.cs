@@ -15,6 +15,7 @@ using IdentityServer4.Admin.Domain.Commands.Client;
 using IdentityServer4.Admin.Domain.Commands.Client.Claim;
 using IdentityServer4.Admin.Domain.Commands.Client.Property;
 using IdentityServer4.Admin.Domain.Commands.Client.Secret;
+using IdentityServer4.Admin.Domain.Commands.IdentityResource;
 using IdentityServer4.Admin.Domain.Commands.User;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Events;
@@ -78,6 +79,7 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IRequestHandler<SetApiSecretCommand, bool>, ApiResourceCommandHandler>()
                 .AddScoped<IRequestHandler<SetApiScopeCommand, bool>, ApiResourceCommandHandler>();
             RegisterClientCommandHandler(services);
+            RegisterIdentityResourceCommandHandler(services);
 
             // Repositories
             services.AddScoped<IDS4DbContext>()
@@ -97,7 +99,7 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IApiScopeRepository, ApiScopeRepository>();
         }
 
-        static IServiceCollection RegisterClientCommandHandler(IServiceCollection services)
+        static void RegisterClientCommandHandler(IServiceCollection services)
         {
             services.AddScoped<IRequestHandler<CreateClientCommand, bool>, ClientCommandHandler>()
                 .AddScoped<IRequestHandler<UpdateClientCommand, bool>, ClientCommandHandler>()
@@ -108,8 +110,13 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IRequestHandler<RemoveClientSecretCommand, bool>, ClientCommandHandler>()
                 .AddScoped<IRequestHandler<SaveClientClaimCommand, bool>, ClientCommandHandler>()
                 .AddScoped<IRequestHandler<RemoveClientClaimCommand, bool>, ClientCommandHandler>();
+        }
 
-            return services;
+        static void RegisterIdentityResourceCommandHandler(IServiceCollection services)
+        {
+            services.AddScoped<IRequestHandler<CreateIdentityResourceCommand, bool>, IdentityResourceCommandHandler>()
+                .AddScoped<IRequestHandler<RemoveIdentityResourceCommand, bool>, IdentityResourceCommandHandler>()
+                .AddScoped<IRequestHandler<UpdateIdentityResourceCommand, bool>, IdentityResourceCommandHandler>();
         }
     }
 }
