@@ -18,5 +18,11 @@ namespace IdentityServer4.Admin.Application.Interfaces
         Task<IEnumerable<SecretViewModel>> GetSecretsAsync(string clientId);
         Task<IEnumerable<ClaimViewModel>> GetClaimsAsync(string clientId);
         Task<IEnumerable<PropertyViewModel>> GetPropertiesAsync(string clientId);
+        Task RemovePropertiesAsync(string clientId, int id);
+        Task SavePropertyAsync(string clientId, SaveClientPropertyViewModel model);
+        Task RemoveSecretAsync(string clientId, int id);
+        Task SaveSecretAsync(SaveClientSecretViewModel model);
+        Task RemoveClaimAsync(string clientId, int id);
+        Task SaveClaimAsync(SaveClientClaimViewModel model);
     }
 }

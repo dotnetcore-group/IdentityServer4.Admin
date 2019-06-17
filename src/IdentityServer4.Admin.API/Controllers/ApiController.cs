@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer4.Admin.API.Controllers
 {
-    [ApiController]
+    //[ApiController]
     public abstract class ApiController : ControllerBase
     {
         public const string ApiRouteTemplate = "api/v{version:apiVersion}/[controller]";

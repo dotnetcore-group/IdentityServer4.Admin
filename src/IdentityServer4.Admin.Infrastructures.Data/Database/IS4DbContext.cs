@@ -41,6 +41,8 @@ namespace IdentityServer4.Admin.Infrastructures.Data.Database
 
         public DbSet<IdentityClaim> IdentityClaims { get; set; }
 
+        public DbSet<IdentityResourceProperty> IdentityResourceProperties { get; set; }
+
         public DbSet<ApiResourceClaim> ApiResourceClaims { get; set; }
 
         public DbSet<Client> Clients { get; set; }

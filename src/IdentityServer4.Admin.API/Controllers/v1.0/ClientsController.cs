@@ -49,11 +49,6 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpPost]
         public async Task<ActionResult<JsonResponse<bool>>> Post([FromBody]CreateClientViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                NotifyModelStateErrors();
-                return JsonResponse(false);
-            }
             await _clientService.CreateAsync(model);
             return JsonResponse(true);
         }
@@ -68,11 +63,6 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpPut]
         public async Task<ActionResult<JsonResponse<bool>>> Put([FromBody]UpdateClientViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                NotifyModelStateErrors();
-                return JsonResponse(false);
-            }
             await _clientService.UpdateAsync(model);
             return JsonResponse(true);
         }
@@ -89,7 +79,17 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpDelete, Route("{clientId}/properties/{id}")]
         public async Task<ActionResult<JsonResponse<bool>>> RemoveProperty(string clientId, int id)
         {
+            await _clientService.RemovePropertiesAsync(clientId, id);
+
             return JsonResponse(false);
+        }
+
+        [HttpPost, Route("{clientId}/properties")]
+        public async Task<ActionResult<JsonResponse<bool>>> SaveProperty(string clientId, [FromBody]SaveClientPropertyViewModel model)
+        {
+            await _clientService.SavePropertyAsync(clientId, model);
+
+            return JsonResponse(true);
         }
 
         #endregion
@@ -106,9 +106,18 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpDelete, Route("{clientId}/secrets/{id}")]
         public async Task<ActionResult<JsonResponse<bool>>> RemoveSecret(string clientId, int id)
         {
+            await _clientService.RemoveSecretAsync(clientId, id);
+
             return JsonResponse(false);
         }
 
+        [HttpPost, Route("{clientId}/secrets")]
+        public async Task<ActionResult<JsonResponse<bool>>> SaveSecret(string clientId, [FromBody]SaveClientSecretViewModel model)
+        {
+            model.ClientId = clientId;
+            await _clientService.SaveSecretAsync(model);
+            return JsonResponse(true);
+        }
         #endregion
 
         #region Claim
@@ -123,7 +132,16 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpDelete, Route("{clientId}/claims/{id}")]
         public async Task<ActionResult<JsonResponse<bool>>> RemoveClaim(string clientId, int id)
         {
+            await _clientService.RemoveClaimAsync(clientId, id);
             return JsonResponse(false);
+        }
+
+        [HttpPost, Route("{clientId}/claims")]
+        public async Task<ActionResult<JsonResponse<bool>>> SaveClaim(string clientId, [FromBody]SaveClientClaimViewModel model)
+        {
+            model.ClientId = clientId;
+            await _clientService.SaveClaimAsync(model);
+            return JsonResponse(true);
         }
 
         #endregion

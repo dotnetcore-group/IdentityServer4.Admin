@@ -45,11 +45,6 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpPost]
         public async Task<ActionResult<JsonResponse<bool>>> Post([FromBody]ApiResource model)
         {
-            if (ModelState.IsValid == false)
-            {
-                NotifyModelStateErrors();
-                return JsonResponse(false);
-            }
             await _apiService.AddAsync(model);
             return JsonResponse(true);
         }
@@ -72,11 +67,6 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpDelete, Route("secret")]
         public async Task<ActionResult<JsonResponse<bool>>> RemoveSecret([FromBody]RemoveApiSecretViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                NotifyModelStateErrors();
-                return JsonResponse(false);
-            }
             await _apiService.RemoveSecrectAsync(model);
             return JsonResponse(true);
         }
@@ -84,11 +74,6 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpPost, Route("secret")]
         public async Task<ActionResult<JsonResponse<bool>>> AddSecret([FromBody]SetApiSecretViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                NotifyModelStateErrors();
-                return JsonResponse(false);
-            }
             await _apiService.SetSecretAsync(model);
             return JsonResponse(true);
         }
@@ -105,11 +90,6 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpDelete, Route("scope")]
         public async Task<ActionResult<JsonResponse<bool>>> RemoveScope([FromBody]RemoveApiScopeViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                NotifyModelStateErrors();
-                return JsonResponse(false);
-            }
             await _apiService.RemoveScopeAsync(model);
             return JsonResponse(true);
         }
@@ -117,11 +97,6 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         [HttpPost, Route("scope")]
         public async Task<ActionResult<JsonResponse<bool>>> AddScope([FromBody]SetApiScopeViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                NotifyModelStateErrors();
-                return JsonResponse(false);
-            }
             await _apiService.SetScopeAsync(model);
             return JsonResponse(true);
         }
