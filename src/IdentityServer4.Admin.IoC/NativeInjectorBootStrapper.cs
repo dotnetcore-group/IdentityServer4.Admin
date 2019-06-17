@@ -12,6 +12,9 @@ using IdentityServer4.Admin.Domain.CommandHandlers;
 using IdentityServer4.Admin.Domain.Commands;
 using IdentityServer4.Admin.Domain.Commands.ApiResource;
 using IdentityServer4.Admin.Domain.Commands.Client;
+using IdentityServer4.Admin.Domain.Commands.Client.Claim;
+using IdentityServer4.Admin.Domain.Commands.Client.Property;
+using IdentityServer4.Admin.Domain.Commands.Client.Secret;
 using IdentityServer4.Admin.Domain.Commands.User;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Events;
@@ -73,9 +76,8 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IRequestHandler<AddLoginCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<RemoveApiResourceCommand, bool>, ApiResourceCommandHandler>()
                 .AddScoped<IRequestHandler<SetApiSecretCommand, bool>, ApiResourceCommandHandler>()
-                .AddScoped<IRequestHandler<SetApiScopeCommand, bool>, ApiResourceCommandHandler>()
-                .AddScoped<IRequestHandler<CreateClientCommand, bool>, ClientCommandHandler>()
-                .AddScoped<IRequestHandler<RemoveClientCommand, bool>, ClientCommandHandler>();
+                .AddScoped<IRequestHandler<SetApiScopeCommand, bool>, ApiResourceCommandHandler>();
+            RegisterClientCommandHandler(services);
 
             // Repositories
             services.AddScoped<IDS4DbContext>()
@@ -93,6 +95,21 @@ namespace IdentityServer4.Admin.IoC
                 .AddScoped<IIdentityResourceRepository, IdentityResourceRepository>()
                 .AddScoped<IApiSecretRepository, ApiSecretRepository>()
                 .AddScoped<IApiScopeRepository, ApiScopeRepository>();
+        }
+
+        static IServiceCollection RegisterClientCommandHandler(IServiceCollection services)
+        {
+            services.AddScoped<IRequestHandler<CreateClientCommand, bool>, ClientCommandHandler>()
+                .AddScoped<IRequestHandler<UpdateClientCommand, bool>, ClientCommandHandler>()
+                .AddScoped<IRequestHandler<RemoveClientCommand, bool>, ClientCommandHandler>()
+                .AddScoped<IRequestHandler<SaveClientPropertyCommand, bool>, ClientCommandHandler>()
+                .AddScoped<IRequestHandler<RemoveClientPropertyCommand, bool>, ClientCommandHandler>()
+                .AddScoped<IRequestHandler<SaveClientSecretCommand, bool>, ClientCommandHandler>()
+                .AddScoped<IRequestHandler<RemoveClientSecretCommand, bool>, ClientCommandHandler>()
+                .AddScoped<IRequestHandler<SaveClientClaimCommand, bool>, ClientCommandHandler>()
+                .AddScoped<IRequestHandler<RemoveClientClaimCommand, bool>, ClientCommandHandler>();
+
+            return services;
         }
     }
 }

@@ -3,6 +3,9 @@ using IdentityServer4.Admin.Application.Interfaces;
 using IdentityServer4.Admin.Application.ViewModels;
 using IdentityServer4.Admin.Application.ViewModels.Client;
 using IdentityServer4.Admin.Domain.Commands.Client;
+using IdentityServer4.Admin.Domain.Commands.Client.Claim;
+using IdentityServer4.Admin.Domain.Commands.Client.Property;
+using IdentityServer4.Admin.Domain.Commands.Client.Secret;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Interfaces;
 using IdentityServer4.EntityFramework.Mappers;
@@ -81,6 +84,43 @@ namespace IdentityServer4.Admin.Application.Services
         {
             var properties = await _clientPropertyRepository.FindByClientIdAsync(clientId);
             return _mapper.Map<IEnumerable<PropertyViewModel>>(properties);
+        }
+
+        public async Task RemovePropertiesAsync(string clientId, int id)
+        {
+            var command = new RemoveClientPropertyCommand(clientId, id);
+            await _bus.SendCommand(command);
+        }
+
+        public async Task SavePropertyAsync(string clientId, SaveClientPropertyViewModel model)
+        {
+            model.ClientId = clientId;
+            var command = _mapper.Map<SaveClientPropertyCommand>(model);
+            await _bus.SendCommand(command);
+        }
+
+        public async Task RemoveSecretAsync(string clientId, int id)
+        {
+            var command = new RemoveClientSecretCommand(clientId, id);
+            await _bus.SendCommand(command);
+        }
+
+        public async Task SaveSecretAsync(SaveClientSecretViewModel model)
+        {
+            var command = _mapper.Map<SaveClientSecretCommand>(model);
+            await _bus.SendCommand(command);
+        }
+
+        public async Task RemoveClaimAsync(string clientId, int id)
+        {
+            var command = new RemoveClientClaimCommand(clientId, id);
+            await _bus.SendCommand(command);
+        }
+
+        public async Task SaveClaimAsync(SaveClientClaimViewModel model)
+        {
+            var command = _mapper.Map<SaveClientClaimCommand>(model);
+            await _bus.SendCommand(command);
         }
     }
 }

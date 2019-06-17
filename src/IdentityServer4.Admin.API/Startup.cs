@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.Admin.API.Extensions;
+using IdentityServer4.Admin.API.Filters;
 using IdentityServer4.Admin.IoC;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -27,7 +28,10 @@ namespace IdentityServer4.Admin.API
                 options.LowercaseUrls = true;
             });
 
-            services.AddMvc()
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<ModelStateValidationFilter>();
+            })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddApiVersioning(options =>
             {
