@@ -50,7 +50,6 @@ namespace IdentityServer4.AdminUI
 
             services.AddMvc(options =>
             {
-                options.Filters.Add<AfterCommandHandlerFilter>();
                 options.Filters.Add<RefitApiExceptionFilter>();
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)

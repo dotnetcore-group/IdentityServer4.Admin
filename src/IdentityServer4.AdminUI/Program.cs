@@ -1,4 +1,5 @@
 ﻿using System;
+using IdentityServer4.Admin.BuildingBlock;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
@@ -16,6 +17,7 @@ namespace IdentityServer4.AdminUI
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls("https://+:5001", "http://+:5000")
+                .UseSerilogLogger()
                 .UseStartup<Startup>();
     }
 }

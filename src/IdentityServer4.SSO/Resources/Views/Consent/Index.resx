@@ -132,4 +132,10 @@
   <data name="Remember My Decision" xml:space="preserve">
     <value>记住我的选择</value>
   </data>
+  <data name="Application Access" xml:space="preserve">
+    <value>应用访问</value>
+  </data>
+  <data name="Personal Infomation" xml:space="preserve">
+    <value>个人信息</value>
+  </data>
 </root>
