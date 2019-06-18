@@ -5,4 +5,11 @@ html, body, #root {
 
 body {
   margin: 0;
+  background: #eceae6;
+}
+
+
+.container{
+    width: 1100px;
+    margin: 0px auto;
 }
