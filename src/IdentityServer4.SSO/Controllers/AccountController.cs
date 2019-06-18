@@ -385,8 +385,6 @@ namespace IdentityServer4.SSO.Controllers
                 {
                     return RedirectToAction(nameof(Login), new { returnUrl = model.ReturnUrl });
                 }
-                var errors = _notifications.GetNotifications();
-                errors.ForEach(error => ModelState.AddModelError(error.Key, error.Value));
             }
 
             var vm = await BuildRegisterViewModelAsync(model);

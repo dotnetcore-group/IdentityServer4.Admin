@@ -30,15 +30,15 @@
 
             <div class="consent-header">
                 <div class="header-item">
-                    <a href="@(Model.ClientUrl)" target="_blank" title="@(Model.ClientName)">
-                        <img src="@Url.Content(Model.ClientLogoUrl)" class="header-img" />
+                    <a href="@Model.ClientUrl" target="_blank" title="@Model.ClientName">
+                        <img src="@Model.ClientLogoUrl" class="header-img" />
                     </a>
                 </div>
                 <div class="header-item">
                     <i class="header-icon fa fa-check-circle"></i>
                 </div>
                 <div class="header-item">
-                    <img src="@Url.Content("/images/ids4.jpg")" class="header-img" />
+                    <img src="~/images/ids4-admin.png" class="header-img" />
                 </div>
             </div>
             <h1 class="title">Authorize @Model.ClientName</h1>
@@ -59,7 +59,7 @@
                                         </div>
                                         <div class="scope-title">
                                             <h2>
-                                                Identity Scopes
+                                                @Localizer["Personal Infomation"]
                                             </h2>
                                             <p>
                                                 @Localizer["access your account", Model.UserName]
@@ -87,7 +87,7 @@
                                             <img src="~/images/ids4.jpg" />
                                         </div>
                                         <div class="scope-title">
-                                            <h2>Resource Scopes</h2>
+                                            <h2>@Localizer["Application Access"]</h2>
                                             <p>
                                                 @Localizer["access your public data"]
                                                 <button type="button" class="btn-more" data-toggle="collapse" data-target="#resource-collapse" aria-expanded="false" aria-controls="resource-collapse"><i class="fa fa-ellipsis-h"></i></button>

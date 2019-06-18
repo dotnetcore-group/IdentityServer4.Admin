@@ -11,6 +11,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using IdentityModel.Client;
+using Microsoft.Extensions.Configuration;
+using System.Globalization;
 
 namespace IdentityServer4.AdminUI.Controllers
 {
@@ -26,10 +30,9 @@ namespace IdentityServer4.AdminUI.Controllers
         [Authorize]
         public async Task<IActionResult> Secure()
         {
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var refreshToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
             var user = HttpContext.User;
-
-            return Ok(new { accessToken });
+            return Ok(new { refreshToken });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

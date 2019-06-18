@@ -1,7 +1,7 @@
 
 <h1 align="center">IdentityServer4 AdminUI</h1>
 
-<p align="center"><img src="./ids4-admin.jpg"/>
+<p align="center"><img src="./ids4-admin.png"/>
 <p align="center">IdentityServer4 AdminUI and Single Sign On</p>
 
 

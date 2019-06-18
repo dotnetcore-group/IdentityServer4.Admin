@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.AdminUI.Apis;
+using IdentityServer4.AdminUI.Models.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,16 @@ namespace IdentityServer4.AdminUI.Controllers
         [HttpGet, Route("")]
         public IActionResult Index()
         {
-            return View();
+            var model = new CreateClientViewModel();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateClientViewModel model)
+        {
+            var response = await _clientsApi.CreateClientAsync(model);
+            return View("Index", new CreateClientViewModel());
         }
 
         [HttpGet, Route("list")]

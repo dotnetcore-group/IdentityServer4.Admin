@@ -132,4 +132,10 @@
   <data name="Remember My Decision" xml:space="preserve">
     <value>Remember My Decision</value>
   </data>
+  <data name="Application Access" xml:space="preserve">
+    <value>Application Access</value>
+  </data>
+  <data name="Personal Infomation" xml:space="preserve">
+    <value>Personal Infomation</value>
+  </data>
 </root>

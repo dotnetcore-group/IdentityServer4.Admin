@@ -1,0 +1,46 @@
+﻿
+.client-types .type-item-container {
+    display: block;
+    width: 100%;
+}
+
+    .client-types .type-item-container input[type=radio] {
+        display: none;
+    }
+
+.type-item {
+    display: block;
+    width: 100%;
+    padding: 20px 0px;
+    text-align: center;
+    border: 1px solid #c8c8c8;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    min-height: 100px;
+    transition: all ease .3s;
+    position: relative;
+    cursor: pointer;
+}
+
+    .type-item:hover {
+        box-shadow: 0px 0px 10px 5px rgba(0,0,0,.1)
+    }
+
+.client-types input[type=radio]:checked + .type-item {
+    background-color: #3c8dbc;
+    border-color: #3c8dbc;
+    color: #ffffff;
+}
+
+.type-item .type-item-name, .type-item .type-item-desc {
+    display: block;
+}
+
+.type-item .type-item-name {
+    font-size: 14px;
+    padding: 5px 0px;
+}
+
+.type-item .type-item-desc {
+    font-size: 12px;
+}
