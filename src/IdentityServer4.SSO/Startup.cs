@@ -71,6 +71,17 @@ namespace IdentityServer4.SSO
 
             services.AddMediatR(typeof(Startup));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Development", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                });
+            });
+
             // .NET Native DI Abstraction
             RegisterServices(services);
         }
@@ -81,6 +92,7 @@ namespace IdentityServer4.SSO
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("Development");
             }
             else
             {
@@ -95,6 +107,7 @@ namespace IdentityServer4.SSO
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "files")),
                 RequestPath = "/files"
             });
+
             app.UseCookiePolicy();
             app.UseIdentityServer();
             app.UseLocalization();

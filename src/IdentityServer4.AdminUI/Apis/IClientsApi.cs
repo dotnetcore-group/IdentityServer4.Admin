@@ -15,5 +15,8 @@ namespace IdentityServer4.AdminUI.Apis
 
         [Get("/clients/{clientId}")]
         Task<JsonResponse<Client>> GetClientDetailsAsync(string clientId);
+
+        [Post("/clients")]
+        Task<JsonResponse<bool>> CreateClientAsync([Body]Models.Client.CreateClientViewModel model);
     }
 }

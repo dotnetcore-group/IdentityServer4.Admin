@@ -48,36 +48,67 @@ namespace IdentityServer4.SSO
 
         public static IEnumerable<Client> GetClients() => new List<Client>
         {
+            //new Client {
+            //    ClientId="IDS4-AdminUI",
+            //    ClientName="IdentityServer4 AdminUI",
+            //    ClientUri="http://localhost:5000",
+            //    LogoUri ="/images/ids4-admin.png",
+            //    AllowedGrantTypes = GrantTypes.Hybrid,
+            //    AllowAccessTokensViaBrowser = true,
+
+            //    ClientSecrets = {
+            //        new Secret("234E496F-1927-47A4-B64E-8AF93C5F2F10".Sha256())
+            //    },
+
+            //    RedirectUris = {
+            //        "http://localhost:5000/signin-oidc",
+            //        "https://localhost:5001/signin-oidc",
+            //    },
+            //    PostLogoutRedirectUris = {
+            //        "http://localhost:5000/signout-callback-oidc",
+            //        "https://localhost:5001/signout-callback-oidc",
+            //    },
+            //    AllowedCorsOrigins={
+            //        "http://localhost:5000",
+            //        "https://localhost:5001",
+            //    },
+            //    AccessTokenLifetime = 3600,
+            //    AuthorizationCodeLifetime = 3600,
+            //    AllowedScopes={
+            //        StandardScopes.OpenId,
+            //        StandardScopes.Profile,
+            //        StandardScopes.Email,
+            //        "ids4_admin_api",
+            //    },
+            //    AllowOfflineAccess = true,
+            //    AlwaysIncludeUserClaimsInIdToken = true
+            //},
             new Client {
-                ClientId="IDS4-AdminUI",
+                ClientId="ids4-admin-ui",
                 ClientName="IdentityServer4 AdminUI",
-                ClientUri="http://localhost:5000",
+                ClientUri="http://localhost:8000",
                 LogoUri ="/images/ids4-admin.png",
-                AllowedGrantTypes = GrantTypes.Hybrid,
+                AllowedGrantTypes = GrantTypes.Implicit,
                 AllowAccessTokensViaBrowser = true,
 
                 ClientSecrets = {
-                    new Secret("234E496F-1927-47A4-B64E-8AF93C5F2F10".Sha256())
+                    new Secret("266D5022-5BCA-45FF-BC77-EE013CA2A129".Sha256())
                 },
 
                 RedirectUris = {
-                    "http://localhost:5000/signin-oidc",
-                    "https://localhost:5001/signin-oidc",
+                    "http://localhost:8000/signin-callback-oidc",
                 },
                 PostLogoutRedirectUris = {
-                    "http://localhost:5000/signout-callback-oidc",
-                    "https://localhost:5001/signout-callback-oidc",
+                    "http://localhost:8000/signout-callback-oidc",
                 },
                 AllowedCorsOrigins={
-                    "http://localhost:5000",
-                    "https://localhost:5001",
+                    "http://localhost:8000"
                 },
                 AccessTokenLifetime = 3600,
                 AuthorizationCodeLifetime = 3600,
                 AllowedScopes={
                     StandardScopes.OpenId,
                     StandardScopes.Profile,
-                    StandardScopes.Email,
                     "ids4_admin_api",
                 },
                 AllowOfflineAccess = true,

@@ -1,10 +1,12 @@
-﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+﻿@model IdentityServer4.AdminUI.Models.Client.CreateClientViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Index";
 }
 
 @section Styles{
     <link href="~/lib/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/clients.css" rel="stylesheet" />
 }
 
 @section Breadcrumb{
@@ -22,6 +24,9 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
+                    <i class="fa fa-plus"></i> @Localizer["Add Client"]
+                </button>
                 <table id="clients-table" class="table table-bordered table-hover" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -34,6 +39,15 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-create">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <partial name="_CreateNewClientDialogPartial" model="Model"/>
+        </div>
+        <!-- /.modal-content -->
     </div>
 </div>
 
