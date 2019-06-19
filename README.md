@@ -10,10 +10,4 @@
 
 > This project is only a demonstration project. Please do not use it in production. 
 
-## Screenshots
-
-1. Login
-![login](./screenshots/login.png)
-
-2. Register
-![register](./screenshots/register.png)
+todo...
