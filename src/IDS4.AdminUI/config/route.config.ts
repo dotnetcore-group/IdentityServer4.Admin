@@ -39,6 +39,10 @@ export default [
                     {
                         path: '/clients/add',
                         component: './clients/AddClient'
+                    },
+                    {
+                        path: '/clients/edit',
+                        component: './clients/EditClient'
                     }
                 ]
             },

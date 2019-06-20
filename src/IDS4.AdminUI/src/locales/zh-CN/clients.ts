@@ -4,6 +4,7 @@ export default {
     'pages.clients.list.table.client.name': '客户端名称',
     'pages.clients.list.table.client.logo': '图标',
     'pages.clients.list.table.client.enabled': '状态',
+    'pages.clients.list.table.remove.confirm': '确定要删除吗？',
 
 
     /** Add Client Page */
@@ -20,5 +21,13 @@ export default {
     'pages.clients.add.form.logouri.tip': '客户端的LOGO地址',
     'pages.clients.add.form.description': '描述',
     'pages.clients.add.form.description.tip': '客户端的详细描述',
-    'pages.clients.add.from.create': '创建'
+    'pages.clients.add.from.create': '创建',
+
+
+    /**Edit Client Page */
+    'pages.clients.edit.tabs.basic': '基本',
+    'pages.clients.edit.tabs.settings': '高级',
+    'pages.clients.edit.tabs.authentication': '身份认证',
+    'pages.clients.edit.tabs.token': '令牌',
+    'pages.clients.edit.tabs.deviceflow': 'Device Flow'
 }

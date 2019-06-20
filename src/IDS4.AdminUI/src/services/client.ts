@@ -15,3 +15,15 @@ export const createClient = (model: CreateClientViewModel) => {
         }
     })
 }
+
+export const removeClient = (clientId: string) => {
+    return request(`/api/v1.0/clients/${clientId}`, {
+        method: 'delete'
+    })
+}
+
+export const fetchClient = (id: string) => {
+    return request(`/api/v1.0/clients/${id}`, {
+        method: 'get'
+    });
+}

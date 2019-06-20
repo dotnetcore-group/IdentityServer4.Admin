@@ -36,7 +36,7 @@ namespace IdentityServer4.Admin.API.Controllers
             }
 
             var errors = Notifications?.Select(n => n.Value);
-            return BadRequest(new JsonResponse<T>(errors));
+            return Ok(new JsonResponse<T>(errors));
         }
 
         protected void NotifyModelStateErrors()

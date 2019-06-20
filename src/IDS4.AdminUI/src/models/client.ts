@@ -1,12 +1,14 @@
 import IClientViewModel from "@/@types/IClientViewModel";
 import { Reducer } from "redux";
 import { Effect } from "dva";
-import { fetchClients, createClient } from "@/services/client";
+import { fetchClients, createClient, removeClient } from "@/services/client";
 import { message } from "antd";
 import { router } from "umi";
+import { fetchClient } from '../services/client';
 
 export interface IClientModelState {
     list?: Array<IClientViewModel>;
+    detail?: any
 }
 
 export interface IClientModelType {
@@ -14,7 +16,9 @@ export interface IClientModelType {
     state: IClientModelState;
     effects: {
         fetchList: Effect,
-        create: Effect
+        fetchDetail: Effect,
+        create: Effect,
+        remove: Effect
     };
     reducers: {
         save: Reducer<IClientModelState>
@@ -23,7 +27,9 @@ export interface IClientModelType {
 
 const ClientModel: IClientModelType = {
     namespace: 'client',
-    state: {},
+    state: {
+        detail: {}
+    },
     effects: {
         *fetchList(_, { call, put }) {
             const response = yield call(fetchClients);
@@ -35,13 +41,38 @@ const ClientModel: IClientModelType = {
                 }
             })
         },
-        *create({ payload }, { call, put }) {
+        *fetchDetail({ payload }, { call, put }) {
+            const response = yield call(fetchClient, payload);
+            const { data } = response;
+            if (data && data.success) {
+                const { data: detail } = data;
+                yield put({
+                    type: 'save',
+                    payload: {
+                        detail
+                    }
+                })
+            }
+        },
+        *create({ payload }, { call }) {
             const response = yield call(createClient, payload);
             const { data } = response;
             if (data.success) {
                 message.success("create success!");
                 router.push('/clients');
             }
+        },
+        *remove({ payload }, { call, put }) {
+            yield call(removeClient, payload);
+
+            const response = yield call(fetchClients);
+            const { data: { data: list } } = response;
+            yield put({
+                type: 'save',
+                payload: {
+                    list
+                }
+            })
         }
     },
     reducers: {
