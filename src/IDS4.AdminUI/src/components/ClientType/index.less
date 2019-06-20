@@ -1,0 +1,43 @@
+.clienttype {
+    width        : 100%;
+    border       : 1px solid #ccc;
+    text-align   : center;
+    margin-bottom: 20px;
+    padding      : 20px 0px;
+    border-radius: 5px;
+    cursor       : pointer;
+    position     : relative;
+    transition   : all ease .3s;
+
+    &:hover {
+        border-color: #1890FF;
+    }
+
+    .check {
+        display : none;
+        position: absolute;
+        left    : 5px;
+        top     : 5px;
+    }
+
+    .name {
+        font-size: 16px;
+    }
+
+    .desc {
+        font-size  : 12px;
+        line-height: 20px;
+    }
+
+}
+
+
+.clienttype.active {
+    border-color: #1890FF;
+
+    .check {
+        color  : #1890FF;
+        display: inline-block;
+    }
+
+}

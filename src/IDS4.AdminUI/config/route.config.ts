@@ -29,8 +29,20 @@ export default [
                 path: '/clients',
                 name: 'clients',
                 icon: 'desktop',
-                component: './clients/List'
-            }
+                component: '../layouts/BlankLayout',
+                hideChildrenInMenu: true,
+                routes: [
+                    {
+                        path: '/clients',
+                        component: './clients/List'
+                    },
+                    {
+                        path: '/clients/add',
+                        component: './clients/AddClient'
+                    }
+                ]
+            },
+
         ],
     },
 ]

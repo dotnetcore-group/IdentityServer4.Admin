@@ -4,7 +4,8 @@ import menu from './en-US/menu';
 import pwa from './en-US/pwa';
 import settingDrawer from './en-US/settingDrawer';
 import settings from './en-US/settings';
-import clientList from './en-US/clientList';
+import client from './en-US/client';
+import shared from './en-US/shared';
 
 export default {
     'navBar.lang': 'Languages',
@@ -12,11 +13,12 @@ export default {
     'layout.user.link.privacy': 'Privacy',
     'layout.user.link.terms': 'Terms',
     'app.preview.down.block': 'Download this page to your local project',
+    ...shared,
     ...globalHeader,
     ...menu,
     ...settingDrawer,
     ...settings,
     ...pwa,
     ...component,
-    ...clientList
+    ...client
 };
