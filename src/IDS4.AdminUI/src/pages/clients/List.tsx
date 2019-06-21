@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { ConnectState, ConnectProps } from '@/models/connect';
 import IClientViewModel from '../../@types/IClientViewModel';
-import { Table, Avatar, Icon, Card, Button, Badge } from 'antd';
+import { Table, Avatar, Card, Button, Badge, Popconfirm, Divider } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { router } from 'umi';
 
@@ -18,12 +18,18 @@ class ClientList extends React.Component<IClientListProps> {
         dispatch && dispatch({ type: 'client/fetchList' });
     }
 
+    handleRemove(clientId: string) {
+        const { dispatch } = this.props;
+
+        dispatch && dispatch({ type: 'client/remove', payload: clientId });
+    }
+
     render() {
         const { list, loading } = this.props;
         return (
             <Card>
                 <div>
-                    <Button type="primary" icon="plus" onClick={()=>{router.push("/clients/add")}}>
+                    <Button type="primary" icon="plus" onClick={() => { router.push("/clients/add") }}>
                         {formatMessage({ id: 'pages.clients.list.table.client.add', defaultMessage: 'Add Client' })}
                     </Button>
                 </div>
@@ -38,6 +44,18 @@ class ClientList extends React.Component<IClientListProps> {
                     <Table.Column dataIndex="enabled" title={formatMessage({ id: 'pages.clients.list.table.client.enabled' })}
                         render={record =>
                             record ? (<Badge status="success" text={formatMessage({ id: 'app.shared.enabled' })} />) : (<Badge status="error" text={formatMessage({ id: 'app.shared.disabled' })} />)} />
+                    <Table.Column render={(text, record) => (
+                        <>
+                            <Button type="ghost" onClick={() => { router.push(`/clients/edit?id=${record.clientId}`) }}>{formatMessage({ id: 'app.shared.edit', defaultMessage: 'Edit' })}</Button>
+                            <Divider type="vertical" />
+                            <Popconfirm placement="topLeft" title={formatMessage({ id: 'pages.clients.list.table.remove.confirm', defaultMessage: 'Remove' })}
+                                onConfirm={this.handleRemove.bind(this, record)}
+                                okText="Yes"
+                                cancelText="No">
+                                <Button type="danger">{formatMessage({ id: 'app.shared.remove', defaultMessage: 'Remove' })}</Button>
+                            </Popconfirm>
+                        </>
+                    )} />
                 </Table>
             </Card>
         )
@@ -46,5 +64,5 @@ class ClientList extends React.Component<IClientListProps> {
 
 export default connect(({ client, loading }: ConnectState) => ({
     list: client.list,
-    loading: loading.effects['client/fetchList']
+    loading: loading.effects['client/fetchList'] || loading.effects['client/remove']
 }))(ClientList)

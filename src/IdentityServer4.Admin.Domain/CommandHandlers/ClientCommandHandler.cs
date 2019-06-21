@@ -111,7 +111,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
                 return false;
             }
             var clientId = request.OriginalClinetId != request.Client.ClientId ? request.OriginalClinetId : request.Client.ClientId;
-            var client = await _clientRepository.FindByClientIdAsync(clientId);
+            var client = await _clientRepository.FindByClientIdWithNoTrackingAsync(clientId);
             if (client == null)
             {
                 await _bus.RaiseEvent(new DomainNotification("key_not_found", $"Client with ClientId {clientId} not found"));

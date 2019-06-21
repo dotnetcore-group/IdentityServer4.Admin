@@ -10,6 +10,7 @@ namespace IdentityServer4.Admin.Domain.Interfaces
         Task<Client> GetClientAsync(string clientId);
         Task<bool> ExistedAsync(string clientId);
         Task<Client> FindByClientIdAsync(string clientId);
+        Task<Client> FindByClientIdWithNoTrackingAsync(string clientId);
         Task UpdateWithChildrensAsync(Client entity);
     }
 }
