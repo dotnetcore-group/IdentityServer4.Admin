@@ -3,6 +3,7 @@ import IPanelPropsBase from './IPanelPropsBase';
 import FormItem from './FormItem';
 import { Switch, Input } from 'antd';
 import { formatMessage } from 'umi-plugin-locale';
+import TagsInput from '@/components/TagsInput/TagsInput';
 
 export interface IAuthenticationPanelProps extends IPanelPropsBase {
     frontChannelLogoutUri?: string;
@@ -69,7 +70,7 @@ export default class AuthenticationPanel extends React.Component<IAuthentication
                         getFieldDecorator('identityProviderRestrictions', {
                             initialValue: identityProviderRestrictions,
                         })(
-                            <Input />
+                            <TagsInput newText={formatMessage({ id: 'pages.clients.edit.tabs.addrestriction', defaultMessage: 'Add Restriction' })} />
                         )
                     }
                 </FormItem>
@@ -78,7 +79,7 @@ export default class AuthenticationPanel extends React.Component<IAuthentication
                         getFieldDecorator('allowedCorsOrigins', {
                             initialValue: allowedCorsOrigins,
                         })(
-                            <Input />
+                            <TagsInput longTagLength={-1} newText={formatMessage({ id: 'pages.clients.edit.tabs.addorigin', defaultMessage: 'Add Origin' })} />
                         )
                     }
                 </FormItem>

@@ -26,6 +26,11 @@ namespace IdentityServer4.Admin.Data.Repositories
             return await DbSet.FirstOrDefaultAsync(c => c.ClientId == clientId);
         }
 
+        public async Task<Client> FindByClientIdWithNoTrackingAsync(string clientId)
+        {
+            return await DbSet.AsNoTracking().FirstOrDefaultAsync(c => c.ClientId == clientId);
+        }
+
         public async Task<Client> GetClientAsync(string clientId)
         {
             return await DbSet

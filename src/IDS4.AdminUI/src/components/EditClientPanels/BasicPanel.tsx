@@ -18,7 +18,8 @@ export default class BasicPanel extends React.Component<IBasicPanelProps> {
 
         return (
             <>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientId', defaultMessage: 'Client Id' })}>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientId', defaultMessage: 'Client Id' })}
+                    tip="test">
                     {getFieldDecorator('clientId', {
                         initialValue: clientId
                     })(

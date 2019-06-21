@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { ConnectState, ConnectProps } from '@/models/connect';
 import IClientViewModel from '../../@types/IClientViewModel';
-import { Table, Avatar, Icon, Card, Button, Badge, Popconfirm, Divider } from 'antd';
+import { Table, Avatar, Card, Button, Badge, Popconfirm, Divider } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { router } from 'umi';
 
@@ -44,9 +44,9 @@ class ClientList extends React.Component<IClientListProps> {
                     <Table.Column dataIndex="enabled" title={formatMessage({ id: 'pages.clients.list.table.client.enabled' })}
                         render={record =>
                             record ? (<Badge status="success" text={formatMessage({ id: 'app.shared.enabled' })} />) : (<Badge status="error" text={formatMessage({ id: 'app.shared.disabled' })} />)} />
-                    <Table.Column dataIndex="clientId" render={(record) => (
+                    <Table.Column render={(text, record) => (
                         <>
-                            <Button type="ghost" onClick={() => { router.push(`/clients/edit?id=${record}`) }}>{formatMessage({ id: 'app.shared.edit', defaultMessage: 'Edit' })}</Button>
+                            <Button type="ghost" onClick={() => { router.push(`/clients/edit?id=${record.clientId}`) }}>{formatMessage({ id: 'app.shared.edit', defaultMessage: 'Edit' })}</Button>
                             <Divider type="vertical" />
                             <Popconfirm placement="topLeft" title={formatMessage({ id: 'pages.clients.list.table.remove.confirm', defaultMessage: 'Remove' })}
                                 onConfirm={this.handleRemove.bind(this, record)}

@@ -1,7 +1,7 @@
 import IClientViewModel from "@/@types/IClientViewModel";
 import { Reducer } from "redux";
 import { Effect } from "dva";
-import { fetchClients, createClient, removeClient } from "@/services/client";
+import { fetchClients, createClient, removeClient, updateClient } from "@/services/client";
 import { message } from "antd";
 import { router } from "umi";
 import { fetchClient } from '../services/client';
@@ -18,7 +18,8 @@ export interface IClientModelType {
         fetchList: Effect,
         fetchDetail: Effect,
         create: Effect,
-        remove: Effect
+        remove: Effect,
+        update: Effect
     };
     reducers: {
         save: Reducer<IClientModelState>
@@ -73,6 +74,14 @@ const ClientModel: IClientModelType = {
                     list
                 }
             })
+        },
+        *update({ payload }, { call, put }) {
+            const response = yield call(updateClient, payload);
+            const { data } = response;
+            if (data.success) {
+                message.success("update success!");
+                router.push('/clients');
+            }
         }
     },
     reducers: {

@@ -1,7 +1,12 @@
-import { Form } from "antd";
+import { Form, Tooltip, Icon } from "antd";
 import React from 'react';
+import { FormItemProps } from "antd/lib/form";
 
-export default class FormItem extends Form.Item {
+export interface IFormItemProps extends FormItemProps {
+    tip?: React.ReactNode;
+}
+
+export default class FormItem extends React.Component<IFormItemProps> {
     render() {
 
         const formItemLayout = {
@@ -15,10 +20,32 @@ export default class FormItem extends Form.Item {
             },
         }
 
-        return (
-            <Form.Item {...this.props} {...formItemLayout} labelAlign="left">
+        const { children } = this.props;
 
+        return (
+            <Form.Item {...this.props}
+                {...formItemLayout}
+                labelAlign="left"
+                label={this.renderFormLabel()}>
+                {children}
             </Form.Item>
+        )
+    }
+
+    renderFormLabel() {
+        const { label, tip } = this.props;
+        return (
+            <>
+                {label}
+                {
+                    tip &&
+                    <Tooltip title={tip}>
+                        <span style={{ marginLeft: '5px' }}>
+                            <Icon theme="filled" type="question-circle" />
+                        </span>
+                    </Tooltip>
+                }
+            </>
         )
     }
 }

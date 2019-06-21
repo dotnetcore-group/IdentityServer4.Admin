@@ -4,6 +4,7 @@ import FormItem from './FormItem';
 import { Switch, Select, Input, Button } from 'antd';
 import { Link } from 'umi';
 import { formatMessage } from 'umi-plugin-locale';
+import TagsInput from '@/components/TagsInput/TagsInput';
 
 export interface IAdvancedPanelProps extends IPanelPropsBase {
     enabled?: boolean;
@@ -113,7 +114,7 @@ export default class AdvancedPanel extends React.Component<IAdvancedPanelProps> 
                         getFieldDecorator('allowedScopes', {
                             initialValue: allowedScopes,
                         })(
-                            <Input />
+                            <TagsInput newText={formatMessage({ id: 'pages.clients.edit.tabs.addscope', defaultMessage: 'Add Scope' })} />
                         )
                     }
                 </FormItem>
@@ -122,20 +123,26 @@ export default class AdvancedPanel extends React.Component<IAdvancedPanelProps> 
                         getFieldDecorator('redirectUris', {
                             initialValue: redirectUris
                         })(
-                            <Input />
+                            <TagsInput longTagLength={25} newText={formatMessage({ id: 'pages.clients.edit.tabs.addredirecturi', defaultMessage: 'Add Redirect Uri' })} />
                         )
                     }
                 </FormItem>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.allowedGrantTypes', defaultMessage: "Allowed Grant Types"})}>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.allowedGrantTypes', defaultMessage: "Allowed Grant Types" })}>
                     {
                         getFieldDecorator('allowedGrantTypes', {
                             initialValue: allowedGrantTypes
                         })(
-                            <Input />
+                            <Select mode="multiple">
+                                <Select.Option value="implicit">implicit</Select.Option>
+                                <Select.Option value="hybird">hybird</Select.Option>
+                                <Select.Option value="client_credentials">client_credentials</Select.Option>
+                                <Select.Option value="authorization_code">authorization_code</Select.Option>
+                                <Select.Option value="password">password</Select.Option>
+                            </Select>
                         )
                     }
                 </FormItem>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.requireConsentScreen', defaultMessage: "Require Consent Screen"})}>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.requireConsentScreen', defaultMessage: "Require Consent Screen" })}>
                     {
                         getFieldDecorator('requireConsent', {
                             initialValue: requireConsent,
@@ -145,14 +152,18 @@ export default class AdvancedPanel extends React.Component<IAdvancedPanelProps> 
                         )
                     }
                 </FormItem>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientSecrets', defaultMessage: "Client Secrets"})}>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientSecrets', defaultMessage: "Client Secrets" })}>
                     <Link to="">
-                        <Button type="primary" htmlType="button">Client Secrets</Button>
+                        <Button type="primary" htmlType="button">
+                            {formatMessage({ id: 'pages.clients.edit.tabs.panel.clientSecrets', defaultMessage: "Client Secrets" })}
+                        </Button>
                     </Link>
                 </FormItem>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.properties', defaultMessage: "Properties"})}>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.properties', defaultMessage: "Properties" })}>
                     <Link to="">
-                        <Button type="primary" htmlType="button">Properties</Button>
+                        <Button type="primary" htmlType="button">
+                            {formatMessage({ id: 'pages.clients.edit.tabs.panel.properties', defaultMessage: "Properties" })}
+                        </Button>
                     </Link>
                 </FormItem>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Form, { FormComponentProps } from "antd/lib/form";
-import { Col, Row, Divider, Tabs, Input } from "antd";
+import { Divider, Tabs } from "antd";
 import Button from 'antd/es/button/button';
 import { formatMessage } from "umi-plugin-locale";
 import BasicPanel from "./BasicPanel";
@@ -8,16 +8,19 @@ import AuthenticationPanel from "./AuthenticationPanel";
 import AdvancedPanel from './AdvancedPanel';
 import TokenPanel from "./TokenPanel";
 import DeviceFlowPanel from "./DeviceFlowPanel";
+import { router } from "umi";
 
 const { TabPane } = Tabs;
 
-export interface IEditPanelProps extends FormComponentProps {
-    detail?: any
+export interface IEditTabsProps extends FormComponentProps {
+    detail?: any;
+    updating?: boolean;
+    onUpdate?: (values: any) => void;
 }
 
-class EditPanel extends React.Component<IEditPanelProps> {
+class EditTabs extends React.Component<IEditTabsProps> {
     render() {
-        const { form, detail } = this.props;
+        const { form, detail, onUpdate, updating } = this.props;
 
         const tabList = [
             {
@@ -49,11 +52,22 @@ class EditPanel extends React.Component<IEditPanelProps> {
                 e.preventDefault();
                 form.validateFields((err, fieldsValue) => {
                     if (!err) {
-                        console.log(fieldsValue);
+                        onUpdate && onUpdate({
+                            ...detail,
+                            ...fieldsValue
+                        });
                     }
                 })
             }}>
-                <Tabs defaultActiveKey={tabList[0].key}>
+                {
+                    form.getFieldDecorator('originalClinetId', {
+                        initialValue: detail.clientId
+                    })(
+                        <input type="hidden" />
+                    )
+                }
+                <Tabs defaultActiveKey={tabList[0].key}
+                    animated={false}>
                     {
                         tabList.map(item => (
                             <TabPane tab={item.tab} key={item.key}>
@@ -62,12 +76,12 @@ class EditPanel extends React.Component<IEditPanelProps> {
                         ))
                     }
                 </Tabs>
-                <Button htmlType="submit" type="primary">{formatMessage({ id: 'app.shared.update' })}</Button>
+                <Button loading={updating} htmlType="submit" type="primary">{formatMessage({ id: 'app.shared.update' })}</Button>
                 <Divider type="vertical" />
-                <Button htmlType="button" type="default">{formatMessage({ id: 'app.shared.cancel' })}</Button>
-            </Form >
+                <Button loading={updating} htmlType="button" type="default" onClick={() => router.goBack()}>{formatMessage({ id: 'app.shared.cancel' })}</Button>
+            </Form>
         )
     }
 }
 
-export default Form.create<IEditPanelProps>()(EditPanel);
+export default Form.create<IEditTabsProps>()(EditTabs);

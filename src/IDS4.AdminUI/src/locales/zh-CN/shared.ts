@@ -1,4 +1,6 @@
 export default {
+    'app.shared.client': '客户端',
+
     'app.shared.enabled': '可用',
     'app.shared.disabled': '不可用',
     'app.shared.remove': '删除',

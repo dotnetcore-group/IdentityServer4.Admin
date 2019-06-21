@@ -27,3 +27,12 @@ export const fetchClient = (id: string) => {
         method: 'get'
     });
 }
+
+export const updateClient = (model: any) => {
+    return request('/api/v1.0/clients', {
+        method: 'put',
+        data: {
+            ...model
+        }
+    })
+}

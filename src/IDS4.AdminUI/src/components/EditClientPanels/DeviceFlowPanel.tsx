@@ -2,6 +2,7 @@ import React from 'react';
 import IPanelPropsBase from './IPanelPropsBase';
 import FormItem from './FormItem';
 import { Input } from 'antd';
+import { formatMessage } from 'umi-plugin-locale';
 
 export interface IDeviceFlowPanelProps extends IPanelPropsBase {
     userCodeType?: string;
@@ -17,7 +18,7 @@ export default class DeviceFlowPanel extends React.Component<IDeviceFlowPanelPro
 
         return (
             <>
-                <FormItem label="User Code Type">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.userCodeType', defaultMessage: "User Code Type" })}>
                     {
                         getFieldDecorator('userCodeType', {
                             initialValue: userCodeType
@@ -26,7 +27,7 @@ export default class DeviceFlowPanel extends React.Component<IDeviceFlowPanelPro
                         )
                     }
                 </FormItem>
-                <FormItem label="Device Code Lifetime">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.deviceCodeLifetime', defaultMessage: "Device Code Lifetime" })}>
                     {
                         getFieldDecorator('deviceCodeLifetime', {
                             initialValue: deviceCodeLifetime

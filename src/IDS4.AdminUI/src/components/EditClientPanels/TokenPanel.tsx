@@ -3,6 +3,7 @@ import IPanelPropsBase from './IPanelPropsBase';
 import { Switch, Select, Input, Button, InputNumber } from 'antd';
 import FormItem from './FormItem';
 import { Link } from 'umi';
+import { formatMessage } from 'umi-plugin-locale';
 
 export interface ITokenPanelProps extends IPanelPropsBase {
     identityTokenLifetime?: number;
@@ -42,7 +43,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
 
         return (
             <>
-                <FormItem label="Identity Token Lifetime">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.identityTokenLifetime', defaultMessage: "Identity Token Lifetime" })}>
                     {
                         getFieldDecorator('identityTokenLifetime', {
                             initialValue: identityTokenLifetime
@@ -51,7 +52,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Access Token Lifetime">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.accessTokenLifetime', defaultMessage: "Access Token Lifetime" })}>
                     {
                         getFieldDecorator('accessTokenLifetime', {
                             initialValue: accessTokenLifetime
@@ -60,7 +61,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Access Token Type">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.accessTokenType', defaultMessage: "Access Token Type" })}>
                     {
                         getFieldDecorator('accessTokenType', {
                             initialValue: accessTokenType
@@ -72,7 +73,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Authorization Code Lifetime">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.authorizationCodeLifetime', defaultMessage: "Authorization Code Lifetime" })}>
                     {
                         getFieldDecorator('authorizationCodeLifetime', {
                             initialValue: authorizationCodeLifetime
@@ -81,7 +82,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Absolute Refresh Token Lifetime">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.absoluteRefeshTokenLifetime', defaultMessage: "Absolute Refresh Token Lifetime" })}>
                     {
                         getFieldDecorator('absoluteRefeshTokenLifetime', {
                             initialValue: absoluteRefeshTokenLifetime
@@ -90,7 +91,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Sliding Refresh Token Lifetime">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.slidingRefreshTokenLifetime', defaultMessage: "Sliding Refresh Token Lifetime" })}>
                     {
                         getFieldDecorator('slidingRefreshTokenLifetime', {
                             initialValue: slidingRefreshTokenLifetime
@@ -99,31 +100,31 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Refresh Token Usage">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.refreshTokenUsage', defaultMessage: "Refresh Token Usage" })}>
                     {
                         getFieldDecorator('refreshTokenUsage', {
                             initialValue: refreshTokenUsage
                         })(
                             <Select>
-                                <Select.Option value={0}>Reuse</Select.Option>
-                                <Select.Option value={1}>One Time Only</Select.Option>
+                                <Select.Option value={0}>{formatMessage({ id: 'pages.clients.edit.tabs.panel.refreshTokenUsage.reuse', defaultMessage: "ReUse" })}</Select.Option>
+                                <Select.Option value={1}>{formatMessage({ id: 'pages.clients.edit.tabs.panel.refreshTokenUsage.onetimeonly', defaultMessage: "One Time Only" })}</Select.Option>
                             </Select>
                         )
                     }
                 </FormItem>
-                <FormItem label="Refresh Token Expiration">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.refreshTokenExpiration', defaultMessage: "Refresh Token Expiration" })}>
                     {
                         getFieldDecorator('refreshTokenExpiration', {
                             initialValue: refreshTokenExpiration
                         })(
                             <Select>
-                                <Select.Option value={0}>Sliding</Select.Option>
-                                <Select.Option value={1}>Absolute</Select.Option>
+                                <Select.Option value={0}>{formatMessage({ id: 'pages.clients.edit.tabs.panel.refreshTokenExpiration.sliding', defaultMessage: "Sliding" })}</Select.Option>
+                                <Select.Option value={1}>{formatMessage({ id: 'pages.clients.edit.tabs.panel.refreshTokenExpiration.absolute', defaultMessage: "Absolute" })}</Select.Option>
                             </Select>
                         )
                     }
                 </FormItem>
-                <FormItem label="Update Access Token Claims On Refresh">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.updateAccessTokenClaimsOnRefresh', defaultMessage: "Update Access Token Claims On Refresh" })}>
                     {
                         getFieldDecorator('updateAccessTokenClaimsOnRefresh', {
                             initialValue: updateAccessTokenClaimsOnRefresh,
@@ -133,7 +134,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Include Jwt Id">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.includeJwtId', defaultMessage: "Include Jwt Id" })}>
                     {
                         getFieldDecorator('includeJwtId', {
                             initialValue: includeJwtId,
@@ -143,7 +144,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Always Send Client Claims">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.alwaysSendClientClaims', defaultMessage: "Always Send Client Claims" })}>
                     {
                         getFieldDecorator('alwaysSendClientClaims', {
                             initialValue: alwaysSendClientClaims,
@@ -153,7 +154,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Always Include User Claims In IdToken">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.alwaysIncludeUserClaimsInIdToken', defaultMessage: "Always Include User Claims In IdToken" })}>
                     {
                         getFieldDecorator('alwaysIncludeUserClaimsInIdToken', {
                             initialValue: alwaysIncludeUserClaimsInIdToken,
@@ -163,7 +164,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Pair Wise Subject Salt">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.pairWiseSubjectSalt', defaultMessage: "Pair Wise Subject Salt" })}>
                     {
                         getFieldDecorator('pairWiseSubjectSalt', {
                             initialValue: pairWiseSubjectSalt
@@ -172,7 +173,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Client Claims Prefix">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientClaimsPrefix', defaultMessage: "Client Claims Prefix" })}>
                     {
                         getFieldDecorator('clientClaimsPrefix', {
                             initialValue: clientClaimsPrefix
@@ -181,9 +182,9 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
                         )
                     }
                 </FormItem>
-                <FormItem label="Claims">
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.claims', defaultMessage: "Claims" })}>
                     <Link to="">
-                        <Button type="primary" htmlType="button">Claims</Button>
+                        <Button type="primary" htmlType="button">{formatMessage({ id: 'pages.clients.edit.tabs.panel.claims', defaultMessage: "Claims" })}</Button>
                     </Link>
                 </FormItem>
             </>
