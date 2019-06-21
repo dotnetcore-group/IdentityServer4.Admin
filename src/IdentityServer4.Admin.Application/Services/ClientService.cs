@@ -47,7 +47,7 @@ namespace IdentityServer4.Admin.Application.Services
         public async Task<Client> GetClientDetails(string clientId)
         {
             var client = await _clientRepository.GetClientAsync(clientId);
-            return _mapper.Map<Client>(client);
+            return client?.ToModel();
         }
 
         public async Task CreateAsync(CreateClientViewModel model)

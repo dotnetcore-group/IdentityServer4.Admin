@@ -1,48 +1,59 @@
 import React from 'react';
-import { Form, Input } from 'antd';
+import { Input } from 'antd';
+import IPanelPropsBase from './IPanelPropsBase';
+import FormItem from './FormItem';
+import { formatMessage } from 'umi-plugin-locale';
 
-export default class BasicPanel extends React.Component<any> {
+export interface IBasicPanelProps extends IPanelPropsBase {
+    clientId?: string;
+    clientName?: string;
+    clientUri?: string;
+    logoUri?: string;
+    description?: string;
+}
+
+export default class BasicPanel extends React.Component<IBasicPanelProps> {
     render() {
-        const { form: { getFieldDecorator }, detail = {} } = this.props;
-        console.log(detail);
+        const { form: { getFieldDecorator }, clientId, clientName, clientUri, logoUri, description } = this.props;
+
         return (
-            <div>
-                <Form.Item label="Client Id">
+            <>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientId', defaultMessage: 'Client Id' })}>
                     {getFieldDecorator('clientId', {
-                        initialValue: detail.clientId
+                        initialValue: clientId
                     })(
                         <Input />
                     )}
-                </Form.Item>
-                <Form.Item label="Client Name">
+                </FormItem>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientName', defaultMessage: 'Client Name' })}>
                     {getFieldDecorator('clientName', {
-                        initialValue: detail.clientName
+                        initialValue: clientName
                     })(
                         <Input />
                     )}
-                </Form.Item>
-                <Form.Item label="Client Uri">
+                </FormItem>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientUri', defaultMessage: 'Client Uri' })}>
                     {getFieldDecorator('clientUri', {
-                        initialValue: detail.clientUri
+                        initialValue: clientUri
                     })(
                         <Input />
                     )}
-                </Form.Item>
-                <Form.Item label="Logo Uri">
+                </FormItem>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.logoUri', defaultMessage: 'Logo Uri' })}>
                     {getFieldDecorator('logoUri', {
-                        initialValue: detail.logoUri
+                        initialValue: logoUri
                     })(
                         <Input />
                     )}
-                </Form.Item>
-                <Form.Item label="Description">
+                </FormItem>
+                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.description', defaultMessage: 'Description' })}>
                     {getFieldDecorator('description', {
-                        initialValue: detail.description
+                        initialValue: description
                     })(
-                        <Input />
+                        <Input.TextArea />
                     )}
-                </Form.Item>
-            </div>
+                </FormItem>
+            </>
         )
     }
 }
