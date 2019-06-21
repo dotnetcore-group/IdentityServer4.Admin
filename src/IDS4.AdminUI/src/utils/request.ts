@@ -33,22 +33,33 @@ axios.interceptors.response.use(
         const { response } = error;
         if (response) {
             const { status } = response;
-            console.log(status === 401);
-            if (status === 401) {
+            if (status === 400) {
+                const { data } = response;
+                if (data) {
+                    const { success, errors } = data;
+                    if (!success) {
+                        let description = errors;
+                        notification.error({
+                            message: 'Error!',
+                            description: description
+                        })
+                    }
+                }
+                return response;
+            } else if (status === 401) {
                 // var refreshTime = userManager.oidcUser.expires_at;
                 // var currentTime = moment().unix().valueOf();
-                
+
                 // if (currentTime >= refreshTime) {
-                    // todo : refresh access token
+                // todo : refresh access token
                 // } else {
-                    window.location.href = "/user/login";
+                window.location.href = "/user/login";
                 // }
 
             }
             // todo : handler other status code
         }
         return { success: false, data: false, errors: ["error!"] };
-
     }
 )
 
@@ -69,20 +80,6 @@ export default function request(url: string, options: IRequestOptions) {
     return axios({
         ...newOptions,
         url
-    }).then(checkResponse)
+    });
 }
 
-const checkResponse = (response: AxiosResponse) => {
-    const { data } = response;
-    if (data) {
-        const { success, errors } = data;
-        if (!success) {
-            let description = errors;
-            notification.error({
-                message: 'Error!',
-                description: description
-            })
-        }
-    }
-    return response;
-}

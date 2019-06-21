@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace IdentityServer4.Admin.API
 {
@@ -38,6 +39,8 @@ namespace IdentityServer4.Admin.API
                 options.ReportApiVersions = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
             });
+
+            services.ConfigureLocalization();
 
             // Identity
             services.ConfigureIdentityDatabase(Configuration);
@@ -73,6 +76,10 @@ namespace IdentityServer4.Admin.API
                 app.UseHttpsRedirection();
             }
             app.UseAuthentication();
+
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

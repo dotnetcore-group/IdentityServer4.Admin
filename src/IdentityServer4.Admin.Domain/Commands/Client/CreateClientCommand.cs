@@ -101,6 +101,7 @@ namespace IdentityServer4.Admin.Domain.Commands.Client
         public void Configure(IdentityServer4.Models.Client client)
         {
             IClientConfigurationStrategy strategy = null;
+
             if (_clientType.Id == ClientType.WebImplicit.Id)
             {
                 strategy = new WebImplicitClientConfigurationStrategy();
@@ -127,7 +128,7 @@ namespace IdentityServer4.Admin.Domain.Commands.Client
             }
             else
             {
-                throw new ArgumentException(nameof(_clientType.Id));
+                // empty
             }
             strategy?.Configure(client);
         }

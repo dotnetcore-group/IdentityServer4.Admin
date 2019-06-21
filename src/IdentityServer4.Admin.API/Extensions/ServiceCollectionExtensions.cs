@@ -5,12 +5,14 @@ using IdentityServer4.Admin.Application.AutoMapper;
 using IdentityServer4.Admin.Data.Mysql.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
@@ -108,6 +110,25 @@ namespace IdentityServer4.Admin.API.Extensions
             });
 
             return services;
+        }
+
+        public static void ConfigureLocalization(this IServiceCollection services)
+        {
+            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+
+            services.Configure<RequestLocalizationOptions>(
+                            opts =>
+                            {
+                                var supportedCultures = new[]
+                                {
+                                    new CultureInfo("zh-cn"),
+                                    new CultureInfo("en-us"),
+                                };
+
+                                opts.DefaultRequestCulture = new RequestCulture("zh-cn");
+                                opts.SupportedCultures = supportedCultures;
+                                opts.SupportedUICultures = supportedCultures;
+                            });
         }
     }
 

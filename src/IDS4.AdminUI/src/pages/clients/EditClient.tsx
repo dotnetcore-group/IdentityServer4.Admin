@@ -39,7 +39,7 @@ class EditClient extends React.Component<IEditClientProps> {
 
     render() {
         const { updating, loading, detail = {} } = this.props;
-        const { clientName, clientId } = detail;
+        const { clientId } = detail;
 
         console.log(detail);
 
@@ -49,7 +49,7 @@ class EditClient extends React.Component<IEditClientProps> {
                 style={{ width: '100%', padding: '0px' }}>
                 <h1>
                     <Button type="link" onClick={() => router.goBack()}><Icon type="left" /></Button>
-                    {formatMessage({ id: 'app.shared.client', defaultMessage: "Client" })} : {clientName}
+                    {formatMessage({ id: 'app.shared.client', defaultMessage: "Client" })} : {clientId}
                 </h1>
                 <EditTabs detail={detail}
                     updating={updating}
