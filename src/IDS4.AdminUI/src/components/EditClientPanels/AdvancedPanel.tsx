@@ -2,11 +2,12 @@ import React from 'react';
 import IPanelPropsBase from './IPanelPropsBase';
 import FormItem from './FormItem';
 import { Switch, Select, Input, Button } from 'antd';
-import { Link } from 'umi';
+import { Link, router } from 'umi';
 import { formatMessage } from 'umi-plugin-locale';
 import TagsInput from '@/components/TagsInput/TagsInput';
 
 export interface IAdvancedPanelProps extends IPanelPropsBase {
+    clientId?: string;
     enabled?: boolean;
     protocolType?: string;
     requireClientSecret?: boolean;
@@ -23,6 +24,7 @@ export interface IAdvancedPanelProps extends IPanelPropsBase {
 export default class AdvancedPanel extends React.Component<IAdvancedPanelProps> {
     render() {
         const { form: { getFieldDecorator },
+            clientId,
             enabled,
             protocolType,
             requireClientSecret,
@@ -153,14 +155,14 @@ export default class AdvancedPanel extends React.Component<IAdvancedPanelProps> 
                     }
                 </FormItem>
                 <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientSecrets', defaultMessage: "Client Secrets" })}>
-                    <Link to="">
+                    <Link to={`/clients/secrets?id=${clientId}`}>
                         <Button type="primary" htmlType="button">
                             {formatMessage({ id: 'pages.clients.edit.tabs.panel.clientSecrets', defaultMessage: "Client Secrets" })}
                         </Button>
                     </Link>
                 </FormItem>
                 <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.properties', defaultMessage: "Properties" })}>
-                    <Link to="">
+                    <Link to={`/clients/properties?id=${clientId}`}>
                         <Button type="primary" htmlType="button">
                             {formatMessage({ id: 'pages.clients.edit.tabs.panel.properties', defaultMessage: "Properties" })}
                         </Button>

@@ -44,12 +44,12 @@ class ClientList extends React.Component<IClientListProps> {
                     <Table.Column dataIndex="enabled" title={formatMessage({ id: 'pages.clients.list.table.client.enabled' })}
                         render={record =>
                             record ? (<Badge status="success" text={formatMessage({ id: 'app.shared.enabled' })} />) : (<Badge status="error" text={formatMessage({ id: 'app.shared.disabled' })} />)} />
-                    <Table.Column render={(text, record) => (
+                    <Table.Column render={(text, record: IClientViewModel) => (
                         <>
                             <Button type="ghost" onClick={() => { router.push(`/clients/edit?id=${record.clientId}`) }}>{formatMessage({ id: 'app.shared.edit', defaultMessage: 'Edit' })}</Button>
                             <Divider type="vertical" />
                             <Popconfirm placement="topLeft" title={formatMessage({ id: 'pages.clients.list.table.remove.confirm', defaultMessage: 'Remove' })}
-                                onConfirm={this.handleRemove.bind(this, record)}
+                                onConfirm={this.handleRemove.bind(this, record.clientId || '')}
                                 okText="Yes"
                                 cancelText="No">
                                 <Button type="danger">{formatMessage({ id: 'app.shared.remove', defaultMessage: 'Remove' })}</Button>

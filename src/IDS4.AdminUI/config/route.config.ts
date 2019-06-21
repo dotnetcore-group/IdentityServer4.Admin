@@ -43,6 +43,18 @@ export default [
                     {
                         path: '/clients/edit',
                         component: './clients/EditClient'
+                    },
+                    {
+                        path: '/clients/secrets',
+                        component: './clients/Secrets'
+                    },
+                    {
+                        path: '/clients/properties',
+                        component: './clients/Properties'
+                    },
+                    {
+                        path: '/clients/claims',
+                        component: './clients/Claims'
                     }
                 ]
             },

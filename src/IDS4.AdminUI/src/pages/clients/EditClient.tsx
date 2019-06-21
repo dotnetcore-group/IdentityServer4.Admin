@@ -39,7 +39,7 @@ class EditClient extends React.Component<IEditClientProps> {
 
     render() {
         const { updating, loading, detail = {} } = this.props;
-        const { clientName } = detail;
+        const { clientName, clientId } = detail;
 
         console.log(detail);
 
