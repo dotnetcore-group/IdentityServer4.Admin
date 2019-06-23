@@ -12,7 +12,6 @@ import ProLayout, {
 } from '@ant-design/pro-layout';
 import React, { useState } from 'react';
 
-import Authorized from '@/utils/Authorized';
 import Link from 'umi/link';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { connect } from 'dva';
@@ -41,13 +40,13 @@ const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
             ...item,
             children: item.children ? menuDataRender(item.children) : [],
         };
-        return Authorized.check(item.authority, localItem, null) as MenuDataItem;
+        return localItem as MenuDataItem;
     });
 
 const footerRender: BasicLayoutProps['footerRender'] = (_, defaultDom) => {
     return (
-        <div style={{textAlign:'center',padding:'15px',color:'rgb(146, 146, 146)'}}>
-            IdentityServer4 AdminUI <Icon type="copyright"/> 2019
+        <div style={{ textAlign: 'center', padding: '15px', color: 'rgb(146, 146, 146)' }}>
+            IdentityServer4 AdminUI <Icon type="copyright" /> 2019
         </div>
     )
 };

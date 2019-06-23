@@ -1,7 +1,7 @@
 import React from 'react';
 import IPanelPropsBase from './IPanelPropsBase';
 import FormItem from './FormItem';
-import { Input } from 'antd';
+import { Input, InputNumber } from 'antd';
 import { formatMessage } from 'umi-plugin-locale';
 
 export interface IDeviceFlowPanelProps extends IPanelPropsBase {
@@ -39,7 +39,7 @@ export default class DeviceFlowPanel extends React.Component<IDeviceFlowPanelPro
         >
           {getFieldDecorator('deviceCodeLifetime', {
             initialValue: deviceCodeLifetime,
-          })(<Input />)}
+          })(<InputNumber />)}
         </FormItem>
       </>
     );

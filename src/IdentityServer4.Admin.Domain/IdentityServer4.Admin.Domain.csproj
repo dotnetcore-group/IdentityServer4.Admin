@@ -18,4 +18,8 @@
     <ProjectReference Include="..\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
 </Project>

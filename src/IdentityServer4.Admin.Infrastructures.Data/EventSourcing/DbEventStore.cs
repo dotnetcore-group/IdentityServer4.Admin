@@ -26,7 +26,7 @@ namespace IdentityServer4.Admin.Data.EventSourcing
             var storedEvent = new StoredEvent(
                 @event,
                 serializedData,
-                _user.Username);
+                _user.UserId);
 
             _eventStoreRepository.Store(storedEvent);
         }

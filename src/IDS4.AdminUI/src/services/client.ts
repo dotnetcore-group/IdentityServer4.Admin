@@ -36,3 +36,11 @@ export const updateClient = (model: any) => {
         }
     })
 }
+
+
+// Client Secrets
+export const getSecrets = (id: string) => {
+    return request(`/api/v1.0/clients/${id}/secrets`, {
+        method: 'get'
+    });
+}
