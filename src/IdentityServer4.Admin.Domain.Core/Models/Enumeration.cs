@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace IdentityServer4.Admin.Domain.Models
+namespace IdentityServer4.Admin.Domain.Core.Models
 {
     public abstract class Enumeration : IComparable
     {

@@ -33,3 +33,4 @@
 /src/IdentityServer4.SSO/files/avatars/201906
 /tests/IdentityServer.SSO.Tests/bin/Debug/netcoreapp3.0
 /tests/IdentityServer.SSO.Tests/obj
+/tests/IdentityServer.SSO.Tests/bin/Debug/netcoreapp2.2
