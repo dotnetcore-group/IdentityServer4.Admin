@@ -97,6 +97,7 @@ namespace IdentityServer4.SSO
 
                 RedirectUris = {
                     "http://localhost:8000/signin-callback-oidc",
+                    "http://localhost:8000/silent-refresh"
                 },
                 PostLogoutRedirectUris = {
                     "http://localhost:8000/signout-callback-oidc",

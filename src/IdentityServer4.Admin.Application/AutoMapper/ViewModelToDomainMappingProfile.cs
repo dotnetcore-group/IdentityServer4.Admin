@@ -31,7 +31,7 @@ namespace IdentityServer4.Admin.Application.AutoMapper
                 .ConstructUsing(c => new CreateUserCommand(c.UserName, c.Email, c.Nickname, c.Password, c.ConfirmPassword, c.EmailConfirmed));
 
             CreateMap<SetApiSecretViewModel, SetApiSecretCommand>(MemberList.Source)
-                .ConstructUsing(c => new SetApiSecretCommand(c.ApiResourceName, c.Description, c.Value, c.Type, c.Expiration, (int)c.HashType.GetValueOrDefault(HashType.Sha256)));
+                .ConstructUsing(c => new SetApiSecretCommand(c.ApiResourceName, c.Description, c.Value, c.Type, c.Expiration, c.HashType));
             CreateMap<SetApiScopeViewModel, SetApiScopeCommand>()
                 .ConstructUsing(c => new SetApiScopeCommand(c.ApiResourceName, c.Name, c.DisplayName, c.Description, c.Required, c.Emphasize, c.ShowInDiscoveryDocument, c.UserClaims));
 

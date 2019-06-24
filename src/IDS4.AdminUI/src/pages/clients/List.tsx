@@ -86,8 +86,8 @@ class ClientList extends React.Component<IClientListProps> {
                                         defaultMessage: 'Remove',
                                     })}
                                     onConfirm={this.handleRemove.bind(this, record.clientId || '')}
-                                    okText="Yes"
-                                    cancelText="No"
+                                    okText={formatMessage({id:'app.shared.yes'})}
+                                    cancelText={formatMessage({id:'app.shared.no'})}
                                 >
                                     <Button type="danger">
                                         {formatMessage({ id: 'app.shared.remove', defaultMessage: 'Remove' })}

@@ -153,10 +153,18 @@ export default {
         '设备代码的生命周期，以秒为单位（默认为300秒/ 5分钟）。',
 
 
-        
+
     /**Client Secrets */
-    'pages.clients.secrets.table.title.value': '值',
-    'pages.clients.secrets.table.title.type': '哈希方式',
+    'pages.clients.secrets.add': '添加',
+    'pages.clients.secrets.table.remove.confirm':'你确定要删除吗？',
+    'pages.clients.secrets.table.title.value': 'Secret 值',
+    'pages.clients.secrets.table.title.type': 'Secret 类型',
     'pages.clients.secrets.table.title.description': '描述',
-    'pages.clients.secrets.table.title.expiration': '过期时间'
+    'pages.clients.secrets.table.title.expiration': '过期时间',
+    'pages.clients.secrets.add.value': '值',
+    'pages.clients.secrets.add.submit': '创建',
+    'pages.clients.secrets.add.type': '机密类型',
+    'pages.clients.secrets.add.hashtype': '哈希方式',
+    'pages.clients.secrets.add.expiration': '过期时间',
+    'pages.clients.secrets.add.description': '描述',
 };

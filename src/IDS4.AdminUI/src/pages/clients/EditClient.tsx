@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Icon, Button } from 'antd';
 import { RouteProps } from 'dva/router';
 import { ConnectProps, ConnectState } from '../../models/connect';
-import { router, Link } from 'umi';
+import { router } from 'umi';
 import { connect } from 'dva';
 import EditTabs from '@/components/EditClientPanels/EditTabs';
 import { formatMessage } from 'umi-plugin-locale';
@@ -48,7 +48,7 @@ class EditClient extends React.Component<IEditClientProps> {
                 loading={loading}
                 style={{ width: '100%', padding: '0px' }}>
                 <h1>
-                    <Button type="link" onClick={() => router.goBack()}><Icon type="left" /></Button>
+                    <Button type="link" onClick={() => router.push('/clients')}><Icon type="left" /></Button>
                     {formatMessage({ id: 'app.shared.client', defaultMessage: "Client" })} : {clientId}
                 </h1>
                 <EditTabs detail={detail}

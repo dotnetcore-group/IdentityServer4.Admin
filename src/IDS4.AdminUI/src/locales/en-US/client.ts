@@ -154,8 +154,14 @@ export default {
 
 
     /**Client Secrets */
-    'pages.clients.secrets.table.title.value': 'Value',
-    'pages.clients.secrets.table.title.type': 'Hash Type',
+    'pages.clients.secrets.table.title.value': 'Secret Value',
+    'pages.clients.secrets.table.title.type': 'Secret Type',
     'pages.clients.secrets.table.title.description': 'Description',
-    'pages.clients.secrets.table.title.expiration': 'Expiration'
+    'pages.clients.secrets.table.title.expiration': 'Expiration',
+    'pages.clients.secrets.add.value': 'Secret Value',
+    'pages.clients.secrets.add.submit': 'Create',
+    'pages.clients.secrets.add.type': 'Secret Type',
+    'pages.clients.secrets.add.hashtype': 'Hash Type',
+    'pages.clients.secrets.add.expiration': 'Expiration',
+    'pages.clients.secrets.add.description': 'Description',
 };
