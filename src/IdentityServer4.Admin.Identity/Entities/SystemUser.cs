@@ -17,7 +17,7 @@ namespace IdentityServer4.Admin.Identity.Entities
 
         public string Username => _accessor.HttpContext.User.FindFirst("username")?.Value;
 
-        public Guid UserId => Guid.Parse(_accessor.HttpContext.User.FindFirst("sub")?.Value);
+        public string UserId => _accessor.HttpContext.User.FindFirst("sub")?.Value;
         public bool IsAuthenticated()
         {
             return _accessor.HttpContext.User.Identity.IsAuthenticated;

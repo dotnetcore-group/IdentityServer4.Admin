@@ -36,3 +36,24 @@ export const updateClient = (model: any) => {
         }
     })
 }
+
+
+// Client Secrets
+export const getSecrets = (id: string) => {
+    return request(`/api/v1.0/clients/${id}/secrets`, {
+        method: 'get'
+    });
+}
+export const addSecret = (payload: any) => {
+    const { clientId, model } = payload;
+    return request(`/api/v1.0/clients/${clientId}/secrets`, {
+        method: 'post',
+        data: model
+    })
+}
+export const removeSecret = (payload: any) => {
+    const { clientId, id } = payload;
+    return request(`/api/v1.0/clients/${clientId}/secrets/${id}`, {
+        method: 'delete'
+    })
+}

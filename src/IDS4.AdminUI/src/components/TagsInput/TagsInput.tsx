@@ -6,6 +6,7 @@ export interface ITagInputProps {
     onChange?: (value: any) => void;
     newText?: string;
     longTagLength?: number;
+    inputStyle?: React.CSSProperties
 }
 
 export interface ITagInputStates {
@@ -28,7 +29,8 @@ class TagInput extends React.Component<ITagInputProps, ITagInputStates> {
 
     static defaultProps: ITagInputProps = {
         newText: "New Tag",
-        longTagLength: 20
+        longTagLength: 20,
+        inputStyle: { width: '100px' }
     }
 
     constructor(props: ITagInputProps) {
@@ -77,7 +79,7 @@ class TagInput extends React.Component<ITagInputProps, ITagInputStates> {
 
     render() {
         const { tags, inputVisible, inputValue } = this.state;
-        const { newText, longTagLength } = this.props;
+        const { newText, longTagLength, inputStyle } = this.props;
 
         return (
             <div>
@@ -101,7 +103,7 @@ class TagInput extends React.Component<ITagInputProps, ITagInputStates> {
                         ref={this.saveInputRef}
                         type="text"
                         size="small"
-                        style={{ width: 78 }}
+                        style={inputStyle}
                         value={inputValue}
                         onChange={this.handleInputChange}
                         onBlur={this.handleInputConfirm}

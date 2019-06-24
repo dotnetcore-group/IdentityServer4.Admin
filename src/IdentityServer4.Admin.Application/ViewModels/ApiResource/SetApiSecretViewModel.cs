@@ -11,7 +11,7 @@ namespace IdentityServer4.Admin.Application.ViewModels.ApiResource
         [Required]
         public string Value { get; set; }
         public DateTime? Expiration { get; set; }
-        public HashType? HashType { get; set; } = ViewModels.HashType.Sha256;
+        public int HashType { get; set; } = Domain.Models.HashType.Sha256.Id;
         public string Type { get; set; }
         [Required]
         public string ApiResourceName { get; set; }

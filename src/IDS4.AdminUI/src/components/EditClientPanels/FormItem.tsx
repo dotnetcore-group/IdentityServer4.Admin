@@ -41,7 +41,7 @@ export default class FormItem extends React.Component<IFormItemProps> {
                     tip &&
                     <Tooltip title={tip}>
                         <span style={{ marginLeft: '5px' }}>
-                            <Icon theme="filled" type="question-circle" />
+                            <Icon type="question-circle" />
                         </span>
                     </Tooltip>
                 }

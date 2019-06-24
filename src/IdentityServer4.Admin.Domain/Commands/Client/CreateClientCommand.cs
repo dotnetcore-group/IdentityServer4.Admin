@@ -2,6 +2,7 @@
 using IdentityServer4.Admin.Domain.Validations.Client;
 using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
+using System;
 
 namespace IdentityServer4.Admin.Domain.Commands.Client
 {
@@ -100,6 +101,7 @@ namespace IdentityServer4.Admin.Domain.Commands.Client
         public void Configure(IdentityServer4.Models.Client client)
         {
             IClientConfigurationStrategy strategy = null;
+
             if (_clientType.Id == ClientType.WebImplicit.Id)
             {
                 strategy = new WebImplicitClientConfigurationStrategy();
@@ -107,6 +109,26 @@ namespace IdentityServer4.Admin.Domain.Commands.Client
             else if (_clientType.Id == ClientType.WebHybrid.Id)
             {
                 strategy = new WebHybridClientConfigurationStrategy();
+            }
+            else if (_clientType.Id == ClientType.Device.Id)
+            {
+                strategy = new DeviceClientConfigurationStrategy();
+            }
+            else if (_clientType.Id == ClientType.Spa.Id)
+            {
+                strategy = new SpaClientConfigurationStrategy();
+            }
+            else if (_clientType.Id == ClientType.Native.Id)
+            {
+                strategy = new NativeClientConfigurationStrategy();
+            }
+            else if (_clientType.Id == ClientType.Machine.Id)
+            {
+                strategy = new MachineClientConfigurationStrategy();
+            }
+            else
+            {
+                // empty
             }
             strategy?.Configure(client);
         }

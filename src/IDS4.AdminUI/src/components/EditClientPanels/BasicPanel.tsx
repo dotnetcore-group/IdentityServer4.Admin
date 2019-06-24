@@ -14,47 +14,73 @@ export interface IBasicPanelProps extends IPanelPropsBase {
 
 export default class BasicPanel extends React.Component<IBasicPanelProps> {
     render() {
-        const { form: { getFieldDecorator }, clientId, clientName, clientUri, logoUri, description } = this.props;
+        const {
+            form: { getFieldDecorator },
+            clientId,
+            clientName,
+            clientUri,
+            logoUri,
+            description,
+        } = this.props;
 
         return (
             <>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientId', defaultMessage: 'Client Id' })}
-                    tip="test">
+                <FormItem
+                    label={formatMessage({
+                        id: 'pages.clients.edit.tabs.panel.clientId',
+                        defaultMessage: 'Client Id',
+                    })}
+                    tip={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientId.tip' })}
+                >
                     {getFieldDecorator('clientId', {
-                        initialValue: clientId
-                    })(
-                        <Input />
-                    )}
+                        initialValue: clientId,
+                    })(<Input />)}
                 </FormItem>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientName', defaultMessage: 'Client Name' })}>
+                <FormItem
+                    label={formatMessage({
+                        id: 'pages.clients.edit.tabs.panel.clientName',
+                        defaultMessage: 'Client Name',
+                    })}
+                    tip={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientName.tip' })}
+                >
                     {getFieldDecorator('clientName', {
-                        initialValue: clientName
-                    })(
-                        <Input />
-                    )}
+                        initialValue: clientName,
+                    })(<Input />)}
                 </FormItem>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientUri', defaultMessage: 'Client Uri' })}>
+                <FormItem
+                    label={formatMessage({
+                        id: 'pages.clients.edit.tabs.panel.clientUri',
+                        defaultMessage: 'Client Uri',
+                    })}
+                    tip={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientUri.tip' })}
+                >
                     {getFieldDecorator('clientUri', {
-                        initialValue: clientUri
-                    })(
-                        <Input />
-                    )}
+                        initialValue: clientUri,
+                    })(<Input />)}
                 </FormItem>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.logoUri', defaultMessage: 'Logo Uri' })}>
+                <FormItem
+                    label={formatMessage({
+                        id: 'pages.clients.edit.tabs.panel.logoUri',
+                        defaultMessage: 'Logo Uri',
+                    })}
+                    tip={formatMessage({ id: 'pages.clients.edit.tabs.panel.logoUri.tip' })}
+                >
                     {getFieldDecorator('logoUri', {
-                        initialValue: logoUri
-                    })(
-                        <Input />
-                    )}
+                        initialValue: logoUri,
+                    })(<Input />)}
                 </FormItem>
-                <FormItem label={formatMessage({ id: 'pages.clients.edit.tabs.panel.description', defaultMessage: 'Description' })}>
+                <FormItem
+                    label={formatMessage({
+                        id: 'pages.clients.edit.tabs.panel.description',
+                        defaultMessage: 'Description',
+                    })}
+                    tip={formatMessage({ id: 'pages.clients.edit.tabs.panel.description.tip' })}
+                >
                     {getFieldDecorator('description', {
-                        initialValue: description
-                    })(
-                        <Input.TextArea />
-                    )}
+                        initialValue: description,
+                    })(<Input.TextArea />)}
                 </FormItem>
             </>
-        )
+        );
     }
 }
