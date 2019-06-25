@@ -136,6 +136,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             if (result.Succeeded)
             {
                 await _bus.RaiseEvent(new UserRegisteredEvent(user.Id.ToString(), user.UserName, user.Email));
+                await SendComfirmEmailAsync(user);
                 return true;
             }
             return false;
@@ -299,5 +300,11 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             return PathUtils.CombinePaths(domain, requestPath, $"{uid}.jpg");
         }
 
+        private async Task SendComfirmEmailAsync(ApplicationUser user)
+        {
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callback = $"https://localhost:5005/account/confirm-email?token={token}&email={user.Email}";
+            await _emailSender.SendEmailConfirmationAsync(user.Email, callback);
+        }
     }
 }

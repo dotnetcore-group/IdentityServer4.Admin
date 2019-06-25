@@ -6,6 +6,7 @@ using IdentityServer4.Admin.Identity;
 using IdentityServer4.Admin.Identity.Entities;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,17 @@ namespace IdentityServer4.SSO.Extensions
         public static void ConfigureIdentityDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentityContextMySql(configuration);
+
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = false;
+                options.Password.RequiredLength = 8;
+            })
+                .AddErrorDescriber<LocalizedIdentityErrorDescriber>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                //.AddClaimsPrincipalFactory<ClaimsPrincipalFactory>()
+                .AddDefaultTokenProviders();
         }
 
         public static IServiceCollection ConfigureIdentityServerDatabase(this IServiceCollection services, IConfiguration configuration)

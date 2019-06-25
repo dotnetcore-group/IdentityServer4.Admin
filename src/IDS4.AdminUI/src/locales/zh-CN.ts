@@ -6,6 +6,7 @@ import settingDrawer from './zh-CN/settingDrawer';
 import settings from './zh-CN/settings';
 import clients from './zh-CN/clients';
 import shared from './zh-CN/shared';
+import users from './zh-CN/users';
 
 export default {
     'navBar.lang': '语言',
@@ -20,5 +21,6 @@ export default {
     ...settings,
     ...pwa,
     ...component,
-    ...clients
+    ...clients,
+    ...users
 };

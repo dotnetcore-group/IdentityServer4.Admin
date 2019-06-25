@@ -260,7 +260,8 @@ namespace IdentityServer4.SSO.Controllers
                     if (result.Succeeded)
                     {
                         await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id.ToString(), user.UserName));
-                        await _bus.RaiseEvent(new UserLoggedInEvent(user.Uid, HttpContext)); ;
+                        await _bus.RaiseEvent(new UserLoggedInEvent(user.Uid, HttpContext));
+
 
                         if (context != null)
                         {
@@ -356,7 +357,7 @@ namespace IdentityServer4.SSO.Controllers
                 return SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
             }
 
-            return View("LoggedOut", vm);
+            return Redirect("/");
         }
         #endregion
 
@@ -394,7 +395,16 @@ namespace IdentityServer4.SSO.Controllers
         #endregion
 
         #region EMAIL CONFIRM
-
+        [HttpGet, Route("account/confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(string email, string token)
+        {
+            var user = await _users.FindByEmailAsync(email);
+            if (user != null)
+            {
+                await _users.ConfirmEmailAsync(user, token);
+            }
+            return View();
+        }
         #endregion
 
         #region RESET PASSWORD

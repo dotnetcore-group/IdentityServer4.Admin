@@ -20,8 +20,7 @@
     <ProjectReference Include="..\IdentityServer4.Admin.Application\IdentityServer4.Admin.Application.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.BuildingBlock\IdentityServer4.Admin.BuildingBlock.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Data.Mysql\IdentityServer4.Admin.Data.Mysql.csproj" />
-    <ProjectReference Include="..\IdentityServer4.Admin.Domain\IdentityServer4.Admin.Domain.csproj" />
-    <ProjectReference Include="..\IdentityServer4.Admin.Infrastructures.Data\IdentityServer4.Admin.Data.csproj" />
+    <ProjectReference Include="..\IdentityServer4.Admin.Domain.Core\IdentityServer4.Admin.Domain.Core.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.IoC\IdentityServer4.Admin.IoC.csproj" />
   </ItemGroup>
 

@@ -14,7 +14,7 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
 {
     [Route(ApiRouteTemplate)]
     [ApiVersion("1.0")]
-    [Authorize(Policy = PolicyNames.AuthenticatedUser)]
+    [Authorize(Policy = PolicyNames.Admin)]
     public class UsersController : ApiController
     {
         private readonly IUserManagerService _userManagerService;

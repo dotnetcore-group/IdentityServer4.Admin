@@ -4,9 +4,11 @@ using IdentityServer4.Admin.Application.ViewModels;
 using IdentityServer4.Admin.Domain.Commands;
 using IdentityServer4.Admin.Domain.Commands.User;
 using IdentityServer4.Admin.Domain.Core.Bus;
+using IdentityServer4.Admin.Domain.Core.Notifications;
 using IdentityServer4.Admin.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -93,6 +95,19 @@ namespace IdentityServer4.Admin.Application.Services
         {
             var command = _mapper.Map<RegisterNewUserWithoutPassCommand>(user);
             await _bus.SendCommand(command);
+        }
+
+        public async Task<bool> ConfirmEmailAsync(ApplicationUser user, string token)
+        {
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Errors.Any())
+            {
+                result.Errors.ToList().ForEach(error =>
+                {
+                    _bus.RaiseEvent(new DomainNotification("confirm_email_error", error.Description));
+                });
+            }
+            return result.Succeeded;
         }
     }
 }
