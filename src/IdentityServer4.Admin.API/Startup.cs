@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.Admin.API.Extensions;
 using IdentityServer4.Admin.API.Filters;
 using IdentityServer4.Admin.IoC;
+using IdentityServer4.Admin.IoC.AutofacInjector;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace IdentityServer4.Admin.API
 {
@@ -32,6 +34,7 @@ namespace IdentityServer4.Admin.API
             services.AddMvc(options =>
             {
                 options.Filters.Add<ModelStateValidationFilter>();
+                options.Filters.Add<HttpGlobalExceptionFilter>();
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddApiVersioning(options =>
@@ -60,6 +63,8 @@ namespace IdentityServer4.Admin.API
 
             // Register Services
             RegisterServices(services);
+
+            //return AutofacInjectorBootstrapper.RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

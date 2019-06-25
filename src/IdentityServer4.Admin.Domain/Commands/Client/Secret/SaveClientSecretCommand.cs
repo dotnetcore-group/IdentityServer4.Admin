@@ -21,7 +21,7 @@ namespace IdentityServer4.Admin.Domain.Commands.Client.Secret
 
         public override bool IsValid()
         {
-            ValidationResult = new SaveClientSecretCommandValidation().Validate(this);
+            ValidationResult = new SaveClientSecretCommandValidator().Validate(this);
             return ValidationResult.IsValid;
         }
 

@@ -15,7 +15,7 @@ namespace IdentityServer4.Admin.Domain.Commands.Client
 
         public override bool IsValid()
         {
-            ValidationResult = new RemoveClientPropertyCommandValidation().Validate(this);
+            ValidationResult = new RemoveClientPropertyCommandValidator().Validate(this);
             return ValidationResult.IsValid;
         }
     }

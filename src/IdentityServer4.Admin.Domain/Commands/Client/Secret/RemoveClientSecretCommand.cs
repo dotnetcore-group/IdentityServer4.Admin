@@ -15,7 +15,7 @@ namespace IdentityServer4.Admin.Domain.Commands.Client.Secret
 
         public override bool IsValid()
         {
-            ValidationResult = new RemoveClientSecretCommandValidation().Validate(this);
+            ValidationResult = new RemoveClientSecretCommandValidator().Validate(this);
 
             return ValidationResult.IsValid;
         }

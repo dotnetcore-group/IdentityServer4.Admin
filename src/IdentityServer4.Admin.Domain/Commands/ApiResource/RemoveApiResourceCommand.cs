@@ -14,7 +14,7 @@ namespace IdentityServer4.Admin.Domain.Commands.ApiResource
 
         public override bool IsValid()
         {
-            ValidationResult = new RemoveApiResourceCommandValidation().Validate(this);
+            ValidationResult = new RemoveApiResourceCommandValidator().Validate(this);
             return ValidationResult.IsValid;
         }
     }

@@ -17,7 +17,7 @@ namespace IdentityServer4.Admin.Domain.Commands.User
 
         public override bool IsValid()
         {
-            ValidationResult = new CreateUserCommandValidation().Validate(this);
+            ValidationResult = new CreateUserCommandValidator().Validate(this);
             return ValidationResult.IsValid;
         }
     }

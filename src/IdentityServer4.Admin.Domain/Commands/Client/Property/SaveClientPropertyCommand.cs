@@ -16,7 +16,7 @@ namespace IdentityServer4.Admin.Domain.Commands.Client.Property
 
         public override bool IsValid()
         {
-            ValidationResult = new SaveClientPropertyCommandValidation().Validate(this);
+            ValidationResult = new SaveClientPropertyCommandValidator().Validate(this);
             return ValidationResult.IsValid;
         }
     }

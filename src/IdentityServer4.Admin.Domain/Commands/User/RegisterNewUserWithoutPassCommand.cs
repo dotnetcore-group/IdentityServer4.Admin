@@ -18,7 +18,7 @@ namespace IdentityServer4.Admin.Domain.Commands
 
         public override bool IsValid()
         {
-            ValidationResult = new RegisterNewUserWithoutPassCommandValidation(string.IsNullOrEmpty(Email) == false)
+            ValidationResult = new RegisterNewUserWithoutPassCommandValidator(string.IsNullOrEmpty(Email) == false)
                 .Validate(this);
             return ValidationResult.IsValid;
         }

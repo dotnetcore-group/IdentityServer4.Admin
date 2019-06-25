@@ -34,3 +34,5 @@
 /tests/IdentityServer.SSO.Tests/bin/Debug/netcoreapp3.0
 /tests/IdentityServer.SSO.Tests/obj
 /tests/IdentityServer.SSO.Tests/bin/Debug/netcoreapp2.2
+/src/IdentityServer4.Admin.Extensions/bin/Debug/netstandard2.0
+/src/IdentityServer4.Admin.Extensions/obj
