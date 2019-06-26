@@ -98,17 +98,15 @@ class ClientSecrets extends React.Component<IClientSecretsProps> {
         clientId: ''
     }
     componentDidMount() {
-        const { dispatch, location: { query = {} } } = this.props;
-        const id = query.id;
-        if (!id) {
-            console.error('redirect to 404');
-            return;
+        const { match, dispatch } = this.props;
+        if (match) {
+            const { id } = match.params;
+            dispatch && dispatch({
+                type: 'client/fetchSecrets',
+                payload: id
+            });
+            this.setState({ clientId: id });
         }
-        dispatch && dispatch({
-            type: 'client/fetchSecrets',
-            payload: id
-        });
-        this.setState({ clientId: id });
     }
 
     createSecret(values: any) {

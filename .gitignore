@@ -36,3 +36,16 @@
 /tests/IdentityServer.SSO.Tests/bin/Debug/netcoreapp2.2
 /src/IdentityServer4.Admin.Extensions/bin/Debug/netstandard2.0
 /src/IdentityServer4.Admin.Extensions/obj
+/src/IdentityServer4.Admin.API/bin/release/netcoreapp2.2
+/src/IdentityServer4.Admin.API/publish
+/src/IdentityServer4.Admin.Application/bin/release/netstandard2.0
+/src/IdentityServer4.Admin.BuildingBlock/bin/release/netstandard2.0
+/src/IdentityServer4.Admin.Data.Mysql/bin/release/netstandard2.0
+/src/IdentityServer4.Admin.Domain/bin/release/netstandard2.0
+/src/IdentityServer4.Admin.Domain.Core/bin/release/netstandard2.0
+/src/IdentityServer4.Admin.Extensions/bin/release/netstandard2.0
+/src/IdentityServer4.Admin.Identity/bin/release/netstandard2.0
+/src/IdentityServer4.Admin.Infrastructures.Data/bin/release/netstandard2.0
+/src/IdentityServer4.Admin.IoC/bin/release/netstandard2.0
+/src/IdentityServer4.SSO/bin/release/netcoreapp2.2
+/src/IdentityServer4.SSO/publish

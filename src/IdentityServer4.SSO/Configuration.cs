@@ -1,5 +1,6 @@
 ﻿using IdentityModel;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,47 +47,12 @@ namespace IdentityServer4.SSO
              }
         };
 
-        public static IEnumerable<Client> GetClients() => new List<Client>
+        public static IEnumerable<Client> GetClients(Dictionary<string,string> endpoints) => new List<Client>
         {
-            //new Client {
-            //    ClientId="IDS4-AdminUI",
-            //    ClientName="IdentityServer4 AdminUI",
-            //    ClientUri="http://localhost:5000",
-            //    LogoUri ="/images/ids4-admin.png",
-            //    AllowedGrantTypes = GrantTypes.Hybrid,
-            //    AllowAccessTokensViaBrowser = true,
-
-            //    ClientSecrets = {
-            //        new Secret("234E496F-1927-47A4-B64E-8AF93C5F2F10".Sha256())
-            //    },
-
-            //    RedirectUris = {
-            //        "http://localhost:5000/signin-oidc",
-            //        "https://localhost:5001/signin-oidc",
-            //    },
-            //    PostLogoutRedirectUris = {
-            //        "http://localhost:5000/signout-callback-oidc",
-            //        "https://localhost:5001/signout-callback-oidc",
-            //    },
-            //    AllowedCorsOrigins={
-            //        "http://localhost:5000",
-            //        "https://localhost:5001",
-            //    },
-            //    AccessTokenLifetime = 3600,
-            //    AuthorizationCodeLifetime = 3600,
-            //    AllowedScopes={
-            //        StandardScopes.OpenId,
-            //        StandardScopes.Profile,
-            //        StandardScopes.Email,
-            //        "ids4_admin_api",
-            //    },
-            //    AllowOfflineAccess = true,
-            //    AlwaysIncludeUserClaimsInIdToken = true
-            //},
             new Client {
                 ClientId="ids4-admin-ui",
                 ClientName="IdentityServer4 AdminUI",
-                ClientUri="http://localhost:8000",
+                ClientUri=endpoints["ids4adminui"],
                 LogoUri ="/images/ids4-admin.png",
                 AllowedGrantTypes = GrantTypes.Implicit,
                 AllowAccessTokensViaBrowser = true,
@@ -96,14 +62,14 @@ namespace IdentityServer4.SSO
                 },
 
                 RedirectUris = {
-                    "http://localhost:8000/signin-callback-oidc",
-                    "http://localhost:8000/silent-refresh"
+                    $"{endpoints["ids4adminui"]}/signin-callback-oidc",
+                    $"{endpoints["ids4adminui"]}/silent-refresh"
                 },
                 PostLogoutRedirectUris = {
-                    "http://localhost:8000/signout-callback-oidc",
+                    $"{endpoints["ids4adminui"]}/signout-callback-oidc",
                 },
                 AllowedCorsOrigins={
-                    "http://localhost:8000"
+                    endpoints["ids4adminui"]
                 },
                 AccessTokenLifetime = 3600,
                 AuthorizationCodeLifetime = 3600,
@@ -125,8 +91,7 @@ namespace IdentityServer4.SSO
                 RequireConsent = true,
                 RedirectUris =
                 {
-                    "http://localhost:5004/swagger/oauth2-redirect.html",
-                    "https://localhost:5003/swagger/oauth2-redirect.html",
+                    $"{endpoints["ids4adminapi"]}/swagger/oauth2-redirect.html"
                 },
                 AllowedScopes =
                 {

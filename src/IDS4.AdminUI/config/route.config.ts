@@ -45,19 +45,19 @@ export default [
                         component: './clients/AddClient',
                     },
                     {
-                        path: '/clients/edit',
+                        path: '/clients/edit/:id',
                         component: './clients/EditClient',
                     },
                     {
-                        path: '/clients/secrets',
+                        path: '/clients/:id/secrets',
                         component: './clients/Secrets',
                     },
                     {
-                        path: '/clients/properties',
+                        path: '/clients/:id/properties',
                         component: './clients/Properties',
                     },
                     {
-                        path: '/clients/claims',
+                        path: '/clients/:id/claims',
                         component: './clients/Claims',
                     },
                 ],
@@ -72,6 +72,10 @@ export default [
                     {
                         path: '/users',
                         component: './users/List'
+                    },
+                    {
+                        path: '/users/:id',
+                        component: './users/Edit'
                     }
                 ]
             }

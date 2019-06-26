@@ -36,6 +36,15 @@ namespace IdentityServer4.Admin.Data.Mysql.Extensions
                 options.UseMySql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly))
             );
 
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = false;
+                options.Password.RequiredLength = 8;
+            })
+                .AddErrorDescriber<LocalizedIdentityErrorDescriber>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                //.AddClaimsPrincipalFactory<ClaimsPrincipalFactory>()
+                .AddDefaultTokenProviders();
 
             return services;
         }

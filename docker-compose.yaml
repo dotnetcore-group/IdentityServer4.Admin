@@ -1,0 +1,62 @@
+version: '3.4'
+
+services:
+  
+  # Mysql Database
+  ids4adb:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports: 
+      - "3305:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd1234
+      MYSQL_DATABASE: ids4admin
+
+  # IdentityServer4 Admin API
+  ids4.admin.api:
+    image: ${REGISTRY:-zengande}/ids4a.api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/IdentityServer4.Admin.API/Dockerfile
+    depends_on:
+      - ids4adb
+    ports:
+      # - "5003:443"
+      - "5004:80"
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Development
+      CUSTOMCONNSTR_SSOConnection: "server=ids4adb,port=3306;database=ids4admin;user=root;password=P@ssw0rd1234"
+      AuthorityUrl: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:5006
+
+  # IdentityServer4 SSO
+  ids4.admin.sso:
+    image: ${REGISTRY:-zengande}/ids4a.sso:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/IdentityServer4.SSO/Dockerfile
+    depends_on:
+      - ids4adb
+    ports:
+      # - "5005:443"
+      - "5006:80"
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Development
+      CUSTOMCONNSTR_SSOConnection: "server=ids4adb,port=3306;database=ids4admin;user=root;password=P@ssw0rd1234"
+      IDS4AdminUIEndpoint: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:8000
+      IDS4AdminAPIEndpoint: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:5004
+
+  ids4.admin.ui:
+    image: ${REGISTRY:-zengande}/ids4a.ui:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: src/IDS4.AdminUI/docker/Dockerfile
+    depends_on:
+      - ids4.admin.api
+      - ids4.admin.sso
+    ports:
+      - "8000:80"
+    environment:
+      API_ENDPOINT: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:5004
+      AUTHORITY_ENDPOINT: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:5006
+      DOMAIN_ENDPOINT: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:8000

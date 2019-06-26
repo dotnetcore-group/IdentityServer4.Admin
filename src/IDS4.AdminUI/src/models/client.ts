@@ -1,7 +1,7 @@
 import IClientViewModel from "@/@types/IClientViewModel";
 import { Reducer } from "redux";
 import { Effect } from "dva";
-import { fetchClients, createClient, removeClient, updateClient, getSecrets, removeSecret } from "@/services/client";
+import { fetchClients, createClient, removeClient, updateClient, getSecrets, removeSecret, getProperties } from "@/services/client";
 import { message } from "antd";
 import { router } from "umi";
 import { fetchClient, addSecret } from '../services/client';
@@ -9,7 +9,8 @@ import { fetchClient, addSecret } from '../services/client';
 export interface IClientModelState {
     list?: Array<IClientViewModel>;
     detail?: any;
-    secrets?: Array<any>
+    secrets?: Array<any>;
+    properties?: Array<any>
 }
 
 export interface IClientModelType {
@@ -18,12 +19,13 @@ export interface IClientModelType {
     effects: {
         fetchList: Effect,
         fetchDetail: Effect,
-        fetchSecrets: Effect,
         create: Effect,
         remove: Effect,
         update: Effect,
+        fetchSecrets: Effect,
         createSecret: Effect,
-        removeSecret: Effect
+        removeSecret: Effect,
+        fetchProperties: Effect
     };
     reducers: {
         save: Reducer<IClientModelState>
@@ -33,7 +35,10 @@ export interface IClientModelType {
 const ClientModel: IClientModelType = {
     namespace: 'client',
     state: {
-        detail: {}
+        list: [],
+        detail: {},
+        secrets: [],
+        properties: []
     },
     effects: {
         /**Client */
@@ -130,6 +135,21 @@ const ClientModel: IClientModelType = {
                         secrets
                     }
                 })
+            }
+        },
+
+
+        /**Property */
+        *fetchProperties({ payload }, { call, put }) {
+            const { data } = yield call(getProperties, payload);
+            if (data.success) {
+                const { data: properties } = data;
+                yield put({
+                    type: 'save',
+                    payload: {
+                        properties
+                    }
+                });
             }
         }
     },

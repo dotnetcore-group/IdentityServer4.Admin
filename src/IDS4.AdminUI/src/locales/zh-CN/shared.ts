@@ -9,6 +9,7 @@ export default {
     'app.shared.update': '更新',
     'app.shared.yes': '确定',
     'app.shared.no': '取消',
+    'app.shared.create':'创建',
 
     'app.shared.refreshtoken.successfully': '自动刷新访问令牌成功!',
 };

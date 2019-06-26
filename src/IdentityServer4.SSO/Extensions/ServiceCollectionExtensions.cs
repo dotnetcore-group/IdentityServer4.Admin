@@ -23,17 +23,6 @@ namespace IdentityServer4.SSO.Extensions
         public static void ConfigureIdentityDatabase(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentityContextMySql(configuration);
-
-
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-            {
-                options.SignIn.RequireConfirmedEmail = false;
-                options.Password.RequiredLength = 8;
-            })
-                .AddErrorDescriber<LocalizedIdentityErrorDescriber>()
-                .AddEntityFrameworkStores<AppIdentityDbContext>()
-                //.AddClaimsPrincipalFactory<ClaimsPrincipalFactory>()
-                .AddDefaultTokenProviders();
         }
 
         public static IServiceCollection ConfigureIdentityServerDatabase(this IServiceCollection services, IConfiguration configuration)

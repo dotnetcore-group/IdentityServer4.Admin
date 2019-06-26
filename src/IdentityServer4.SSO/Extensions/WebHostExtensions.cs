@@ -14,6 +14,7 @@ using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Stores;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace IdentityServer4.SSO.Extensions
 {
@@ -45,9 +46,16 @@ namespace IdentityServer4.SSO.Extensions
 
         private static async Task EnsureSeedIDS4DataAsync(IDS4DbContext context, IServiceProvider sp)
         {
+            var configuraion = sp.GetRequiredService<IConfiguration>();
+
+            var endpoints = new Dictionary<string, string>{
+                { "ids4adminui", configuraion.GetValue<string>("IDS4AdminUIEndpoint") },
+                { "ids4adminapi", configuraion.GetValue<string>("IDS4AdminAPIEndpoint") },
+            };
+
             if (!context.Clients.Any())
             {
-                foreach (var client in Configuration.GetClients())
+                foreach (var client in Configuration.GetClients(endpoints))
                 {
                     var entity = client.ToEntity();
                     await context.Clients.AddAsync(entity);

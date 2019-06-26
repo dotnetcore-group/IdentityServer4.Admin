@@ -23,7 +23,6 @@ namespace IdentityServer4.SSO
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("https://+:5005","http://+:5006")
                 .UseStartup<Startup>()
                 .UseSerilogLogger();
     }

@@ -29,7 +29,7 @@ namespace IdentityServer4.Admin.API.Extensions
 
         public static IServiceCollection AddIdentityServerAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            //IdentityModelEventSource.ShowPII = true;
+            IdentityModelEventSource.ShowPII = true;
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 

@@ -264,7 +264,7 @@ export default class TokenPanel extends React.Component<ITokenPanelProps> {
           })}
           tip={formatMessage({ id: 'pages.clients.edit.tabs.panel.claims.tip' })}
         >
-          <Link to={`/clients/claims?id=${clientId}`}>
+          <Link to={`/clients/${clientId}/claims`}>
             <Button type="primary" htmlType="button">
               {formatMessage({
                 id: 'pages.clients.edit.tabs.panel.claims',
