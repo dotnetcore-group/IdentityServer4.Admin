@@ -16,7 +16,7 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Views\Account\Login.zh-cn.resx">
+    <EmbeddedResource Update="Resources\Views\Account\Login.zh.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

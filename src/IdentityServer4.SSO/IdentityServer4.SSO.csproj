@@ -39,7 +39,7 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Views\Account\Login.en-us.resx">
+    <EmbeddedResource Update="Resources\Views\Account\Login.en.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

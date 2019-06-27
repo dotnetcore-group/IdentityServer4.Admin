@@ -12,7 +12,7 @@ const { pwa, primaryColor } = defaultSettings;
 // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 
-const { API_ENDPOINT = 'http://ids4a:5004', TEST, NODE_ENV } = process.env;
+const { TEST, NODE_ENV } = process.env;
 const plugins: IPlugin[] = [
     [
         'umi-plugin-react',
@@ -81,7 +81,9 @@ export default {
     // add for transfer to umi
     plugins,
     define: {
-        API_ENDPOINT: API_ENDPOINT
+        "API_ENDPOINT": 'http://10.0.1.46:5004',
+        "AUTHORITY_ENDPOINT": 'http://10.0.1.46:5006',
+        "DOMAIN_ENDPOINT": 'http://10.0.1.46:8000',
     },
     block: {
     },
@@ -99,7 +101,7 @@ export default {
     },
     proxy: {
         "/api": {
-            "target": `${API_ENDPOINT}/api`,
+            "target": `http://localhost:5004/api`,
             "changeOrigin": true,
             "pathRewrite": { "^/api": "" }
         }

@@ -3,8 +3,6 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-RUN mkdir files
-
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
 COPY ["src/IdentityServer4.SSO/IdentityServer4.SSO.csproj", "src/IdentityServer4.SSO/"]
@@ -17,6 +15,7 @@ COPY ["src/IdentityServer4.Admin.Identity/IdentityServer4.Admin.Identity.csproj"
 COPY ["src/IdentityServer4.Admin.Application/IdentityServer4.Admin.Application.csproj", "src/IdentityServer4.Admin.Application/"]
 COPY ["src/IdentityServer4.Admin.Extensions/IdentityServer4.Admin.Extensions.csproj", "src/IdentityServer4.Admin.Extensions/"]
 COPY ["src/IdentityServer4.Admin.IoC/IdentityServer4.Admin.IoC.csproj", "src/IdentityServer4.Admin.IoC/"]
+
 RUN dotnet restore "src/IdentityServer4.SSO/IdentityServer4.SSO.csproj"
 COPY . .
 WORKDIR "/src/src/IdentityServer4.SSO"
@@ -28,4 +27,5 @@ RUN dotnet publish "IdentityServer4.SSO.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+RUN mkdir files
 ENTRYPOINT ["dotnet", "IdentityServer4.SSO.dll"]

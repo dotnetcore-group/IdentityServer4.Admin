@@ -3,7 +3,7 @@ import storageManager from './storageManager';
 import UserProfile from '../@types/userProfile';
 import oidcResponse from '../@types/oidcResponse';
 
-const { AUTHORITY_ENDPOINT = 'http://ids4a:5006', DOMAIN_ENDPOINT = 'http://ids4a:8000' } = process.env;
+// const { AUTHORITY_ENDPOINT, DOMAIN_ENDPOINT } = process.env;
 
 const settings: oidc.UserManagerSettings = {
     authority: AUTHORITY_ENDPOINT,

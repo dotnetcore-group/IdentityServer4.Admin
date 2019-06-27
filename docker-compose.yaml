@@ -8,7 +8,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports: 
-      - "3305:3306"
+      - "33066:3306"
     environment:
       MYSQL_ROOT_PASSWORD: P@ssw0rd1234
       MYSQL_DATABASE: ids4admin
@@ -46,6 +46,7 @@ services:
       IDS4AdminUIEndpoint: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:8000
       IDS4AdminAPIEndpoint: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:5004
 
+  # IdentityServer4 AdminUI
   ids4.admin.ui:
     image: ${REGISTRY:-zengande}/ids4a.ui:${TAG:-latest}
     build:
@@ -56,7 +57,3 @@ services:
       - ids4.admin.sso
     ports:
       - "8000:80"
-    environment:
-      API_ENDPOINT: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:5004
-      AUTHORITY_ENDPOINT: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:5006
-      DOMAIN_ENDPOINT: http://${EXTERNAL_DNS_NAME_OR_IP:-localhost}:8000
