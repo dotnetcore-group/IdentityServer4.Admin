@@ -29,7 +29,7 @@ namespace IdentityServer4.Admin.API.Extensions
 
         public static IServiceCollection AddIdentityServerAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            //IdentityModelEventSource.ShowPII = true;
+            IdentityModelEventSource.ShowPII = true;
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -121,11 +121,11 @@ namespace IdentityServer4.Admin.API.Extensions
                             {
                                 var supportedCultures = new[]
                                 {
-                                    new CultureInfo("zh-cn"),
-                                    new CultureInfo("en-us"),
+                                    new CultureInfo("zh"),
+                                    new CultureInfo("en"),
                                 };
 
-                                opts.DefaultRequestCulture = new RequestCulture("zh-cn");
+                                opts.DefaultRequestCulture = new RequestCulture("zh");
                                 opts.SupportedCultures = supportedCultures;
                                 opts.SupportedUICultures = supportedCultures;
                             });

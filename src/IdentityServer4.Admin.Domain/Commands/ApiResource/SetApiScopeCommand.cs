@@ -21,7 +21,7 @@ namespace IdentityServer4.Admin.Domain.Commands.ApiResource
 
         public override bool IsValid()
         {
-            ValidationResult = new SetApiScopeCommandValidation().Validate(this);
+            ValidationResult = new SetApiScopeCommandValidator().Validate(this);
             return ValidationResult.IsValid;
         }
     }

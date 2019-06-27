@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>a105eaec-ba0a-4b57-a439-0a1a976c2e6d</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
   </ItemGroup>
@@ -20,8 +23,7 @@
     <ProjectReference Include="..\IdentityServer4.Admin.Application\IdentityServer4.Admin.Application.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.BuildingBlock\IdentityServer4.Admin.BuildingBlock.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Data.Mysql\IdentityServer4.Admin.Data.Mysql.csproj" />
-    <ProjectReference Include="..\IdentityServer4.Admin.Domain\IdentityServer4.Admin.Domain.csproj" />
-    <ProjectReference Include="..\IdentityServer4.Admin.Infrastructures.Data\IdentityServer4.Admin.Data.csproj" />
+    <ProjectReference Include="..\IdentityServer4.Admin.Domain.Core\IdentityServer4.Admin.Domain.Core.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.IoC\IdentityServer4.Admin.IoC.csproj" />
   </ItemGroup>
 

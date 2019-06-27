@@ -1,5 +1,3 @@
-import { query as queryUsers } from '@/services/user';
-
 import { Effect } from 'dva';
 import { Reducer } from 'redux';
 import UserProfile from '@/@types/userProfile';
@@ -14,7 +12,6 @@ export interface UserModelType {
     namespace: 'user';
     state: UserModelState;
     effects: {
-        fetch: Effect;
         saveOidcResponse: Effect;
     };
     reducers: {
@@ -30,17 +27,11 @@ const UserModel: UserModelType = {
     },
 
     effects: {
-        *fetch(_, { call, put }) {
-            const response = yield call(queryUsers);
-            yield put({
-                type: 'save',
-                payload: response,
-            });
-        },
+        
         *saveOidcResponse({ payload }, { put }) {
             userManager.storeOidcUser(payload);
             const { profile } = payload;
-            
+
             yield put({
                 type: 'saveCurrentUser',
                 payload: profile

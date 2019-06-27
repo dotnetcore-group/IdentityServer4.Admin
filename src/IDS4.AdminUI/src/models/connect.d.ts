@@ -6,14 +6,14 @@ import { GlobalModelState } from './global';
 import { DefaultSettings as SettingModelState } from '../../config/defaultSettings';
 import { UserModelState } from './user';
 import { IClientModelState } from './client';
+import { IUsersModelState } from './users';
 
-export { GlobalModelState, SettingModelState, UserModelState };
+export { GlobalModelState, SettingModelState, UserModelState, IClientModelState, IUsersModelState };
 
 export interface Loading {
     global: boolean;
     effects: { [key: string]: boolean | undefined };
     models: {
-        global?: boolean;
         menu?: boolean;
         setting?: boolean;
         user?: boolean;
@@ -21,11 +21,11 @@ export interface Loading {
 }
 
 export interface ConnectState {
-    global: GlobalModelState;
     loading: Loading;
     settings: SettingModelState;
     user: UserModelState;
-    client: IClientModelState
+    client: IClientModelState,
+    users: IUsersModelState
 }
 
 export type Effect = (

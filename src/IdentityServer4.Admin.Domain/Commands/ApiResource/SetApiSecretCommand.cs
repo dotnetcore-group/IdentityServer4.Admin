@@ -20,7 +20,7 @@ namespace IdentityServer4.Admin.Domain.Commands.ApiResource
 
         public override bool IsValid()
         {
-            ValidationResult = new SetApiSecretCommandValidation().Validate(this);
+            ValidationResult = new SetApiSecretCommandValidator().Validate(this);
             return ValidationResult.IsValid;
         }
 

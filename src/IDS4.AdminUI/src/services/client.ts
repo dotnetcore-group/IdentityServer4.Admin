@@ -57,3 +57,10 @@ export const removeSecret = (payload: any) => {
         method: 'delete'
     })
 }
+
+// Client property
+export async function getProperties(clientId: string): Promise<any> {
+    return request(`/api/v1.0/clients/${clientId}/properties`, {
+        method: 'get'
+    })
+}

@@ -73,7 +73,7 @@ class ClientList extends React.Component<IClientListProps> {
                                 <Button
                                     type="ghost"
                                     onClick={() => {
-                                        router.push(`/clients/edit?id=${record.clientId}`);
+                                        router.push(`/clients/edit/${record.clientId}`);
                                     }}
                                 >
                                     {formatMessage({ id: 'app.shared.edit', defaultMessage: 'Edit' })}

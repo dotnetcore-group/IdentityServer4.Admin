@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>c793a151-aab6-4a4a-b27f-05cd99c5cba1</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +24,7 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
@@ -31,13 +34,12 @@
     <ProjectReference Include="..\IdentityServer4.Admin.BuildingBlock\IdentityServer4.Admin.BuildingBlock.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Data.Mysql\IdentityServer4.Admin.Data.Mysql.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj" />
-    <ProjectReference Include="..\IdentityServer4.Admin.Infrastructures.Data\IdentityServer4.Admin.Data.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.IoC\IdentityServer4.Admin.IoC.csproj" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Views\Account\Login.en-us.resx">
+    <EmbeddedResource Update="Resources\Views\Account\Login.en.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

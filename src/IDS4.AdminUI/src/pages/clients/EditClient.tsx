@@ -17,15 +17,14 @@ export interface IEditClientProps extends RouteProps, ConnectProps {
 
 class EditClient extends React.Component<IEditClientProps> {
     componentDidMount() {
-        const { dispatch, location: { query: { id } } } = this.props;
-        if (!id || id === '') {
-            router.push('/exception/404');
-            return;
+        const { match, dispatch } = this.props;
+        if (match) {
+            const { id } = match.params;
+            dispatch && dispatch({
+                type: 'client/fetchDetail',
+                payload: id
+            })
         }
-        dispatch && dispatch({
-            type: 'client/fetchDetail',
-            payload: id
-        })
     }
 
 

@@ -16,7 +16,6 @@ namespace IdentityServer4.Admin.API
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("https://+:5003", "http://+:5004")
                 .UseStartup<Startup>()
                 .UseSerilogLogger();
     }

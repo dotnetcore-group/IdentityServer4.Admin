@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IdentityServer4.Admin.Domain\IdentityServer4.Admin.Domain.csproj" />
+    <ProjectReference Include="..\IdentityServer4.Admin.Extensions\IdentityServer4.Admin.Extensions.csproj" />
     <ProjectReference Include="..\IdentityServer4.Admin.Identity\IdentityServer4.Admin.Identity.csproj" />
   </ItemGroup>
 

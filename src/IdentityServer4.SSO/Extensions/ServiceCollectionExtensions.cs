@@ -6,6 +6,7 @@ using IdentityServer4.Admin.Identity;
 using IdentityServer4.Admin.Identity.Entities;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Localization.Routing;
 using Microsoft.Extensions.Configuration;
@@ -110,11 +111,11 @@ namespace IdentityServer4.SSO.Extensions
                             {
                                 var supportedCultures = new[]
                                 {
-                                    new CultureInfo("zh-cn"),
-                                    new CultureInfo("en-us"),
+                                    new CultureInfo("zh"),
+                                    new CultureInfo("en"),
                                 };
 
-                                opts.DefaultRequestCulture = new RequestCulture("zh-cn");
+                                opts.DefaultRequestCulture = new RequestCulture("zh");
                                 opts.SupportedCultures = supportedCultures;
                                 opts.SupportedUICultures = supportedCultures;
                             });

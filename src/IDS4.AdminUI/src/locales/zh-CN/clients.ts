@@ -23,7 +23,7 @@ export default {
     'pages.clients.add.from.create': '创建',
 
     /**Edit Client Page */
-    'pages.clients.edit.tabs.basic': '基本',
+    'pages.clients.edit.tabs.basic': '基础',
     'pages.clients.edit.tabs.settings': '高级',
     'pages.clients.edit.tabs.authentication': '身份认证',
     'pages.clients.edit.tabs.token': '令牌',
@@ -48,7 +48,7 @@ export default {
     'pages.clients.edit.tabs.panel.redirectUris': '重定向地址',
     'pages.clients.edit.tabs.panel.allowedGrantTypes': '允许授权类型',
     'pages.clients.edit.tabs.panel.requireConsentScreen': '需要用户同意',
-    'pages.clients.edit.tabs.panel.clientSecrets': '客户端 Secrets',
+    'pages.clients.edit.tabs.panel.clientSecrets': '机密',
     'pages.clients.edit.tabs.panel.properties': '属性',
     'pages.clients.edit.tabs.panel.frontChannelLogoutUri': '前端通道注销地址',
     'pages.clients.edit.tabs.panel.frontChannelLogoutSessionRequired': '需要前端通道注销会话',
@@ -155,7 +155,7 @@ export default {
 
 
     /**Client Secrets */
-    'pages.clients.secrets.add': '添加',
+    'pages.clients.secrets.add': '添加机密',
     'pages.clients.secrets.table.remove.confirm':'你确定要删除吗？',
     'pages.clients.secrets.table.title.value': 'Secret 值',
     'pages.clients.secrets.table.title.type': 'Secret 类型',
@@ -167,4 +167,10 @@ export default {
     'pages.clients.secrets.add.hashtype': '哈希方式',
     'pages.clients.secrets.add.expiration': '过期时间',
     'pages.clients.secrets.add.description': '描述',
+
+    /**Client Properties */
+    'pages.clients.properties.add':'添加属性',
+    'pages.clients.properties.table.title.key':'键',
+    'pages.clients.properties.table.title.value':'值',
+    'pages.clients.properties.table.remove.confirm':'你确定要删除这个属性吗？'
 };

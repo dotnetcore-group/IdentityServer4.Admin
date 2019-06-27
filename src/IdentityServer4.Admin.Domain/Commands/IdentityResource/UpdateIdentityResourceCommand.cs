@@ -15,7 +15,7 @@ namespace IdentityServer4.Admin.Domain.Commands.IdentityResource
 
         public override bool IsValid()
         {
-            ValidationResult = new UpdateIdentityResourceCommandValidation().Validate(this);
+            ValidationResult = new UpdateIdentityResourceCommandValidator().Validate(this);
             return ValidationResult.IsValid;
         }
     }

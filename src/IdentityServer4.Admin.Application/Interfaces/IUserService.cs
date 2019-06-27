@@ -8,7 +8,7 @@ namespace IdentityServer4.Admin.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<ApplicationUser> FindByEmailAsync(string username);
+        Task<ApplicationUser> FindByEmailAsync(string email);
         Task<ApplicationUser> FindByNameAsync(string username);
         Task<SignInResult> PasswordSignInAsync(string userName, string password, bool rememberLogin, bool lockoutOnFailure);
         Task<UserViewModel> FindByProviderAsync(string provider, string providerUserId);
@@ -18,5 +18,6 @@ namespace IdentityServer4.Admin.Application.Interfaces
         Task RegisterWithoutPassword(SocialViewModel user);
         Task<ClaimsPrincipal> CreateUserPrincipalAsync(ApplicationUser user);
         Task RegisterAsync(RegisterUserViewModel user);
+        Task<bool> ConfirmEmailAsync(ApplicationUser user, string token);
     }
 }

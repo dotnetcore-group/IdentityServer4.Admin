@@ -204,7 +204,7 @@ export default class AdvancedPanel extends React.Component<IAdvancedPanelProps> 
                     })}
                     tip={formatMessage({ id: 'pages.clients.edit.tabs.panel.clientSecrets.tip' })}
                 >
-                    <Link to={`/clients/secrets?id=${clientId}`}>
+                    <Link to={`/clients/${clientId}/secrets`}>
                         <Button type="primary" htmlType="button">
                             {formatMessage({
                                 id: 'pages.clients.edit.tabs.panel.clientSecrets',
@@ -220,7 +220,7 @@ export default class AdvancedPanel extends React.Component<IAdvancedPanelProps> 
                     })}
                     tip={formatMessage({ id: 'pages.clients.edit.tabs.panel.properties.tip' })}
                 >
-                    <Link to={`/clients/properties?id=${clientId}`}>
+                    <Link to={`/clients/${clientId}/properties`}>
                         <Button type="primary" htmlType="button">
                             {formatMessage({
                                 id: 'pages.clients.edit.tabs.panel.properties',

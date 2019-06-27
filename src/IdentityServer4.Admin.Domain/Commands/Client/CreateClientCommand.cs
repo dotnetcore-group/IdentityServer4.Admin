@@ -32,7 +32,7 @@ namespace IdentityServer4.Admin.Domain.Commands.Client
 
         public override bool IsValid()
         {
-            ValidationResult = new CreateClientCommandValidation().Validate(this);
+            ValidationResult = new CreateClientCommandValidator().Validate(this);
             return ValidationResult.IsValid;
         }
     }
