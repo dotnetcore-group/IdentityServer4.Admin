@@ -2,13 +2,7 @@ FROM nginx:alpine AS base
 WORKDIR /usr/share/nginx/html
 EXPOSE 80
 
-FROM centos:7 AS build 
-
-WORKDIR /home
-RUN curl --silent --location https://rpm.nodesource.com/setup_10.x | bash -
-RUN yum -y install nodejs
-RUN curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
-RUN yum -y install yarn
+FROM zengande/yarn:centos7-node10 AS build 
 
 WORKDIR /src
 COPY ["src/IDS4.AdminUI","."]

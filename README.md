@@ -10,4 +10,15 @@
 
 > This project is only a demonstration project, do not use it in production! 
 
-todo...
+## run in docker
+1. replace your ip address:
+- `.env` : `EXTERNAL_DNS_NAME_OR_IP=[your ip]`
+- `src\IDS4.AdminUI\docker\nginx.conf` : `proxy_pass http://[your ip]:5004`
+
+2. start up
+run `docker-compose up --build` command in the root directory.
+
+3. open in browser
+- AdminUI: `http:[your ip]:8000`
+- SSO: `http:[your ip]:5006`
+- API: `http:[your ip]:5004/swagger/index.html`
