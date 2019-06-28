@@ -6,7 +6,7 @@ using IdentityServer4.Admin.Identity.Entities;
 
 namespace IdentityServer4.Admin.Application.Interfaces
 {
-    public interface IUserService
+    public interface IUserAppService
     {
         Task<ApplicationUser> FindByEmailAsync(string email);
         Task<ApplicationUser> FindByNameAsync(string username);
@@ -18,6 +18,6 @@ namespace IdentityServer4.Admin.Application.Interfaces
         Task RegisterWithoutPassword(SocialViewModel user);
         Task<ClaimsPrincipal> CreateUserPrincipalAsync(ApplicationUser user);
         Task RegisterAsync(RegisterUserViewModel user);
-        Task<bool> ConfirmEmailAsync(ApplicationUser user, string token);
+        Task ConfirmEmailAsync(string email, string token);
     }
 }

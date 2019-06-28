@@ -5,6 +5,7 @@ using IdentityServer4.Admin.Domain.Commands;
 using IdentityServer4.Admin.Domain.Commands.User;
 using IdentityServer4.Admin.Domain.Core.Bus;
 using IdentityServer4.Admin.Domain.Core.Notifications;
+using IdentityServer4.Admin.Domain.Interfaces;
 using IdentityServer4.Admin.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -14,20 +15,17 @@ using System.Threading.Tasks;
 
 namespace IdentityServer4.Admin.Application.Services
 {
-    public class UserService : IUserService
+    public class UserService : IUserAppService
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserManager _userManager;
         private readonly IMapper _mapper;
         private readonly IMediatorHandler _bus;
-        public UserService(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+        public UserService(IUserManager userManager,
             IMapper mapper,
             IMediatorHandler bus)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _signInManager = signInManager;
             _bus = bus;
         }
 
@@ -55,9 +53,15 @@ namespace IdentityServer4.Admin.Application.Services
             return (await _userManager.FindByNameAsync(username)) != null;
         }
 
+        public Task ConfirmEmailAsync(string email, string token)
+        {
+            var command = new ConfirmEmailCommand(email, token);
+            return _bus.SendCommand(command);
+        }
+
         public Task<ClaimsPrincipal> CreateUserPrincipalAsync(ApplicationUser user)
         {
-            return _signInManager.CreateUserPrincipalAsync(user);
+            return _userManager.CreateUserPrincipalAsync(user);
         }
 
         public async Task<ApplicationUser> FindByEmailAsync(string email)
@@ -82,7 +86,7 @@ namespace IdentityServer4.Admin.Application.Services
 
         public async Task<SignInResult> PasswordSignInAsync(string userName, string password, bool rememberLogin, bool lockoutOnFailure)
         {
-            return await _signInManager.PasswordSignInAsync(userName, password, rememberLogin, lockoutOnFailure: true);
+            return await _userManager.PasswordSignInAsync(userName, password, rememberLogin, lockoutOnFailure: true);
         }
 
         public async Task RegisterAsync(RegisterUserViewModel user)
@@ -95,19 +99,6 @@ namespace IdentityServer4.Admin.Application.Services
         {
             var command = _mapper.Map<RegisterNewUserWithoutPassCommand>(user);
             await _bus.SendCommand(command);
-        }
-
-        public async Task<bool> ConfirmEmailAsync(ApplicationUser user, string token)
-        {
-            var result = await _userManager.ConfirmEmailAsync(user, token);
-            if (result.Errors.Any())
-            {
-                result.Errors.ToList().ForEach(error =>
-                {
-                    _bus.RaiseEvent(new DomainNotification("confirm_email_error", error.Description));
-                });
-            }
-            return result.Succeeded;
         }
     }
 }

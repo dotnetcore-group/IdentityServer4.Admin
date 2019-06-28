@@ -14,6 +14,7 @@
 1. replace your ip address:
 - `.env` : `EXTERNAL_DNS_NAME_OR_IP=[your ip]`
 - `src\IDS4.AdminUI\docker\nginx.conf` : `proxy_pass http://[your ip]:5004`
+- `src\IDS4.AdminUI\config\config.ts` : `define: ...`
 
 2. start up
 run `docker-compose up --build` command in the root directory.

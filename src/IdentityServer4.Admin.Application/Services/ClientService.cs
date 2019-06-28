@@ -122,5 +122,10 @@ namespace IdentityServer4.Admin.Application.Services
             var command = _mapper.Map<SaveClientClaimCommand>(model);
             await _bus.SendCommand(command);
         }
+
+        public Task<int> GetTotalClientsAsync()
+        {
+            return _clientRepository.CountAsync();
+        }
     }
 }

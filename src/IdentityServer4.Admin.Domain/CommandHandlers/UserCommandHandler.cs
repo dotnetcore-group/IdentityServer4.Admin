@@ -1,5 +1,4 @@
 ﻿using IdentityModel;
-using IdentityServer4.Admin.BuildingBlock.Drawing;
 using IdentityServer4.Admin.BuildingBlock.Email;
 using IdentityServer4.Admin.Domain.Commands;
 using IdentityServer4.Admin.Domain.Commands.User;
@@ -10,15 +9,11 @@ using IdentityServer4.Admin.Domain.Interfaces;
 using IdentityServer4.Admin.Identity.Entities;
 using IdGen;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using ServiceStack;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,30 +23,20 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
         IRequestHandler<CreateUserCommand, bool>,
         IRequestHandler<RegisterNewUserWithoutPassCommand, bool>,
         IRequestHandler<RegisterNewUserCommand, bool>,
-        IRequestHandler<AddLoginCommand, bool>
+        IRequestHandler<AddLoginCommand, bool>,
+        IRequestHandler<ConfirmEmailCommand, bool>
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserManager _userManager;
         private readonly IEmailSender _emailSender;
         private readonly IIdGenerator<long> _idGenerator;
-        private readonly RandomDrawing _drawing;
-        private readonly IHostingEnvironment _env;
-        private readonly IConfiguration _config;
         public UserCommandHandler(IUnitOfWork uow,
             IMediatorHandler bus,
-            RandomDrawing drawing,
-            IConfiguration config,
             INotificationHandler<DomainNotification> notifications,
-            UserManager<ApplicationUser> userManager,
-            IEmailSender emailSender,
-            IHostingEnvironment env,
+            IUserManager userManager,
             IIdGenerator<long> idGenerator) : base(uow, bus, notifications)
         {
-            _config = config;
             _userManager = userManager;
-            _emailSender = emailSender;
             _idGenerator = idGenerator;
-            _drawing = drawing;
-            _env = env;
         }
 
         public async Task<bool> Handle(RegisterNewUserWithoutPassCommand request, CancellationToken cancellationToken)
@@ -106,7 +91,6 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
                 return false;
             }
             var uid = _idGenerator.CreateId();
-            var avatar = GetAvatar(uid);
             var user = new ApplicationUser
             {
                 Id = Guid.NewGuid(),
@@ -114,8 +98,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
                 UserName = request.UserName,
                 Nickname = request.Nickname,
                 PhoneNumber = request.PhoneNumber,
-                Uid = uid,
-                Avatar = avatar
+                Uid = uid
             };
 
             var emailAlreadyExist = await _userManager.FindByEmailAsync(user.Email);
@@ -136,7 +119,6 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             if (result.Succeeded)
             {
                 await _bus.RaiseEvent(new UserRegisteredEvent(user.Id.ToString(), user.UserName, user.Email));
-                await SendComfirmEmailAsync(user);
                 return true;
             }
             return false;
@@ -279,32 +261,21 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             return result.Succeeded;
         }
 
-        private string GetAvatar(long uid)
+        public async Task<bool> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
-            var domain = _config.GetValue("DomainPath", "https://localhost:5005");
-            var requestPath = PathUtils.CombinePaths("files", "avatars", DateTime.UtcNow.ToString("yyyyMM"));
-            var savePath = PathUtils.CombinePaths(_env.ContentRootPath, requestPath);
-            var filePath = PathUtils.CombinePaths(savePath, $"{uid}.jpg");
-            if (Directory.Exists(savePath) == false)
+            if (request.IsValid() == false)
             {
-                Directory.CreateDirectory(savePath);
+                NotifyValidationErrors(request);
+                return false;
             }
-            using (var avatar = _drawing.Generate(200, 200))
-            {
-                avatar.Seek(0, SeekOrigin.Begin);
-                using (var file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-                {
-                    avatar.CopyTo(file);
-                }
-            }
-            return PathUtils.CombinePaths(domain, requestPath, $"{uid}.jpg");
-        }
 
-        private async Task SendComfirmEmailAsync(ApplicationUser user)
-        {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callback = $"https://localhost:5005/account/confirm-email?token={token}&email={user.Email}";
-            await _emailSender.SendEmailConfirmationAsync(user.Email, callback);
+            var result = await _userManager.ConfirmEmailAsync(request.Email, request.Token);
+            if (result)
+            {
+                await _bus.RaiseEvent(new EmailConfirmedEvent(request.Email, request.Token));
+                return true;
+            }
+            return false;
         }
     }
 }

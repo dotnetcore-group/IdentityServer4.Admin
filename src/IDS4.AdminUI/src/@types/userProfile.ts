@@ -9,4 +9,5 @@ export default interface UserProfile {
     role?: string;
     sid?: string;
     sub?: string;
+    avatar?: string;
 }

@@ -24,7 +24,7 @@ namespace IdentityServer4.Admin.IoC.AutofacInjector
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<UserService>()
-                .As<IUserService>()
+                .As<IUserAppService>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<UserManagerService>()

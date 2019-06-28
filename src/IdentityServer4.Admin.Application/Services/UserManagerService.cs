@@ -36,6 +36,11 @@ namespace IdentityServer4.Admin.Application.Services
             await _bus.SendCommand(command);
         }
 
+        public Task<int> GetTotalUsersAsync()
+        {
+            return _userManager.Users.CountAsync();
+        }
+
         public async Task<PagingDataViewModel<PagingUserViewModel>> GetUsersAsync(PagingQueryViewModel vm)
         {
             int total;

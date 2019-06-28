@@ -22,5 +22,6 @@ namespace IdentityServer4.Admin.Application.Interfaces
         /// <param name="user"></param>
         /// <returns></returns>
         Task CreateAsync(CreateUserViewModel user);
+        Task<int> GetTotalUsersAsync();
     }
 }

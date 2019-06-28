@@ -25,9 +25,9 @@ export default [
         routes: [
             {
                 path: '/',
-                name: 'welcome',
-                icon: 'smile',
-                component: './Welcome',
+                name: 'dashboard',
+                icon: 'dashboard',
+                component: './Dashboard',
             },
             {
                 path: '/clients',

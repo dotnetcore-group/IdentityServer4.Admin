@@ -81,9 +81,10 @@ export default {
     // add for transfer to umi
     plugins,
     define: {
-        "API_ENDPOINT": 'http://10.0.1.46:5004',
-        "AUTHORITY_ENDPOINT": 'http://10.0.1.46:5006',
-        "DOMAIN_ENDPOINT": 'http://10.0.1.46:8000',
+        // sso endpoint
+        "AUTHORITY_ENDPOINT": 'http://localhost:5006',
+        // this website endpoint
+        "DOMAIN_ENDPOINT": 'http://localhost:8000',
     },
     block: {
     },

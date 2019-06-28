@@ -36,7 +36,7 @@ namespace IdentityServer4.SSO.Controllers
     {
         #region DI
         private readonly IMediatorHandler _bus;
-        private readonly IUserService _users;
+        private readonly IUserAppService _users;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
@@ -51,7 +51,7 @@ namespace IdentityServer4.SSO.Controllers
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events,
-            IUserService users,
+            IUserAppService users,
             SignInManager<ApplicationUser> signInManager,
             INotificationHandler<DomainNotification> notifications)
         {
@@ -394,15 +394,11 @@ namespace IdentityServer4.SSO.Controllers
         }
         #endregion
 
-        #region EMAIL CONFIRM
+        #region CONFIRM EMAIL
         [HttpGet, Route("account/confirm-email")]
         public async Task<IActionResult> ConfirmEmail(string email, string token)
         {
-            var user = await _users.FindByEmailAsync(email);
-            if (user != null)
-            {
-                await _users.ConfirmEmailAsync(user, token);
-            }
+            await _users.ConfirmEmailAsync(email, token);
             return View();
         }
         #endregion

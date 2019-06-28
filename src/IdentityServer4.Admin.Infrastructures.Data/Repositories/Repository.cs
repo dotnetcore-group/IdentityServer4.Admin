@@ -65,6 +65,16 @@ namespace IdentityServer4.Admin.Data.Repositories
             return DbSet.FirstOrDefault(where);
         }
 
+        public int Count(Expression<Func<TEntity, bool>> predicate = null)
+        {
+            if (predicate == null)
+            {
+                predicate = t => true;
+            }
+            return DbSet.Count(predicate);
+        }
+
+
         #region Async Methods
         public async Task<TEntity> AddAsync(TEntity entity)
         {
@@ -102,6 +112,15 @@ namespace IdentityServer4.Admin.Data.Repositories
         public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> where)
         {
             return DbSet.FirstOrDefaultAsync(where);
+        }
+
+        public Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
+        {
+            if (predicate == null)
+            {
+                predicate = t => true;
+            }
+            return DbSet.CountAsync(predicate);
         }
 
 

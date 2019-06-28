@@ -24,5 +24,6 @@ namespace IdentityServer4.Admin.Application.Interfaces
         Task SaveSecretAsync(SaveClientSecretViewModel model);
         Task RemoveClaimAsync(string clientId, int id);
         Task SaveClaimAsync(SaveClientClaimViewModel model);
+        Task<int> GetTotalClientsAsync();
     }
 }

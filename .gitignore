@@ -49,3 +49,5 @@
 /src/IdentityServer4.Admin.IoC/bin/release/netstandard2.0
 /src/IdentityServer4.SSO/bin/release/netcoreapp2.2
 /src/IdentityServer4.SSO/publish
+/tests/IdentityServer4.Admin.Domain.Tests/bin/Debug/netcoreapp3.0
+/tests/IdentityServer4.Admin.Domain.Tests/obj

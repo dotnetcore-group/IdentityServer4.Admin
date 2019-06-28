@@ -1,4 +1,6 @@
 export default {
+    'shared.welcome':'您好',
+
     'app.shared.client': '客户端',
 
     'app.shared.enabled': '可用',

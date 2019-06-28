@@ -54,9 +54,9 @@ namespace IdentityServer4.Admin.Domain.Validations
                 .NotEmpty();
         }
 
-        protected void ValidateCode()
+        protected void ValidateToken()
         {
-            RuleFor(c => c.Code)
+            RuleFor(c => c.Token)
                 .NotEmpty();
         }
     }
