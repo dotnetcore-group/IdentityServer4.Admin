@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Table, Avatar, Button, Divider, Drawer, Form, Input, Checkbox } from 'antd';
+import { Card, Table, Avatar, Button, Divider, Drawer, Form, Input, Checkbox, Popconfirm } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
@@ -7,38 +7,91 @@ import { ConnectProps } from '../../models/connect';
 import { router } from 'umi';
 import { FormComponentProps } from 'antd/lib/form';
 
-interface INewUserFormProps extends FormComponentProps { }
+interface INewUserFormProps extends FormComponentProps {
+    onSubmit?: (values: any) => void;
+}
 
 const NewUserForm = Form.create<INewUserFormProps>()(
     class NewUserForm extends React.Component<INewUserFormProps> {
+
+        compareToFirstPassword(rule: any, value: any, callback: any) {
+            const { form } = this.props;
+            if (value && value !== form.getFieldValue('password')) {
+                callback(formatMessage({ id: 'pages.users.list.create.confirmpassword.inconsistent' }));
+            } else {
+                callback();
+            }
+        }
+
+        submitHandler(e: any) {
+            e.preventDefault();
+            const { form, onSubmit } = this.props;
+            form.validateFields((error, values) => {
+                if (!error) {
+                    onSubmit && onSubmit(values);
+                }
+            })
+        }
+
         render() {
             const { form: { getFieldDecorator } } = this.props;
+            const formItemLayout = {
+                labelCol: {
+                    xs: { span: 24 },
+                    sm: { span: 8 },
+                },
+                wrapperCol: {
+                    xs: { span: 24 },
+                    sm: { span: 16 },
+                },
+            };
 
             return (
-                <Form>
+                <Form {...formItemLayout} style={{ paddingTop: '20px' }} onSubmit={this.submitHandler.bind(this)}>
                     <Form.Item label="Username">
-                        {getFieldDecorator('userName', {})(
-                            <Input />
-                        )}
-                    </Form.Item>
-                    <Form.Item label="Nickname">
-                        {getFieldDecorator('nickname', {})(
+                        {getFieldDecorator('userName', {
+                            rules: [{ required: true, message: formatMessage({ id: 'pages.users.list.create.username.required' }) }]
+                        })(
                             <Input />
                         )}
                     </Form.Item>
                     <Form.Item label="Email">
-                        {getFieldDecorator('email', {})(
+                        {getFieldDecorator('email', {
+                            rules: [{
+                                type: 'email',
+                                message: formatMessage({ id: 'pages.users.list.create.email.invalid' })
+                            }, {
+                                required: true,
+                                message: formatMessage({ id: 'pages.users.list.create.email.required' })
+                            }]
+                        })(
+                            <Input />
+                        )}
+                    </Form.Item>
+                    <Form.Item label="Nickname">
+                        {getFieldDecorator('nickname', {
+                        })(
                             <Input />
                         )}
                     </Form.Item>
                     <Form.Item label="Password">
-                        {getFieldDecorator('password', {})(
-                            <Input />
+                        {getFieldDecorator('password', {
+                            rules: [{ required: true, message: formatMessage({ id: 'pages.users.list.create.password.required' }) }]
+                        })(
+                            <Input.Password />
                         )}
                     </Form.Item>
                     <Form.Item label="Confirm Password">
-                        {getFieldDecorator('confirmPassword', {})(
-                            <Input />
+                        {getFieldDecorator('confirmPassword', {
+                            rules: [{
+                                required: true,
+                                message: formatMessage({ id: 'pages.users.list.create.confirmpassword.required' }),
+                            },
+                            {
+                                validator: this.compareToFirstPassword.bind(this),
+                            }]
+                        })(
+                            <Input.Password />
                         )}
                     </Form.Item>
                     <Form.Item label="Email Confirmed">
@@ -86,14 +139,41 @@ class UserList extends React.Component<IUserListProps> {
     }
 
     componentDidMount() {
+        this.fetchData(1, 10);
+    }
+
+    fetchData(pageIndex: number, pageSize: number, search = '') {
         const { dispatch } = this.props;
         dispatch && dispatch({
             type: 'users/fetch',
             payload: {
-                pageIndex: 1,
-                pageSize: 20,
-                search: ''
+                pageIndex,
+                pageSize,
+                search
             }
+        })
+    }
+
+    tablePageChangeHanlder(page: number, pageSize?: number) {
+        this.fetchData(page, pageSize || 10)
+    }
+
+    createHandler(values: any) {
+        const { dispatch } = this.props;
+        dispatch && dispatch({
+            type: 'users/create',
+            payload: {
+                ...values
+            }
+        });
+        this.setState({ drawerVisable: false })
+    }
+
+    removeHandler(id: string) {
+        const { dispatch } = this.props;
+        dispatch && dispatch({
+            type: 'users/remove',
+            payload: id
         })
     }
 
@@ -105,14 +185,15 @@ class UserList extends React.Component<IUserListProps> {
             <>
                 <Card>
                     <div style={{ marginBottom: '20px' }}>
-                        <Button type="primary" icon="plus" onClick={() => this.setState({ drawerVisable: true })}>添加用户</Button>
+                        <Button type="primary" icon="plus" onClick={() => this.setState({ drawerVisable: true })}>{formatMessage({ id: 'pages.users.list.createuser' })}</Button>
                     </div>
                     <Table loading={loading}
                         dataSource={data}
                         rowKey="id"
                         pagination={{
                             pageSize: 20,
-                            total
+                            total,
+                            onChange: this.tablePageChangeHanlder.bind(this)
                         }}>
                         <Table.Column title={formatMessage({ id: 'pages.users.list.table.avatar' })} dataIndex="gravatar" render={src => <Avatar src={src} />} />
                         <Table.Column title={formatMessage({ id: 'pages.users.list.table.username' })} dataIndex="userName" />
@@ -122,7 +203,20 @@ class UserList extends React.Component<IUserListProps> {
                             <>
                                 <Button type="primary" onClick={() => router.push(`/users/${id}`)}>{formatMessage({ id: 'app.shared.edit' })}</Button>
                                 <Divider type="vertical" />
-                                <Button type="danger">{formatMessage({ id: 'app.shared.remove' })}</Button>
+                                <Popconfirm
+                                    placement="topLeft"
+                                    title={formatMessage({
+                                        id: 'pages.users.list.table.remove.confirm',
+                                        defaultMessage: 'Remove',
+                                    })}
+                                    onConfirm={this.removeHandler.bind(this, id || '')}
+                                    okText={formatMessage({ id: 'app.shared.yes' })}
+                                    cancelText={formatMessage({ id: 'app.shared.no' })}
+                                >
+                                    <Button type="danger">
+                                        {formatMessage({ id: 'app.shared.remove', defaultMessage: 'Remove' })}
+                                    </Button>
+                                </Popconfirm>
                             </>
                         )} />
                     </Table>
@@ -131,7 +225,7 @@ class UserList extends React.Component<IUserListProps> {
                     onClose={() => this.setState({ drawerVisable: false })}
                     destroyOnClose={true}
                     visible={this.state.drawerVisable}>
-                    <NewUserForm />
+                    <NewUserForm onSubmit={this.createHandler.bind(this)} />
                 </Drawer>
             </>
         )
@@ -139,6 +233,6 @@ class UserList extends React.Component<IUserListProps> {
 }
 
 export default connect(({ loading, users }: ConnectState) => ({
-    loading: loading.effects['users/fetch'],
+    loading: loading.effects['users/fetch'] || loading.effects['users/remove'],
     list: users.list
 }))(UserList);

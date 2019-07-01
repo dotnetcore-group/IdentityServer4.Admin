@@ -23,6 +23,8 @@ export default {
     'pages.clients.add.from.create': '创建',
 
     /**Edit Client Page */
+    'pages.clients.edit.update.successful': '更新成功！',
+
     'pages.clients.edit.tabs.basic': '基础',
     'pages.clients.edit.tabs.settings': '高级',
     'pages.clients.edit.tabs.authentication': '身份认证',

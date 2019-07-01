@@ -36,6 +36,12 @@ namespace IdentityServer4.Admin.Application.Services
             await _bus.SendCommand(command);
         }
 
+        public Task DeleteAsync(Guid userId)
+        {
+            var command = new DeleteUserCommand(userId);
+            return _bus.SendCommand(command);
+        }
+
         public Task<int> GetTotalUsersAsync()
         {
             return _userManager.Users.CountAsync();

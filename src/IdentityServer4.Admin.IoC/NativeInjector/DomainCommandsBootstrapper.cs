@@ -22,6 +22,7 @@ namespace IdentityServer4.Admin.IoC
             // User
             services.AddScoped<IRequestHandler<RegisterNewUserWithoutPassCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<CreateUserCommand, bool>, UserCommandHandler>()
+                .AddScoped<IRequestHandler<DeleteUserCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<RegisterNewUserCommand, bool>, UserCommandHandler>()
                 .AddScoped<IRequestHandler<AddLoginCommand, bool>, UserCommandHandler>();
 

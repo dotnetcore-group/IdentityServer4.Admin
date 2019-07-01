@@ -5,6 +5,7 @@ import { fetchClients, createClient, removeClient, updateClient, getSecrets, rem
 import { message } from "antd";
 import { router } from "umi";
 import { fetchClient, addSecret } from '../services/client';
+import { formatMessage } from 'umi-plugin-locale';
 
 export interface IClientModelState {
     list?: Array<IClientViewModel>;
@@ -71,26 +72,19 @@ const ClientModel: IClientModelType = {
             const { data } = response;
             if (data.success) {
                 message.success("create success!");
-                router.push(`/clients/edit?id=${clientId}`);
+                router.push(`/clients/edit/${clientId}`);
             }
         },
         *remove({ payload }, { call, put }) {
             yield call(removeClient, payload);
 
-            const response = yield call(fetchClients);
-            const { data: { data: list } } = response;
-            yield put({
-                type: 'save',
-                payload: {
-                    list
-                }
-            })
+            yield put({ type: 'fetchList' })
         },
         *update({ payload }, { call, put }) {
             const response = yield call(updateClient, payload);
             const { data } = response;
             if (data.success) {
-                message.success("update success!");
+                message.success(formatMessage({ id: 'pages.clients.edit.update.successful' }));
                 router.push('/clients');
             }
         },
@@ -115,26 +109,14 @@ const ClientModel: IClientModelType = {
             const response = yield call(addSecret, { ...payload });
             const { data } = response;
             if (data.success) {
-                const { data: { data: secrets } } = yield call(getSecrets, clientId);
-                yield put({
-                    type: 'save',
-                    payload: {
-                        secrets
-                    }
-                })
+                yield put({ type: 'fetchSecrets', payload: clientId })
             }
         },
         *removeSecret({ payload }, { call, put }) {
             const { clientId } = payload;
             const { data } = yield call(removeSecret, { ...payload });
             if (data.success) {
-                const { data: { data: secrets } } = yield call(getSecrets, clientId);
-                yield put({
-                    type: 'save',
-                    payload: {
-                        secrets
-                    }
-                })
+                yield put({ type: 'fetchSecrets', payload: clientId })
             }
         },
 

@@ -7,6 +7,8 @@ export default {
     'pages.clients.list.table.remove.confirm': 'Are you sure you want to delete it?',
 
     /**Edit Client Page */
+    'pages.clients.edit.update.successful': 'Update Successful!',
+
     'pages.clients.edit.tabs.basic': 'Basic',
     'pages.clients.edit.tabs.settings': 'Advanced Setting',
     'pages.clients.edit.tabs.authentication': 'Authentication',

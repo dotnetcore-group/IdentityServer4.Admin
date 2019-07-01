@@ -35,20 +35,17 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
         private readonly IClientPropertyRepository _clientPropertyRepository;
         private readonly IClientSecretRepository _clientSecretRepository;
         private readonly IClientClaimRepository _clientClaimRepository;
-        private readonly IMapper _mapper;
         public ClientCommandHandler(IUnitOfWork uow, IMediatorHandler bus, INotificationHandler<DomainNotification> notifications,
             IClientRepository clientRepository,
             IClientPropertyRepository clientPropertyRepository,
             IClientSecretRepository clientSecretRepository,
-            IClientClaimRepository clientClaimRepository,
-            IMapper mapper)
+            IClientClaimRepository clientClaimRepository)
             : base(uow, bus, notifications)
         {
             _clientRepository = clientRepository;
             _clientPropertyRepository = clientPropertyRepository;
             _clientSecretRepository = clientSecretRepository;
             _clientClaimRepository = clientClaimRepository;
-            _mapper = mapper;
         }
 
         public async Task<bool> Handle(CreateClientCommand request, CancellationToken cancellationToken)

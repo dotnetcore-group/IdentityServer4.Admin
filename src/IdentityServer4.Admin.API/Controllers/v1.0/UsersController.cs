@@ -8,6 +8,7 @@ using IdentityServer4.Admin.Domain.Core.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace IdentityServer4.Admin.API.Controllers.v1._0
@@ -37,6 +38,13 @@ namespace IdentityServer4.Admin.API.Controllers.v1._0
         public async Task<ActionResult<JsonResponse<bool>>> Post([FromBody]CreateUserViewModel user)
         {
             await _userManagerService.CreateAsync(user);
+            return JsonResponse(true);
+        }
+
+        [HttpDelete, Route("{userId:guid}")]
+        public async Task<ActionResult<JsonResponse<bool>>> Delete(Guid userId)
+        {
+            await _userManagerService.DeleteAsync(userId);
             return JsonResponse(true);
         }
     }

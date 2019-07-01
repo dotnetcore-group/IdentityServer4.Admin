@@ -23,5 +23,6 @@ namespace IdentityServer4.Admin.Application.Interfaces
         /// <returns></returns>
         Task CreateAsync(CreateUserViewModel user);
         Task<int> GetTotalUsersAsync();
+        Task DeleteAsync(Guid userId);
     }
 }

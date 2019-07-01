@@ -21,6 +21,7 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
 {
     public class UserCommandHandler : CommandHandler,
         IRequestHandler<CreateUserCommand, bool>,
+        IRequestHandler<DeleteUserCommand, bool>,
         IRequestHandler<RegisterNewUserWithoutPassCommand, bool>,
         IRequestHandler<RegisterNewUserCommand, bool>,
         IRequestHandler<AddLoginCommand, bool>,
@@ -201,6 +202,48 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             return false;
         }
 
+        public async Task<bool> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
+        {
+            if (request.IsValid() == false)
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(request.Email, request.Token);
+            if (result)
+            {
+                await _bus.RaiseEvent(new EmailConfirmedEvent(request.Email, request.Token));
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+
+            var user = await _userManager.FindByIdAsync(request.Id);
+            if (user == null)
+            {
+                await _bus.RaiseEvent(new DomainNotification("user_not_found", $"user {request.Id} is not found!"));
+                return false;
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                await _bus.RaiseEvent(new UserDeletedEvent(user.Id.ToString()));
+                return true;
+            }
+            await _bus.RaiseEvent(new DomainNotification("unknown_error", $"an unknown error occurred."));
+            return false;
+        }
+
         private async Task<Guid?> CreateUserWithProvider(ApplicationUser user, string provider, string providerId)
         {
             if (!string.IsNullOrEmpty(provider))
@@ -261,21 +304,5 @@ namespace IdentityServer4.Admin.Domain.CommandHandlers
             return result.Succeeded;
         }
 
-        public async Task<bool> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
-        {
-            if (request.IsValid() == false)
-            {
-                NotifyValidationErrors(request);
-                return false;
-            }
-
-            var result = await _userManager.ConfirmEmailAsync(request.Email, request.Token);
-            if (result)
-            {
-                await _bus.RaiseEvent(new EmailConfirmedEvent(request.Email, request.Token));
-                return true;
-            }
-            return false;
-        }
     }
 }

@@ -10,7 +10,13 @@ export async function query(params: PagingQueryViewModel): Promise<any> {
 
 export async function create(model: any): Promise<any> {
     return request('/api/v1.0/users', {
-        method: 'put',
+        method: 'post',
         data: model
     });
+}
+
+export async function remove(id: string): Promise<any> {
+    return request(`/api/v1.0/users/${id}`, {
+        method: 'delete'
+    })
 }

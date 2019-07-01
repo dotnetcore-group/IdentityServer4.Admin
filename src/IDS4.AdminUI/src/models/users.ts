@@ -1,5 +1,5 @@
 import { Effect } from './connect';
-import { query, create } from '@/services/user';
+import { query, create, remove } from '@/services/user';
 import PagingQueryViewModel from '@/@types/PagingQueryViewModel';
 import { Reducer } from "redux";
 
@@ -15,7 +15,8 @@ export interface IUsersModelType {
     state: IUsersModelState,
     effects: {
         fetch: Effect,
-        create: Effect
+        create: Effect,
+        remove: Effect
     },
     reducers: {
         save: Reducer<IUsersModelState>
@@ -38,9 +39,16 @@ const UsersModelType: IUsersModelType = {
                 })
             }
         },
-        *create({ payload }, { call, put }) {
+        *create({ payload }, { call, put, take }) {
             const { data } = yield call(create, payload);
             if (data.success) {
+                yield put({ type: 'fetch', payload: {} });
+            }
+        },
+        *remove({ payload }, { call, put }) {
+            const { data } = yield call(remove, payload);
+            if (data.success) {
+                yield put({ type: 'fetch', payload: {} });
             }
         }
     },

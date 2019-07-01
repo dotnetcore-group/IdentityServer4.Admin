@@ -78,6 +78,11 @@ namespace IdentityServer4.Admin.Domain.Identity
             return _userManager.FindByEmailAsync(email);
         }
 
+        public Task<ApplicationUser> FindByIdAsync(Guid id)
+        {
+            return _userManager.FindByIdAsync(id.ToString());
+        }
+
         public Task<ApplicationUser> FindByLoginAsync(string provider, string providerUserId)
         {
             return _userManager.FindByLoginAsync(provider, providerUserId);
@@ -96,6 +101,11 @@ namespace IdentityServer4.Admin.Domain.Identity
         public Task<SignInResult> PasswordSignInAsync(string userName, string password, bool rememberLogin, bool lockoutOnFailure)
         {
             return _signInManager.PasswordSignInAsync(userName, password, rememberLogin, lockoutOnFailure);
+        }
+
+        public Task<IdentityResult> DeleteAsync(ApplicationUser user)
+        {
+            return _userManager.DeleteAsync(user);
         }
     }
 }

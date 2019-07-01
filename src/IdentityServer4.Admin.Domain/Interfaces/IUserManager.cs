@@ -21,5 +21,7 @@ namespace IdentityServer4.Admin.Domain.Interfaces
         Task<IdentityResult> AddLoginAsync(ApplicationUser user, UserLoginInfo userLoginInfo);
         Task<IdentityResult> AddClaimsAsync(ApplicationUser user, List<Claim> claims);
         Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
+        Task<ApplicationUser> FindByIdAsync(Guid id);
+        Task<IdentityResult> DeleteAsync(ApplicationUser user);
     }
 }

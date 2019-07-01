@@ -13,7 +13,7 @@ namespace IdentityServer4.Admin.BuildingBlock.Drawing
 {
     public class RandomDrawing
     {
-        private readonly Rgba32[] Colors = new[] { Rgba32.CadetBlue };
+        private readonly Rgba32[] Colors = new[] { Rgba32.CadetBlue, Rgba32.LimeGreen, Rgba32.PaleVioletRed, Rgba32.LightSalmon };
         public Stream Generate(int width, int height)
         {
             var color = RandomDrawColor();
